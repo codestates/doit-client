@@ -1,5 +1,11 @@
+import Logo from '../components/Login/Logo';
+
 const login = () => {
-  return <div>login 입니다.</div>;
+  return (
+    <div>
+      <Logo />
+    </div>
+  );
 };
 
 export default login;

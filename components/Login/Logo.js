@@ -13,11 +13,18 @@ const Main = styled.div`
   text-align: center;
 `;
 
+
 const Logo = () => {
   return (
-    <Link href='/'>
-      <Main className="bg bg-primary">Do it!</Main>
-    </Link>
+    <div>
+      <Link href="/">
+        <Main>
+          <span className="text-primary" style={{ cursor: 'pointer' }}>
+            Do it!
+          </span>
+        </Main>
+      </Link>
+    </div>
   );
 };
 

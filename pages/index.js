@@ -21,6 +21,8 @@ const Button = styled.button`
   height: 200px;
   width: 300px;
 `;
+
+
 const Home = () => (
   <Main>
     <Link href="/login">

@@ -15,8 +15,10 @@ const Main = styled.div`
 
 const Logo = () => {
   return (
-    <Link href='/'>
-      <Main className="bg bg-primary">Do it!</Main>
+    <Link href="/">
+      <Main className="bg bg-primary">
+        <span className="text-primary">Do it!</span>
+      </Main>
     </Link>
   );
 };

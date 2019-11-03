@@ -1,15 +1,14 @@
 import React from 'react';
 import Logo from '../components/Login/Logo';
-import InputButton from '../components/Login/InputButton'
-import styled from 'styled-components';
+import InputButton from '../components/Login/InputButton';
+import Sign from '../components/Login/Sign';
 
-
-
-const login = (props) => {
+const login = props => {
   return (
     <div>
       <Logo />
-      <InputButton/>
+      <InputButton />
+      <Sign />
     </div>
   );
 };

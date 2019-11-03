@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Main = styled.div`
   position: absolute;
   left: 0;
-  top: 20px;
+  top: 25px;
   height: 100px;
   width: 100%;
   font-size: 3.2rem;

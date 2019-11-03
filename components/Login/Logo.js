@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Main = styled.div`
   position: absolute;
   left: 0;
-  top: 0;
+  top: 25px;
   height: 100px;
   width: 100%;
   font-size: 3.2rem;
@@ -15,11 +15,15 @@ const Main = styled.div`
 
 const Logo = () => {
   return (
-    <Link href="/">
-      <Main className="bg bg-primary">
-        <span className="text-primary">Do it!</span>
-      </Main>
-    </Link>
+    <div>
+      <Link href="/">
+        <Main>
+          <span className="text-primary" style={{ cursor: 'pointer' }}>
+            Do it!
+          </span>
+        </Main>
+      </Link>
+    </div>
   );
 };
 

@@ -33,12 +33,18 @@ const Btn = styled.button`
   width: 350px;
 `;
 
+const LoginHandler  = () => {
+
+}
+
 const Inputs = () => {
   return (
     <Main>
       <InputEmail />
       <InputPassword />
-      <Btn className="btn btn-outline-primary">Login</Btn>
+      <Btn className="btn btn-outline-primary" onClick={() => LoginHandler()}>
+        Login
+      </Btn>
     </Main>
   );
 };

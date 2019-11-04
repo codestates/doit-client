@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Facebook from './Facebook';
+import Router from 'next/router';
 
 const Main = styled.div`
   position: relative;
@@ -33,9 +33,9 @@ const Btn = styled.button`
   width: 350px;
 `;
 
-const LoginHandler  = () => {
-
-}
+const LoginHandler = () => {
+  Router.push('/layout');
+};
 
 const Inputs = () => {
   return (

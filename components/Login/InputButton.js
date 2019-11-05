@@ -42,7 +42,7 @@ const Inputs = () => {
     <Main>
       <InputEmail />
       <InputPassword />
-      <Btn className="btn btn-outline-primary" onClick={() => LoginHandler()}>
+      <Btn  onClick={() => LoginHandler()}>
         Login
       </Btn>
     </Main>

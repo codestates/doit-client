@@ -26,7 +26,7 @@ const Button = styled.button`
 const Home = () => (
   <Main>
     <Link href="/login">
-      <Button className="btn btn-outline-primary">Do it!</Button>
+      <Button >Do it!</Button>
     </Link>
   </Main>
 );

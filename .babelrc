@@ -11,6 +11,7 @@
         "preprocess": false
       }
     ],
+    // 추가
     ["inline-import", { "extensions": [".css"] }],
     ["import", { "libraryName": "antd" }]
   ]

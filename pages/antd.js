@@ -72,8 +72,8 @@ export default class App extends React.Component {
             <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              // defaultSelectedKeys={['1']}
+              // defaultOpenKeys={['sub1']}
               style={{ height: '100%' }}
             >
               <SubMenu
@@ -85,39 +85,52 @@ export default class App extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key="1">option1</Menu.Item>
-                <Menu.Item key="2">option2</Menu.Item>
+                <Menu.Item key="1">시간</Menu.Item>
+                <Menu.Item
+                  key="2"
+                  style={{ height: '100px', textAlign: 'center' }}
+                >
+                  <h1 style={{ color: 'white', fontSize: '3rem' }}>60:00</h1>
+                </Menu.Item>
               </SubMenu>
-              <SubMenu
-                key="sub2"
-                title={
-                  <span>
-                    <Icon type="laptop" />
-                    subnav 2
-                  </span>
-                }
+
+              <Menu.Item>
+                <Icon type="clock-circle" />
+                timer
+              </Menu.Item>
+              <div
+                style={{
+                  fontSize: '3rem',
+                  textAlign: 'center'
+                }}
               >
-                <Menu.Item key="5">option5</Menu.Item>
-                <Menu.Item key="6">option6</Menu.Item>
-              </SubMenu>
+                <h1 style={{ color: 'white' }}>
+                  {/* 시간을 설정 할 수 있다 
+                스타트를 하는 동안에는 시간을 설정 할 수 없다.
+                리셋을 하면 60분이 된다.*/}
+                  60:00
+                </h1>
+                <h2 style={{ textAlign: 'center' }}>
+                  <Button className="btn btn-primary mx-2">start</Button>
+                  <Button className="btn btn-primary mx-2">reset</Button>
+                </h2>
+              </div>
               <SubMenu
                 key="sub3"
                 title={
                   <span>
-                    <Icon type="notification" />
-                    subnav 3
+                    <Icon type="setting" />
+                    설정
                   </span>
                 }
               >
-                <Menu.Item key="9">option9</Menu.Item>
-                <Menu.Item key="10">option10</Menu.Item>
+                  <Menu.Item key="3">시간 설정</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '12px 0' }}>
-              <Breadcrumb.Item href="/antd">Home</Breadcrumb.Item>
-              <Breadcrumb.Item>TiimeLine</Breadcrumb.Item>
+              <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
               <Button onClick={ButtonTest} type="danger">
                 danger
               </Button>
@@ -131,12 +144,13 @@ export default class App extends React.Component {
               }}
             >
               {/* TO do list */}
+              {/* 입력 끝났을 때 처리 */}
               <h3>To do</h3>
               <InputTodo></InputTodo>
               {/* after timer */}
-              <br/>
-              <br/>
-              <br/>
+              <br />
+              <br />
+              <br />
               <h3>Done</h3>
               <InputDone></InputDone>
             </Content>

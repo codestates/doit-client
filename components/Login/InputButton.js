@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Router from 'next/router';
 
-const Main = styled.div`
+const Main = styled.form`
   position: relative;
   top: 200px;
   width: 350px;
@@ -34,7 +34,7 @@ const Btn = styled.button`
 `;
 
 const LoginHandler = () => {
-  Router.push('/layout');
+  Router.push('/antd');
 };
 
 const Inputs = () => {
@@ -42,7 +42,7 @@ const Inputs = () => {
     <Main>
       <InputEmail />
       <InputPassword />
-      <Btn  onClick={() => LoginHandler()}>
+      <Btn className='btn btn-outline-primary'  onClick={() => LoginHandler()}>
         Login
       </Btn>
     </Main>

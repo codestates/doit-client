@@ -25,8 +25,8 @@ const Button = styled.button`
 
 const Home = () => (
   <Main>
-    <Link href="/login">
-      <Button >Do it!</Button>
+    <Link href="/antd">
+      <Button className='btn btn-primary' >Do it!</Button>
     </Link>
   </Main>
 );

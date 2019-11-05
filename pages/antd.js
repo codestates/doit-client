@@ -1,10 +1,31 @@
 import * as React from 'react';
 import stylesheet from 'antd/dist/antd.min.css';
+import styled from 'styled-components';
 import Link from 'next/link';
 import { Layout, Menu, Breadcrumb, Icon, Button } from 'antd';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
+const InputTodo = styled.input.attrs({
+  placeholder: '할 일을 입력해주세요'
+})`
+  position: relative;
+  top: 3px;
+  height: 45px;
+  width: 350px;
+  font-size: 2rem;
+`;
+
+const InputDone = styled.input.attrs({
+  placeholder: '한 일을 입력해주세요'
+})`
+  position: relative;
+  top: 3px;
+  height: 45px;
+  width: 350px;
+  font-size: 2rem;
+`;
 
 const ButtonTest = () => {
   console.log('a');
@@ -34,8 +55,13 @@ export default class App extends React.Component {
             defaultSelectedKeys={['2']}
             style={{ lineHeight: '64px' }}
           >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
+            <Menu.Item key="1">
+              <span>
+                <Icon type="user" />
+                user
+              </span>
+            </Menu.Item>
+            <Menu.Item key="2">History</Menu.Item>
             <Menu.Item key="3">
               <Link href="/login">Login</Link>
             </Menu.Item>
@@ -91,8 +117,7 @@ export default class App extends React.Component {
           <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '12px 0' }}>
               <Breadcrumb.Item href="/antd">Home</Breadcrumb.Item>
-              <Breadcrumb.Item href="/history">History</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
+              <Breadcrumb.Item>TiimeLine</Breadcrumb.Item>
               <Button onClick={ButtonTest} type="danger">
                 danger
               </Button>
@@ -105,7 +130,15 @@ export default class App extends React.Component {
                 minHeight: 280
               }}
             >
-              Content
+              {/* TO do list */}
+              <h3>To do</h3>
+              <InputTodo></InputTodo>
+              {/* after timer */}
+              <br/>
+              <br/>
+              <br/>
+              <h3>Done</h3>
+              <InputDone></InputDone>
             </Content>
           </Layout>
         </Layout>

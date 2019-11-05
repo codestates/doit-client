@@ -1,11 +1,12 @@
 import * as React from 'react';
-import stylesheet from 'antd/dist/antd.min.css';
-import styled from 'styled-components';
-import Link from 'next/link';
-import { Layout, Menu, Breadcrumb, Icon, Button } from 'antd';
+
+import { Layout, Menu, Breadcrumb, Icon, Button, Col } from 'antd';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const InputTodo = styled.input.attrs({
   placeholder: '할 일을 입력해주세요'
@@ -35,7 +36,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Layout>
-        <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
+        {/* <style dangerouslySetInnerHTML={{ __html: stylesheet }} /> */}
+        {/* styled component */}
         <style jsx>{`
           #components-layout-demo-top-side-2 .logo {
             width: 120px;
@@ -52,7 +54,7 @@ export default class App extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={['2']}
+            // defaultSelectedKeys={['2']}
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key="1">
@@ -61,13 +63,21 @@ export default class App extends React.Component {
                 user
               </span>
             </Menu.Item>
-            <Menu.Item key="2">History</Menu.Item>
+            <Menu.Item key="2">
+              <Icon type="hourglass" />
+              History
+            </Menu.Item>
             <Menu.Item key="3">
+              <Icon type="setting" />
+              Setting
+            </Menu.Item>
+            <Menu.Item key="4">
               <Link href="/login">Login</Link>
             </Menu.Item>
           </Menu>
         </Header>
         <Layout>
+          {/* 1. col로 바꾼다 */}
           <Sider width={450} style={{ background: '#fff', height: '600px' }}>
             <Menu
               theme="dark"
@@ -76,6 +86,7 @@ export default class App extends React.Component {
               // defaultOpenKeys={['sub1']}
               style={{ height: '100%' }}
             >
+              {/* 2.사이즈를 강제하는 걸 알아본다 */}
               <SubMenu
                 key="sub1"
                 title={
@@ -100,19 +111,28 @@ export default class App extends React.Component {
               </Menu.Item>
               <div
                 style={{
-                  fontSize: '3rem',
+                  fontSize: '5rem',
                   textAlign: 'center'
                 }}
               >
                 <h1 style={{ color: 'white' }}>
-                  {/* 시간을 설정 할 수 있다 
+                  {/* 
+                우선순위 최하 layout을 80%는 끝내고 진행
+                기본시간은 60분이다.
                 스타트를 하는 동안에는 시간을 설정 할 수 없다.
-                리셋을 하면 60분이 된다.*/}
+                스타트를 하면 pause로 버튼이 바뀐다.
+                시간을 시간설정에서 설정 할 수 있다 
+                리셋을 하면 60분이 된다.
+                60분을 마치면 완료와 함께 complete과 함께 메시지 입력이 가능하다
+                */}
                   60:00
                 </h1>
                 <h2 style={{ textAlign: 'center' }}>
-                  <Button className="btn btn-primary mx-2">start</Button>
-                  <Button className="btn btn-primary mx-2">reset</Button>
+                  {/* 3. 사이즈 연구 */}
+
+                  <br />
+                  <Button>start</Button>
+                  <Button>reset</Button>
                 </h2>
               </div>
               <SubMenu
@@ -124,7 +144,7 @@ export default class App extends React.Component {
                   </span>
                 }
               >
-                  <Menu.Item key="3">시간 설정</Menu.Item>
+                <Menu.Item key="3">시간 설정</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>

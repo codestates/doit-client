@@ -25,7 +25,7 @@ const Button = styled.button`
 
 const Home = () => (
   <Main>
-    <Link href="/antd">
+    <Link href="/timer">
       <Button className='btn btn-primary' >Do it!</Button>
     </Link>
   </Main>

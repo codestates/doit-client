@@ -18,7 +18,7 @@ const Logo = () => {
     <div>
       <Link href="/">
         <Main>
-          <span className='text-primary'  style={{ cursor: 'pointer' }}>
+          <span  style={{ cursor: 'pointer' }}>
             Do it!
           </span>
         </Main>

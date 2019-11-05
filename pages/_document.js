@@ -2,6 +2,9 @@ import Document, { Head, Main, NextScript } from 'next/document';
 // Import styled components ServerStyleSheet
 import { ServerStyleSheet } from 'styled-components';
 
+// ant design 템플릿을 위해 글로벌하게 뿌려준다
+import stylesheet from 'antd/dist/antd.min.css';
+
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     // Step 1: Create an instance of ServerStyleSheet
@@ -23,15 +26,10 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
           <title>My page</title>
           {/* Step 5: Output the styles in the head  */}
           {this.props.styleTags}
-          <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-            crossOrigin="anonymous"
-          />
         </Head>
         <body>
           <Main />

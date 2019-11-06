@@ -4,6 +4,7 @@ import InputButton from '../components/Login/InputButton';
 import Sign from '../components/Login/Sign';
 
 const login = props => {
+  console.log('test', process.env.GOOGLE_LOGIN_API)
   return (
     <div>
       <Logo />

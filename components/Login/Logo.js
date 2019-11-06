@@ -9,7 +9,7 @@ const Main = styled.div`
   height: 100px;
   width: 100%;
   font-size: 3.2rem;
-  color: black;
+  color: #0275d8;
   text-align: center;
 `;
 
@@ -18,9 +18,7 @@ const Logo = () => {
     <div>
       <Link href="/">
         <Main>
-          <span  style={{ cursor: 'pointer' }}>
-            Do it!
-          </span>
+          <span style={{ cursor: 'pointer' }}>Do it!</span>
         </Main>
       </Link>
     </div>

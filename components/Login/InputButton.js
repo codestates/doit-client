@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Router from 'next/router';
 
-
 const Main = styled.form`
   position: relative;
   top: 200px;
@@ -43,9 +42,7 @@ const Inputs = () => {
     <Main>
       <InputEmail />
       <InputPassword />
-      <Btn onClick={() => LoginHandler()}>
-        Login
-      </Btn>
+      <Btn onClick={() => LoginHandler()}>Login</Btn>
     </Main>
   );
 };

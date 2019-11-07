@@ -3,36 +3,30 @@ import styled from 'styled-components';
 import * as timerState from '../timerStates';
 
 const Button = styled.button`
-  padding: 20px;
-  margin: 5px;
+  margin: 0 8px;
 `;
 
 const TimerButton = props => {
-  //추가 및 수정 작업
-  const getButton = () => {
-    if (props.timerState === timerState.NOT_SET)
-      return (
+  return (
+    <div className="row">
+      {props.timerState === timerState.NOT_SET ? (
         <div>
-          <button onClick={props.startTimer}>Start</button>
-          <button onClick={props.resetTimer}>reset</button>
+          <Button onClick={props.startTimer}>Start</Button>
+          <Button onClick={props.resetTimer}>reset</Button>
         </div>
-      );
-    if (props.timerState === timerState.RUNNING)
-      return (
+      ) : props.timerState === timerState.RUNNING ? (
         <div>
-          <button onClick={props.stopTimer}>pause</button>
-          <button onClick={props.resetTimer}>reset</button>
+          <Button onClick={props.stopTimer}>pause</Button>
+          <Button onClick={props.resetTimer}>reset</Button>
         </div>
-      );
-    if (props.timerState === timerState.COMPLETE)
-      return (
+      ) : (
         <div>
-          <button onClick={props.startTimer}>Start</button>
-          <button onClick={props.stopTimer}>reset</button>
+          <Button onClick={props.startTimer}>Start</Button>
+          <Button onClick={props.stopTimer}>reset</Button>
         </div>
-      );
-  };
-  return <div className="row">{getButton()}</div>;
+      )}
+    </div>
+  );
 };
 
 export default TimerButton;

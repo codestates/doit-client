@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import * as timerState from './timerStates';
-import Title from './Title';
+// import TimerHeader from './TimerHeader';
 import TimerDisplay from './TimerDisplay/TimerDisplay';
 import TimerButton from './TimerButton/TimerButton';
 import TimerSetting from './TimerSetting/TimerSetting';
@@ -92,7 +92,7 @@ class Timer extends Component {
   render() {
     return (
       <div>
-        <Title />
+        {/* <TimerHeader /> */}
         <TimerDisplay currentTime={this.state.currentTime} />
         <TimerButton
           startTimer={this.startTimer}
@@ -100,7 +100,7 @@ class Timer extends Component {
           resetTimer={this.resetTimer}
           timerState={this.state.timerState}
         />
-
+        {/* 타이머 셋팅을 다른 부분에 어떻게 옮길까?*/}
         <TimerSetting
           baseTime={this.state.baseTime}
           setBaseTime={this.setBaseTime}

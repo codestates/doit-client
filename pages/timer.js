@@ -7,6 +7,7 @@ const { Header, Content, Sider } = Layout;
 
 import styled from 'styled-components';
 import Link from 'next/link';
+import Timer from '../components/Timer';
 
 const InputTodo = styled.input.attrs({
   placeholder: '할 일을 입력해주세요'

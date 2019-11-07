@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import Timer from '../components/Timer';
 const Main = styled.div`
   margin: auto;
-  height: 500px;
-  width: 700px;
+  height: auto;
+  width: 350px;
   text-align: center;
   border: 3px solid coral;
+  color: blue;;
 `;
 
 const clock = () => (

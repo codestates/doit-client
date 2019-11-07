@@ -17,7 +17,8 @@ const InputEmail = styled.input.attrs({ placeholder: '이메일을 입력해주�
 `;
 
 const InputPassword = styled.input.attrs({
-  placeholder: '비밀번호를 입력해주세요'
+  placeholder: '비밀번호를 입력해주세요',
+  type: 'password'
 })`
   position: relative;
   top: 3px;

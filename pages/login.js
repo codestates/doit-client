@@ -1,7 +1,7 @@
 import React from 'react';
-import Logo from '../components/Login/Logo';
-import InputButton from '../components/Login/InputButton';
-import Sign from '../components/Login/Sign';
+import Logo from '../components/LoginSign/Logo';
+import InputButton from '../components/LoginSign/InputButton';
+import SignGoogle from '../components/LoginSign/SignGoogle';
 
 const login = props => {
   console.log('test', process.env.GOOGLE_LOGIN_API)
@@ -9,7 +9,7 @@ const login = props => {
     <div>
       <Logo />
       <InputButton />
-      <Sign />
+      <SignGoogle />
     </div>
   );
 };

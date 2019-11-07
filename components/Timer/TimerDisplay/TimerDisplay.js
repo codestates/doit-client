@@ -1,13 +1,12 @@
 import React from 'react';
 
-
 const leftPad = val => {
   if (val < 10) return `0${val}`;
 
   return `${val}`;
 };
 
-const TimerDisplay = (props) => {
+const TimerDisplay = props => {
   return (
     <div>
       <h2>

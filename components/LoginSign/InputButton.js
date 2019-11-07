@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Router from 'next/router';
 
-const Main = styled.form`
+const Main = styled.div`
   position: relative;
   top: 200px;
   width: 350px;
@@ -23,18 +23,22 @@ const InputPassword = styled.input.attrs({
   top: 3px;
   height: 45px;
   width: 350px;
+  margin-bottom: 20px;
 `;
 
 const Btn = styled.button`
   position: relative;
   top: 0px;
-  margin-top: 20px;
   height: 45px;
   width: 350px;
+  margin-bottom: 5px;
 `;
 
-const LoginHandler = () => {
+const loginHandler = () => {
   Router.push('/timer');
+};
+const signHandler = () => {
+  Router.push('/sign');
 };
 
 const Inputs = () => {
@@ -42,7 +46,8 @@ const Inputs = () => {
     <Main>
       <InputEmail />
       <InputPassword />
-      <Btn onClick={() => LoginHandler()}>Login</Btn>
+      <Btn onClick={() => loginHandler()}>Login</Btn>
+      <Btn onClick={() => signHandler()}>Sign</Btn>
     </Main>
   );
 };

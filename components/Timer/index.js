@@ -12,8 +12,8 @@ class Timer extends Component {
     this.state = {
       // 초기 설정이 저장이 되어야함
       // moment 말고 다른 대안을 찾아도 좋을 듯
-      currentTime: moment.duration(1, 'minutes'),
-      baseTime: moment.duration(1, 'minutes'),
+      currentTime: moment.duration(45, 'minutes'),
+      baseTime: moment.duration(45, 'minutes'),
       timerState: timerState.NOT_SET,
       timer: null
     };

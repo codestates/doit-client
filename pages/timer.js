@@ -123,19 +123,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-// import { Breadcrumb, Icon } from 'antd';
-
-// ReactDOM.render(
-//   <Breadcrumb>
-//     <Breadcrumb.Item href="">
-//       <Icon type="home" />
-//     </Breadcrumb.Item>
-//     <Breadcrumb.Item href="">
-//       <Icon type="user" />
-//       <span>Application List</span>
-//     </Breadcrumb.Item>
-//     <Breadcrumb.Item>Application</Breadcrumb.Item>
-//   </Breadcrumb>,
-//   mountNode,
-// );

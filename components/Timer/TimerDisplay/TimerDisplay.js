@@ -1,9 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const Display = styled.p`
-  color: blue;
-`;
 
 const leftPad = val => {
   if (val < 10) return `0${val}`;
@@ -11,15 +7,15 @@ const leftPad = val => {
   return `${val}`;
 };
 
-const TimerDisplay = props => {
+const TimerDisplay = (props) => {
   return (
     <div>
-      <Display>
+      <h2>
         {`${leftPad(props.currentTime.get('hours'))}:${leftPad(
           props.currentTime.get('minutes')
         )}:
           ${leftPad(props.currentTime.get('seconds'))}`}
-      </Display>
+      </h2>
     </div>
   );
 };

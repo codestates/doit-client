@@ -2,23 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 
-const Main = styled.div`
-  width: auto;
-  height: 150px;
-  text-align: left;
-  font-size: 1.5rem;
-  border: 2px solid coral;
+const MyModal = styled.div`
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const SubDiv = styled.div`
-  margin-left: 50px;
-  margin-bottom: 10px;
-`;
-const Input = styled.input`
-  margin-left: 40px;
-  height: 20px;
+
+const Content = styled.div`
+  background: white;
+  padding: 1rem;
+  width: 400px;
+  height: auto;
 `;
 
 const TimerSetting = props => {
+  const onClose = e => {
+    props.onClose && props.onClose(e);
+  };
+
+  if (!props.show) {
+    return null;
+  }
   const handleChange = e => {
     let newBaseTime = props.baseTime;
 
@@ -39,41 +49,52 @@ const TimerSetting = props => {
   };
 
   return (
-    <Main>
-      <SubDiv>
-        <label>Hours</label>
-        <Input
-          id="hours"
-          type="number"
-          min="0"
-          max="2"
-          defaultValue={props.baseTime.get('hours')}
-          onChange={handleChange}
-        />
-      </SubDiv>
-      <SubDiv>
-        <label>Minutes</label>
-        <Input
-          id="minutes"
-          type="number"
-          min="0"
-          max="60"
-          defaultValue={props.baseTime.get('minutes')}
-          onChange={handleChange}
-        />
-      </SubDiv>
-      <SubDiv>
-        <label>Seconds</label>
-        <Input
-          id="seconds"
-          type="number"
-          min="0"
-          max="59"
-          defaultValue={props.baseTime.get('seconds')}
-          onChange={handleChange}
-        />
-      </SubDiv>
-    </Main>
+    <MyModal>
+      <Content>
+        <div>
+          <label>Hours</label>
+          <input
+            id="hours"
+            type="number"
+            min="0"
+            max="10"
+            defaultValue={props.baseTime.get('hours')}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Minutes</label>
+          <input
+            id="minutes"
+            type="number"
+            min="0"
+            max="60"
+            defaultValue={props.baseTime.get('minutes')}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Seconds</label>
+          <input
+            id="seconds"
+            type="number"
+            min="0"
+            max="59"
+            defaultValue={props.baseTime.get('seconds')}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <button
+            onClick={e => {
+              onClose(e);
+            }}
+          >
+            Close
+          </button>
+        </div>
+      </Content>
+    </MyModal>
   );
 };
 

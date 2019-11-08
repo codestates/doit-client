@@ -110,31 +110,8 @@ export default class App extends React.Component {
                 <Icon type="clock-circle" />
                 timer
               </Menu.Item>
-              <div
-                style={{
-                  fontSize: '5rem',
-                  textAlign: 'center'
-                }}
-              >
-                <h1 style={{ color: 'white' }}>
-                  {/* 
-                우선순위 최하 layout을 80%는 끝내고 진행
-                기본시간은 60분이다.
-                스타트를 하는 동안에는 시간을 설정 할 수 없다.
-                스타트를 하면 pause로 버튼이 바뀐다.
-                시간을 시간설정에서 설정 할 수 있다 
-                리셋을 하면 60분이 된다.
-                60분을 마치면 완료와 함께 complete과 함께 메시지 입력이 가능하다
-                */}
-                  60:00
-                </h1>
-                <h2 style={{ textAlign: 'center' }}>
-                  {/* 3. 사이즈 연구 */}
-
-                  <br />
-                  <Button>start</Button>
-                  <Button>reset</Button>
-                </h2>
+              <div style={{ textAlign: 'center' }}>
+                <Timer />
               </div>
               <SubMenu
                 key="sub3"

@@ -6,7 +6,6 @@ const Main = styled.div`
   height: auto;
   width: 350px;
   text-align: center;
-  border: 3px solid coral;
   color: blue;;
 `;
 

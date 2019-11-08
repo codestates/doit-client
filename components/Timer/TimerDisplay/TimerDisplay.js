@@ -10,7 +10,8 @@ const leftPad = val => {
 const TimerDisplay = (props) => {
   return (
     <div>
-      <h2>
+      {/* 색깔을 바꾸기 위함 */}
+      <h2 style={{color: 'white', fontSize: '3.5rem', margin: '40px 0px'}}>
         {`${leftPad(props.currentTime.get('hours'))}:${leftPad(
           props.currentTime.get('minutes')
         )}:

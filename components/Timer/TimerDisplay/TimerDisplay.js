@@ -10,12 +10,11 @@ const leftPad = val => {
 const TimerDisplay = (props) => {
   return (
     <div>
-      {/* 색깔을 바꾸기 위함 */}
-      <h2 style={{color: 'white', fontSize: '3.5rem', margin: '40px 0px'}}>
+      {/* timer 페이지에서 색깔을 바꾸기 위함 */}
+      <h2 style={{color: 'white', fontSize: '4.5rem', margin: '80px 0px'}}>
         {`${leftPad(props.currentTime.get('hours'))}:${leftPad(
           props.currentTime.get('minutes')
-        )}:
-          ${leftPad(props.currentTime.get('seconds'))}`}
+        )}:${leftPad(props.currentTime.get('seconds'))}`}
       </h2>
     </div>
   );

@@ -4,8 +4,7 @@ import * as timerState from '../timerStates';
 
 import TimerSetting from '../timerSetting/TimerSetting';
 // 버튼 색깔이 안 나오는 문제
-import { Button } from 'antd';
-
+import { Button, Row } from 'antd';
 
 const TimerButton = props => {
   const [show, setShow] = useState(false);
@@ -16,8 +15,16 @@ const TimerButton = props => {
   return (
     <div>
       {props.timerState === timerState.NOT_SET ? (
-        <div>
-          <Button onClick={() => showSetting()}>Setting</Button>
+        <Row>
+          <Button type="primary" onClick={props.startTimer}>
+            Start
+          </Button>
+          <Button type="danger" onClick={props.resetTimer}>
+            reset
+          </Button>
+          <Button type="link" onClick={() => showSetting()}>
+            Setting
+          </Button>
           <TimerSetting
             onClose={showSetting}
             show={show}
@@ -25,12 +32,18 @@ const TimerButton = props => {
             setBaseTime={props.setBaseTime}
           />{' '}
           <TimerSetting />
-          <Button onClick={props.startTimer}>Start</Button>
-          <Button onClick={props.resetTimer}>reset</Button>
-        </div>
+        </Row>
       ) : props.timerState === timerState.RUNNING ? (
-        <div>
-          <Button onClick={() => showSetting()}>Setting</Button>
+        <Row>
+          <Button type="primary" onClick={props.stopTimer}>
+            pause
+          </Button>
+          <Button type="danger" onClick={props.resetTimer}>
+            reset
+          </Button>
+          <Button type="link" onClick={() => showSetting()}>
+            Setting
+          </Button>
           <TimerSetting
             onClose={showSetting}
             show={show}
@@ -38,12 +51,18 @@ const TimerButton = props => {
             setBaseTime={props.setBaseTime}
           />{' '}
           <TimerSetting />
-          <Button onClick={props.stopTimer}>pause</Button>
-          <Button onClick={props.resetTimer}>reset</Button>
-        </div>
+        </Row>
       ) : (
-        <div>
-          <Button onClick={() => showSetting()}>Setting</Button>
+        <Row>
+          <Button type="primary" onClick={props.startTimer}>
+            Start
+          </Button>
+          <Button type="danger" onClick={props.stopTimer}>
+            reset
+          </Button>
+          <Button type="link" onClick={() => showSetting()}>
+            Setting
+          </Button>
           <TimerSetting
             onClose={showSetting}
             show={show}
@@ -51,9 +70,7 @@ const TimerButton = props => {
             setBaseTime={props.setBaseTime}
           />{' '}
           <TimerSetting />
-          <Button onClick={props.startTimer}>Start</Button>
-          <Button onClick={props.stopTimer}>reset</Button>
-        </div>
+        </Row>
       )}
     </div>
   );

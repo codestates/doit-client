@@ -55,6 +55,7 @@ const submitHandler = async (nick, id, pin) => {
   }).then(
     response => {
       // response 처리해야 함
+      console.log(response)
       Router.push('/login');
     },
     error => {

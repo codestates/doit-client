@@ -45,7 +45,7 @@ const pinHandler = init => {
 const submitHandler = async (nick, id, pin) => {
   await axios({
     method: 'post',
-    url: 'http://localhost:8085/api/user/signup',
+    url: 'http://15.164.163.120:8085/api/user/signup',
     headers: {},
     data: {
       email: id,
@@ -54,9 +54,11 @@ const submitHandler = async (nick, id, pin) => {
     }
   }).then(
     response => {
+      // response 처리해야 함
       Router.push('/login');
     },
     error => {
+      console.log(error)
       alert('중복되는 아이디입니다.');
     }
   );

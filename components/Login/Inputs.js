@@ -19,13 +19,6 @@ const Container = styled.div`
   margin-top: 10px;
 `;
 
-const loginHandler = () => {
-  Router.push('/timer');
-};
-const signHandler = () => {
-  Router.push('/sign');
-};
-
 const idHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
@@ -47,10 +40,18 @@ const pinHandler = init => {
   return { value, onChange };
 };
 
-const submitHandler = async (id, pin) => {
+const loginHandler = async (id, pin) => {
+  if (!id && !pin) {
+    alert('정보 입력 부탁해요');
+    return;
+  }
+  if (!pin) {
+    alert('password 입력 부탁해요');
+    return;
+  }
   await axios({
     method: 'post',
-    url: 'http://localhost:8085/api/user/login',
+    url: 'http://15.164.163.120:8085/api/user/login',
     headers: {},
     data: {
       email: id,
@@ -59,12 +60,17 @@ const submitHandler = async (id, pin) => {
   }).then(
     response => {
       // response 처리해야 함
-      Router.push('/timer');
+      console.log(response);
+      // Router.push('/timer');
     },
     error => {
       alert('잘못된 정보입니다.');
     }
   );
+};
+
+const signHandler = () => {
+  Router.push('/sign');
 };
 
 const Inputs = () => {
@@ -88,7 +94,7 @@ const Inputs = () => {
         {...usePin}
       />
       <Container>
-        <Button type="primary" onClick={() => submitHandler(id, pin)}>
+        <Button type="primary" onClick={() => loginHandler(id, pin)}>
           Login
         </Button>
       </Container>

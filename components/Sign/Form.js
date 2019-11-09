@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Router from 'next/router';
 import axios from 'axios';
+
+// 훅을 이렇게 까지 써야할까?
 
 const FormBox = styled.div`
   position: relative;
@@ -42,10 +45,7 @@ const pinHandler = init => {
 };
 
 const submitHandler = async (userNick, id, pin) => {
-  console.log(userNick, id, pin);
-  //   axios ? post
-
-  const test = await axios({
+  const check = await axios({
     method: 'post',
     url: 'http://localhost:8085/api/user/signup',
     headers: {},
@@ -55,7 +55,11 @@ const submitHandler = async (userNick, id, pin) => {
       password: pin
     }
   });
-  console.log(test);
+  console.log(check);
+  if (check.status === 200) {
+    Router.push('/timer')
+  }
+  // 실패시?
 };
 const From = () => {
   let useNick = nickHandler('');

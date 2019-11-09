@@ -7,9 +7,8 @@ import axios from 'axios';
 const FormBox = styled.div`
   position: relative;
   height: auto;
-  width: auto;
-  margin: 250px;
-  border: 1px solid coral;
+  width: 300px;
+  margin: 240px auto;
 `;
 
 const nickHandler = init => {
@@ -44,8 +43,7 @@ const pinHandler = init => {
 };
 
 const submitHandler = async (nick, id, pin) => {
-  console.log(nick, id, pin);
-  const check = await axios({
+  await axios({
     method: 'post',
     url: 'http://localhost:8085/api/user/signup',
     headers: {},
@@ -54,12 +52,14 @@ const submitHandler = async (nick, id, pin) => {
       nickname: nick,
       password: pin
     }
-  });
-  console.log(check);
-  if (check.status === 200) {
-    Router.push('/timer');
-  }
-  // 실패시?
+  }).then(
+    response => {
+      Router.push('/login');
+    },
+    error => {
+      alert('중복되는 아이디입니다.');
+    }
+  );
 };
 const Inputs = () => {
   let useNick = nickHandler('');
@@ -73,13 +73,26 @@ const Inputs = () => {
     <FormBox>
       <Form>
         <Form.Item label="닉네임">
-          <Input {...useNick} />
+          <Input
+            prefix={<Icon type="smile" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="nickname"
+            {...useNick}
+          />
         </Form.Item>
         <Form.Item label="아이디">
-          <Input {...useId} />
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="e-mail"
+            {...useId}
+          />
         </Form.Item>
         <Form.Item label="비밀번호">
-          <Input {...usePin} type='password' />
+          <Input
+            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="password"
+            {...usePin}
+            type="password"
+          />
         </Form.Item>
         <Button onClick={() => submitHandler(nick, id, pin)}>완료</Button>
       </Form>

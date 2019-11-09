@@ -1,16 +1,24 @@
 import React from 'react';
 import Logo from '../components/Login/Logo';
-import InputButton from '../components/Login/InputButton';
+import Inputs from '../components/Login/Inputs';
 import SignGoogle from '../components/Login/SignGoogle';
 
+import styled from 'styled-components';
+
+const Layout = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(241 242 245);
+`;
+
 const login = props => {
-  console.log('test', process.env.GOOGLE_LOGIN_API)
   return (
-    <div>
+    <Layout>
       <Logo />
-      <InputButton />
+      <Inputs />
       <SignGoogle />
-    </div>
+    </Layout>
   );
 };
 

@@ -9,9 +9,8 @@ const sign = props => {
   return (
     <Layout>
       <Logo />
-      <Content>
-        <Form />
-      </Content>
+
+      <Form />
     </Layout>
   );
 };

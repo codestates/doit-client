@@ -8,7 +8,6 @@ const Main = styled.div`
   top: 25px;
   height: 100px;
   width: 100%;
-  font-size: 3.2rem;
   color: #0275d8;
   text-align: center;
 `;
@@ -17,9 +16,10 @@ const Logo = () => {
   return (
     <div>
       <Main>
-        <Link href='/'>
-          <a style={{ cursor: 'pointer' }}>Do it</a>
+        <Link href="/">
+          <a style={{ cursor: 'pointer', fontSize: '3.2rem' }}>Do it</a>
         </Link>
+        <h2 style={{marginTop: '60px'}}>회원가입 페이지</h2>
       </Main>
     </div>
   );

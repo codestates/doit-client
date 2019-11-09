@@ -1,11 +1,15 @@
 import React from 'react';
+import Logo from '../components/Sign/Logo';
+import Form from '../components/Sign/Form';
 
-const sign = () => {
-    return (
-        <div>
-            sign 페이지입니다.
-        </div>
-    );
+const sign = props => {
+  console.log(props);
+  return (
+    <div>
+      <Logo />
+      <Form />
+    </div>
+  );
 };
 
 export default sign;

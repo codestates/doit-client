@@ -17,7 +17,9 @@ const Logo = () => {
   return (
     <div>
       <Main>
-        <span style={{ cursor: 'pointer' }}>회원가입</span>
+        <Link href='/'>
+          <a style={{ cursor: 'pointer' }}>Do it</a>
+        </Link>
       </Main>
     </div>
   );

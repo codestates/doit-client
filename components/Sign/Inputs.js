@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
+import { Form, Col, Row, Icon, Button, Input } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
 import axios from 'axios';
 
-// 훅을 이렇게 까지 써야할까?
-
 const FormBox = styled.div`
   position: relative;
-  height: 200px;
+  height: auto;
   width: auto;
   margin: 250px;
   border: 1px solid coral;
@@ -44,24 +43,25 @@ const pinHandler = init => {
   return { value, onChange };
 };
 
-const submitHandler = async (userNick, id, pin) => {
+const submitHandler = async (nick, id, pin) => {
+  console.log(nick, id, pin);
   const check = await axios({
     method: 'post',
     url: 'http://localhost:8085/api/user/signup',
     headers: {},
     data: {
       email: id,
-      nickname: userNick,
+      nickname: nick,
       password: pin
     }
   });
   console.log(check);
   if (check.status === 200) {
-    Router.push('/timer')
+    Router.push('/timer');
   }
   // 실패시?
 };
-const From = () => {
+const Inputs = () => {
   let useNick = nickHandler('');
   let nick = useNick.value;
   let useId = idHandler('');
@@ -71,29 +71,20 @@ const From = () => {
 
   return (
     <FormBox>
-      <form>
-        <div>
-          <label>닉네임</label>
-          <input {...useNick}></input>
-        </div>
-        <div>
-          <label>아이디</label>
-          <input {...useId}></input>
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input {...usePin}></input>
-        </div>
-      </form>
-      <div>
-        <input
-          type="submit"
-          value="완료"
-          onClick={() => submitHandler(nick, id, pin)}
-        />
-      </div>
+      <Form>
+        <Form.Item label="닉네임">
+          <Input {...useNick} />
+        </Form.Item>
+        <Form.Item label="아이디">
+          <Input {...useId} />
+        </Form.Item>
+        <Form.Item label="비밀번호">
+          <Input {...usePin} type='password' />
+        </Form.Item>
+        <Button onClick={() => submitHandler(nick, id, pin)}>완료</Button>
+      </Form>
     </FormBox>
   );
 };
 
-export default From;
+export default Inputs;

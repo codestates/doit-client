@@ -1,11 +1,10 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import Link from 'next/link';
-import Timer from '../components/Timer';
-import { Layout, Menu, Breadcrumb, Icon, Button, Input, Col } from 'antd';
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
 
+import { Layout, Menu, Breadcrumb, Icon, Button, Input, Col } from 'antd';
+import styled from 'styled-components';
+const { Header, Content, Sider } = Layout;
+// const { SubMenu } = Menu;
 // const InputTodo = styled.input.attrs({
 //   placeholder: '할 일을 입력해주세요'
 // })`
@@ -91,7 +90,7 @@ export default class App extends React.Component {
                 timer
               </Menu.Item>
               <div style={{ textAlign: 'center' }}>
-                <Timer />
+                
               </div>
             </Menu>
           </Sider>

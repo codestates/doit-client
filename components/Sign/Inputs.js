@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Icon, Button, Input } from 'antd';
+import { Form, Icon, Button, Input } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
 import axios from 'axios';
@@ -55,11 +55,11 @@ const submitHandler = async (nick, id, pin) => {
   }).then(
     response => {
       // response 처리해야 함
-      console.log(response)
+      console.log(response);
       Router.push('/login');
     },
     error => {
-      console.log(error)
+      console.log(error);
       alert('중복되는 아이디입니다.');
     }
   );

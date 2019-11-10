@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
-          <title>My page</title>
+        
           {/* Step 5: Output the styles in the head  */}
           {this.props.styleTags}
           

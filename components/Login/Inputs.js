@@ -64,6 +64,7 @@ const loginHandler = async (id, pin) => {
       // Router.push('/timer');
     },
     error => {
+      console.log(error);
       alert('잘못된 정보입니다.');
     }
   );
@@ -90,7 +91,6 @@ const Inputs = () => {
         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
         placeholder="password"
         type="password"
-        s
         {...usePin}
       />
       <Container>

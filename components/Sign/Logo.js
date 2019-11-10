@@ -19,7 +19,7 @@ const Logo = () => {
         <Link href="/">
           <a style={{ cursor: 'pointer', fontSize: '3.2rem' }}>Do it</a>
         </Link>
-        <h2 style={{marginTop: '60px'}}>회원가입 페이지</h2>
+        <h2 style={{ marginTop: '60px' }}>회원가입 페이지</h2>
       </Main>
     </div>
   );

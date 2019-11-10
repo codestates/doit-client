@@ -16,11 +16,11 @@ const Main = styled.div`
 const Logo = () => {
   return (
     <div>
-      <Link href="/">
-        <Main>
+      <Main>
+        <Link href="/">
           <span style={{ cursor: 'pointer' }}>Do it!</span>
-        </Main>
-      </Link>
+        </Link>
+      </Main>
     </div>
   );
 };

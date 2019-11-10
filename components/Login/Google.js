@@ -13,10 +13,11 @@ const responseGoogle = response => {
 };
 
 const Google = () => {
+  console.log('test', process.env.GOOGLE_LOGIN_API);
   return (
     <Container>
       <GoogleLogin
-        clientId="46549852410-4uq3dof4qcmhfrlrif6gr9itr0mdpckb.apps.googleusercontent.com"
+        clientId={process.env}
         buttonText="Goolge 로그인"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography, Col, Row, Form, Button, Input } from 'antd';
 import { DefaultLayout } from '../components/Layout';
+
 import axios from 'axios';
 
 const StyledRow = styled(Row)`
@@ -30,14 +31,21 @@ const StyledButton = styled(Button)`
   font-size: 1.5em;
 `;
 
+const initialState = {
+  timerOn: false,
+  complete: false,
+  toDoText: '',
+  doneText: '',
+  textOn: true
+};
+
 const Timer = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(1);
-  const [timerOn, setTimerOn] = useState(false);
-  const [complete, setComplete] = useState(false);
-  const [toDoText, setTodoText] = useState('');
-  const [doneText, setDoneText] = useState('');
-  const [textOn, setTextOn] = useState(true);
+  const [
+    { timerOn, complete, toDoText, doneText, textOn },
+    setState
+  ] = useState(initialState);
 
   const handleMinutes = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
@@ -58,43 +66,26 @@ const Timer = () => {
       // Todo에 대한 데이터를 업데이트
       if (timerOn === false) {
         // 재시작에 대한 데이터를 업데이트
-        setTimerOn(true);
+        setState({ ...initialState, timerOn: true });
       } else {
         // 멈춤에 대한 데이터를 업데이트
-        setTimerOn(false);
+        setState({ ...initialState, timerOn: false });
       }
     }
   };
 
   const handleTodoText = e => {
-    setTodoText(e.target.value);
-    // axios로 연결 toDoText
+    setState({ ...initialState, toDoText: e.target.value });
   };
 
   const handleDoneText = e => {
-    setDoneText(e.target.value);
+    setState({ ...initialState });
   };
   const handleComplete = () => {
     alert('축하합니다! 완료하셨습니다.!');
-    setMinutes(0);
-    setSeconds(1);
-    setTodoText('');
-    setDoneText('');
-    setTextOn(true);
-    setTimerOn(false);
-    setComplete(false);
-  };
-
-  const resetCheck = () => {
-    console.log(
-      'test: ',
-      minutes,
-      seconds,
-      toDoText,
-      doneText,
-      timerOn,
-      complete
-    );
+    setState({
+      ...initialState
+    });
   };
 
   useEffect(() => {
@@ -103,7 +94,7 @@ const Timer = () => {
         clearInterval(myInterval);
         setMinutes(0);
         setSeconds(0);
-        setTimerOn(false);
+        setState({ ...initialState, timerOn: false });
       } else if (timerOn) {
         if (!seconds) {
           setSeconds(0);
@@ -118,9 +109,9 @@ const Timer = () => {
         if (seconds === 0) {
           if (minutes === 0) {
             clearInterval(myInterval);
-            setTimerOn(false);
-            setTextOn(false);
-            setComplete(true);
+            setState({ ...initialState, timerOn: false });
+            setState({ ...initialState, textOn: false });
+            setState({ ...initialState, complete: true });
             alert('Done에 회고를 작성해주세요.');
           } else {
             setMinutes(minutes - 1);
@@ -139,7 +130,7 @@ const Timer = () => {
     <DefaultLayout>
       <StyledRow type="flex" justify="center">
         <StyledCol>
-          <Form>
+          <Form id="form">
             <Typography.Title level={3}>Timer</Typography.Title>
             <Form.Item style={{ textAlign: 'center' }}>
               <Col span={6} offset={5}>

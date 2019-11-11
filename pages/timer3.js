@@ -30,14 +30,18 @@ const StyledButton = styled(Button)`
   font-size: 1.5em;
 `;
 
+const initValue = {
+  toDoText: '',
+  doneText: ''
+};
+
 const Timer = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(1);
   const [timerOn, setTimerOn] = useState(false);
   const [complete, setComplete] = useState(false);
-  const [toDoText, setTodoText] = useState('');
-  const [doneText, setDoneText] = useState('');
   const [textOn, setTextOn] = useState(true);
+  const [{ toDoText, doneText }, setState] = useState(initValue);
 
   const handleMinutes = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
@@ -67,35 +71,20 @@ const Timer = () => {
   };
 
   const handleTodoText = e => {
-    setTodoText(e.target.value);
+    setState({ ...initValue, toDoText: e.target.value });
     // axios로 연결 toDoText
   };
 
   const handleDoneText = e => {
-    setDoneText(e.target.value);
+    setState({ ...initValue, doneText: e.target.value });
   };
-  const handleComplete = () => {
-    alert('축하합니다! 완료하셨습니다.!');
-    setMinutes(0);
-    setSeconds(1);
-    setTodoText('');
-    setDoneText('');
-    setTextOn(true);
-    setTimerOn(false);
-    setComplete(false);
+  const handleComplete = e => {
+    alert('축하합니다! 완료하셨습니다!');
+
+    setState({ ...initValue, toDoText: '', doneText: '' });
   };
 
-  const resetCheck = () => {
-    console.log(
-      'test: ',
-      minutes,
-      seconds,
-      toDoText,
-      doneText,
-      timerOn,
-      complete
-    );
-  };
+  const handleReset = () => {};
 
   useEffect(() => {
     const myInterval = setInterval(() => {
@@ -139,7 +128,7 @@ const Timer = () => {
     <DefaultLayout>
       <StyledRow type="flex" justify="center">
         <StyledCol>
-          <Form>
+          <Form id="forms">
             <Typography.Title level={3}>Timer</Typography.Title>
             <Form.Item style={{ textAlign: 'center' }}>
               <Col span={6} offset={5}>
@@ -167,9 +156,8 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>ToDo</Typography.Title>
               <Input.TextArea
-                id="todo"
-                rows="3"
                 value={toDoText}
+                rows="3"
                 onChange={handleTodoText}
                 placeholder="할 일을 입력해주세요"
                 disabled={timerOn || !textOn}
@@ -180,9 +168,8 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>Done</Typography.Title>
               <Input.TextArea
-                id="done"
-                rows="3"
                 value={doneText}
+                rows="3"
                 onChange={handleDoneText}
                 placeholder="한 일을 입력해주세요"
                 disabled={textOn}

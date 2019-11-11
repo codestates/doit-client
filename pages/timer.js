@@ -85,18 +85,6 @@ const Timer = () => {
     setComplete(false);
   };
 
-  const resetCheck = () => {
-    console.log(
-      'test: ',
-      minutes,
-      seconds,
-      toDoText,
-      doneText,
-      timerOn,
-      complete
-    );
-  };
-
   useEffect(() => {
     const myInterval = setInterval(() => {
       if (minutes < 0) {
@@ -167,7 +155,6 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>ToDo</Typography.Title>
               <Input.TextArea
-                id="todo"
                 rows="3"
                 value={toDoText}
                 onChange={handleTodoText}
@@ -180,7 +167,6 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>Done</Typography.Title>
               <Input.TextArea
-                id="done"
                 rows="3"
                 value={doneText}
                 onChange={handleDoneText}

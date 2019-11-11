@@ -66,16 +66,40 @@ const Timer = () => {
     }
   };
 
-  const handleTodoText = e => {
+  const handleTodoText = async e => {
     setTodoText(e.target.value);
-    // axios로 연결 toDoText
+
+    // const res = await axios.post(
+    //   'http://localhost:8085/api/todo',
+    //   {
+    //     todoContent: toDoText,
+    //     duration: 25,
+    //     startedAt: Date.now()
+    //   },
+    //   { withCredentials: true }
+    // );
+
+    // console.log(res);
   };
 
   const handleDoneText = e => {
     setDoneText(e.target.value);
   };
-  const handleComplete = () => {
+  const handleComplete = async () => {
     alert('축하합니다! 완료하셨습니다.!');
+
+    const res = await axios.post(
+      'http://localhost:8085/api/todo',
+      {
+        todoContent: toDoText,
+        duration: 25,
+        startedAt: Date.now()
+      },
+      { withCredentials: true }
+    );
+
+    console.log(res);
+
     setMinutes(0);
     setSeconds(1);
     setTodoText('');
@@ -196,5 +220,20 @@ const Timer = () => {
     </DefaultLayout>
   );
 };
+
+// Timer.getInitialProps = async () => {
+//   const res = await fetch('http://15.164.163.120:8085/api/todo', {
+//     method: 'POST',
+//     headers: {},
+//     body: {
+//       todoContent: 'doit todo api 테스트',
+//       duration: 25,
+//       startedAt: Date.now()
+//     }
+//   });
+//   console.log(res);
+
+//   return res;
+// };
 
 export default Timer;

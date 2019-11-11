@@ -49,25 +49,43 @@ const loginHandler = async (id, pin) => {
     alert('password 입력 부탁해요');
     return;
   }
-  await axios({
-    method: 'post',
-    url: 'http://15.164.163.120:8085/api/user/login',
-    headers: {},
-    data: {
-      email: id,
-      password: pin
-    }
-  }).then(
-    response => {
-      // response 처리해야 함
-      console.log(response);
-      // Router.push('/timer');
-    },
-    error => {
-      console.log(error);
-      alert('잘못된 정보입니다.');
-    }
-  );
+  await axios
+    .post(
+      'http://localhost:8085/api/user/login',
+      { email: id, password: pin },
+      { withCredentials: true }
+    )
+    .then(
+      response => {
+        // response 처리해야 함
+        console.log(response);
+        Router.push('/timer');
+      },
+      error => {
+        console.log(error);
+        alert('잘못된 정보입니다.');
+      }
+    );
+
+  // await axios({
+  //   method: 'post',
+  //   url: 'http://localhost:8085/api/user/login',
+  //   headers: {},
+  //   data: {
+  //     email: id,
+  //     password: pin
+  //   }
+  // }).then(
+  //   response => {
+  //     // response 처리해야 함
+  //     console.log(response);
+  //     Router.push('/timer');
+  //   },
+  //   error => {
+  //     console.log(error);
+  //     alert('잘못된 정보입니다.');
+  //   }
+  // );
 };
 
 const signHandler = () => {

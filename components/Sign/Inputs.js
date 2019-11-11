@@ -45,7 +45,7 @@ const pinHandler = init => {
 const submitHandler = async (nick, id, pin) => {
   await axios({
     method: 'post',
-    url: 'http://15.164.163.120:8085/api/user/signup',
+    url: 'http://localhost:8085/api/user/signup',
     headers: {},
     data: {
       email: id,

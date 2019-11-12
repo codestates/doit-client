@@ -32,7 +32,7 @@ const StyledButton = styled(Button)`
 
 const Timer = () => {
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(1);
+  const [seconds, setSeconds] = useState(3);
   const [timerOn, setTimerOn] = useState(false);
   const [complete, setComplete] = useState(false);
   const [toDoText, setTodoText] = useState('');
@@ -51,35 +51,49 @@ const Timer = () => {
     }
   };
 
-  const handleTimerOn = () => {
+  const handleTimerOn = async () => {
+    // start 와 pasuse를 구분하기 위함, 더 나은 코드가 필요할 거 같음
+    let beteweenButton = document.getElementById('test').innerHTML;
+    // axios로부터 아이디값을 받음
+    let userIdTodo, userIdTimelined;
     if (toDoText.length === 0) {
       alert('ToDo를 작성해주세요.');
     } else {
-      // Todo에 대한 데이터를 업데이트
+      // todo 업테이트
       if (timerOn === false) {
         // 재시작에 대한 데이터를 업데이트
+        const res = await axios.post(
+          'http://localhost:8085/api/todo',
+          {
+            todoContent: toDoText,
+            duration: 25,
+            startedAt: Date.now()
+          },
+          { withCredentials: true }
+        );
+        userIdTodo = res.data.data.todoId;
+        userIdTimelined = res.data.data.timelineId;
+        console.log('create', res);
         setTimerOn(true);
       } else {
-        // 멈춤에 대한 데이터를 업데이트
+        const res = await axios.post(
+          'http://localhost:8085/api/todo/pause',
+          {
+            todoId: userIdTodo,
+            timelineId: userIdTimelined,
+            endedAt: Date.now()
+          },
+          { withCredentials: true }
+        );
+        console.log('pause', res);
+
         setTimerOn(false);
       }
     }
   };
 
-  const handleTodoText = async e => {
+  const handleTodoText = e => {
     setTodoText(e.target.value);
-
-    // const res = await axios.post(
-    //   'http://localhost:8085/api/todo',
-    //   {
-    //     todoContent: toDoText,
-    //     duration: 25,
-    //     startedAt: Date.now()
-    //   },
-    //   { withCredentials: true }
-    // );
-
-    // console.log(res);
   };
 
   const handleDoneText = e => {
@@ -88,17 +102,7 @@ const Timer = () => {
   const handleComplete = async () => {
     alert('축하합니다! 완료하셨습니다.!');
 
-    const res = await axios.post(
-      'http://localhost:8085/api/todo',
-      {
-        todoContent: toDoText,
-        duration: 25,
-        startedAt: Date.now()
-      },
-      { withCredentials: true }
-    );
-
-    console.log(res);
+    // 종료
 
     setMinutes(0);
     setSeconds(1);
@@ -210,7 +214,12 @@ const Timer = () => {
                 complete
               </StyledButton>
             ) : (
-              <StyledButton type="primary" size="large" onClick={handleTimerOn}>
+              <StyledButton
+                id="test"
+                type="primary"
+                size="large"
+                onClick={handleTimerOn}
+              >
                 {timerOn ? 'pause' : 'start'}
               </StyledButton>
             )}
@@ -220,20 +229,5 @@ const Timer = () => {
     </DefaultLayout>
   );
 };
-
-// Timer.getInitialProps = async () => {
-//   const res = await fetch('http://15.164.163.120:8085/api/todo', {
-//     method: 'POST',
-//     headers: {},
-//     body: {
-//       todoContent: 'doit todo api 테스트',
-//       duration: 25,
-//       startedAt: Date.now()
-//     }
-//   });
-//   console.log(res);
-
-//   return res;
-// };
 
 export default Timer;

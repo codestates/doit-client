@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Typography, Col, Row, Form, Button, Input } from 'antd';
-import { DefaultLayout } from '../components/Layout';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Typography, Col, Row, Form, Button, Input } from "antd";
+import { DefaultLayout } from "../components/Layout";
+import axios from "axios";
 // idTodo, idTimelined
 let userIdTodo, userIdTimelined;
 
@@ -17,7 +17,7 @@ const StyledCol = styled(Col)`
 `;
 
 const StyledInput = styled(Input)`
-  &[type='number'] {
+  &[type="number"] {
     text-align: center;
   }
   &::-webkit-inner-spin-button,
@@ -38,8 +38,8 @@ const Timer = () => {
   const [seconds, setSeconds] = useState(3);
   const [timerOn, setTimerOn] = useState(false);
   const [complete, setComplete] = useState(false);
-  const [toDoText, setTodoText] = useState('');
-  const [doneText, setDoneText] = useState('');
+  const [toDoText, setTodoText] = useState("");
+  const [doneText, setDoneText] = useState("");
   const [textOn, setTextOn] = useState(true);
 
   const [resume, setResume] = useState(false);
@@ -59,10 +59,10 @@ const Timer = () => {
   // 다시 시작 멈춤 값이 필요함
   const handleTimerOn = async () => {
     if (toDoText.length === 0) {
-      alert('ToDo를 작성해주세요.');
+      alert("ToDo를 작성해주세요.");
     } else {
       const res = await axios.post(
-        'http://localhost:8085/api/todo',
+        "http://localhost:8085/api/todo",
         {
           todoContent: toDoText,
           duration: 25,
@@ -72,17 +72,17 @@ const Timer = () => {
       );
       userIdTodo = res.data.data.todoId;
       userIdTimelined = res.data.data.timelineId;
-      console.log('create', res);
+      console.log("create", res);
       setTimerOn(true);
     }
   };
 
   const handleTimerOff = async () => {
     if (toDoText.length === 0) {
-      alert('ToDo를 작성해주세요.');
+      alert("ToDo를 작성해주세요.");
     } else {
       const res = await axios.post(
-        'http://localhost:8085/api/todo/pause',
+        "http://localhost:8085/api/todo/pause",
         {
           todoId: userIdTodo,
           timelineId: userIdTimelined,
@@ -90,7 +90,7 @@ const Timer = () => {
         },
         { withCredentials: true }
       );
-      console.log('pause', res);
+      console.log("pause", res);
       setResume(true);
       setTimerOn(false);
     }
@@ -98,14 +98,14 @@ const Timer = () => {
 
   const handleResume = async () => {
     const res = await axios.post(
-      'http://localhost:8085/api/todo/resume',
+      "http://localhost:8085/api/todo/resume",
       {
         todoId: userIdTodo,
         startedAt: Date.now()
       },
       { withCredentials: true }
     );
-    console.log('resume', res);
+    console.log("resume", res);
     setResume(false);
     setTimerOn(true);
   };
@@ -117,10 +117,20 @@ const Timer = () => {
   const handleDoneText = e => {
     setDoneText(e.target.value);
   };
+
+  const handleReset = () => {
+    setMinutes(0);
+    setSeconds(3);
+    setTodoText("");
+    setDoneText("");
+    setTextOn(true);
+    setTimerOn(false);
+    setComplete(false);
+  };
   const handleComplete = async () => {
-    alert('축하합니다! 완료하셨습니다.!');
+    alert("축하합니다! 완료하셨습니다.!");
     const res = await axios.patch(
-      'http://localhost:8085/api/todo',
+      "http://localhost:8085/api/todo",
       {
         doneContent: doneText,
         todoId: userIdTodo,
@@ -129,11 +139,11 @@ const Timer = () => {
       },
       { withCredentials: true }
     );
-    console.log('the end', res);
+    console.log("the end", res);
     setMinutes(0);
     setSeconds(3);
-    setTodoText('');
-    setDoneText('');
+    setTodoText("");
+    setDoneText("");
     setTextOn(true);
     setTimerOn(false);
     setComplete(false);
@@ -163,7 +173,7 @@ const Timer = () => {
             setTimerOn(false);
             setTextOn(false);
             setComplete(true);
-            alert('Done에 회고를 작성해주세요.');
+            alert("Done에 회고를 작성해주세요.");
           } else {
             setMinutes(minutes - 1);
             setSeconds(59);
@@ -183,7 +193,7 @@ const Timer = () => {
         <StyledCol>
           <Form>
             <Typography.Title level={3}>Timer</Typography.Title>
-            <Form.Item style={{ textAlign: 'center' }}>
+            <Form.Item style={{ textAlign: "center" }}>
               <Col span={6} offset={5}>
                 <StyledInput
                   type="number"
@@ -194,7 +204,7 @@ const Timer = () => {
                 />
               </Col>
               <Col span={2}>
-                <h2 style={{ margin: '0' }}>:</h2>
+                <h2 style={{ margin: "0" }}>:</h2>
               </Col>
               <Col span={6}>
                 <StyledInput
@@ -256,6 +266,9 @@ const Timer = () => {
                 start
               </StyledButton>
             )}
+            <StyledButton type="primary" size="large" onClick={handleReset}>
+              reset
+            </StyledButton>
           </Form>
         </StyledCol>
       </StyledRow>

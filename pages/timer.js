@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Typography, Col, Row, Form, Button, Input } from 'antd';
 import { DefaultLayout } from '../components/Layout';
 import axios from 'axios';
+// idTodo, idTimelined
+let userIdTodo, userIdTimelined;
 
 const StyledRow = styled(Row)`
   margin-top: 40px;
@@ -28,6 +30,7 @@ const StyledInput = styled(Input)`
 const StyledButton = styled(Button)`
   width: 120px;
   font-size: 1.5em;
+  margin-right: 20px;
 `;
 
 const Timer = () => {
@@ -38,6 +41,8 @@ const Timer = () => {
   const [toDoText, setTodoText] = useState('');
   const [doneText, setDoneText] = useState('');
   const [textOn, setTextOn] = useState(true);
+
+  const [resume, setResume] = useState(false);
 
   const handleMinutes = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
@@ -51,45 +56,58 @@ const Timer = () => {
     }
   };
 
+  // 다시 시작 멈춤 값이 필요함
   const handleTimerOn = async () => {
-    // start 와 pasuse를 구분하기 위함, 더 나은 코드가 필요할 거 같음
-    let beteweenButton = document.getElementById('test').innerHTML;
-    // axios로부터 아이디값을 받음
-    let userIdTodo, userIdTimelined;
     if (toDoText.length === 0) {
       alert('ToDo를 작성해주세요.');
     } else {
-      // todo 업테이트
-      if (timerOn === false) {
-        // 재시작에 대한 데이터를 업데이트
-        const res = await axios.post(
-          'http://localhost:8085/api/todo',
-          {
-            todoContent: toDoText,
-            duration: 25,
-            startedAt: Date.now()
-          },
-          { withCredentials: true }
-        );
-        userIdTodo = res.data.data.todoId;
-        userIdTimelined = res.data.data.timelineId;
-        console.log('create', res);
-        setTimerOn(true);
-      } else {
-        const res = await axios.post(
-          'http://localhost:8085/api/todo/pause',
-          {
-            todoId: userIdTodo,
-            timelineId: userIdTimelined,
-            endedAt: Date.now()
-          },
-          { withCredentials: true }
-        );
-        console.log('pause', res);
-
-        setTimerOn(false);
-      }
+      const res = await axios.post(
+        'http://localhost:8085/api/todo',
+        {
+          todoContent: toDoText,
+          duration: 25,
+          startedAt: Date.now()
+        },
+        { withCredentials: true }
+      );
+      userIdTodo = res.data.data.todoId;
+      userIdTimelined = res.data.data.timelineId;
+      console.log('create', res);
+      setTimerOn(true);
     }
+  };
+
+  const handleTimerOff = async () => {
+    if (toDoText.length === 0) {
+      alert('ToDo를 작성해주세요.');
+    } else {
+      const res = await axios.post(
+        'http://localhost:8085/api/todo/pause',
+        {
+          todoId: userIdTodo,
+          timelineId: userIdTimelined,
+          endedAt: Date.now()
+        },
+        { withCredentials: true }
+      );
+      console.log('pause', res);
+      setResume(true);
+      setTimerOn(false);
+    }
+  };
+
+  const handleResume = async () => {
+    const res = await axios.post(
+      'http://localhost:8085/api/todo/resume',
+      {
+        todoId: userIdTodo,
+        startedAt: Date.now()
+      },
+      { withCredentials: true }
+    );
+    console.log('resume', res);
+    setResume(false);
+    setTimerOn(true);
   };
 
   const handleTodoText = e => {
@@ -101,11 +119,19 @@ const Timer = () => {
   };
   const handleComplete = async () => {
     alert('축하합니다! 완료하셨습니다.!');
-
-    // 종료
-
+    const res = await axios.patch(
+      'http://localhost:8085/api/todo',
+      {
+        doneContent: doneText,
+        todoId: userIdTodo,
+        timelineId: userIdTimelined,
+        endedAt: Date.now()
+      },
+      { withCredentials: true }
+    );
+    console.log('the end', res);
     setMinutes(0);
-    setSeconds(1);
+    setSeconds(3);
     setTodoText('');
     setDoneText('');
     setTextOn(true);
@@ -213,14 +239,21 @@ const Timer = () => {
               >
                 complete
               </StyledButton>
-            ) : (
+            ) : resume ? (
+              <StyledButton type="primary" size="large" onClick={handleResume}>
+                resume
+              </StyledButton>
+            ) : timerOn ? (
               <StyledButton
-                id="test"
                 type="primary"
                 size="large"
-                onClick={handleTimerOn}
+                onClick={handleTimerOff}
               >
-                {timerOn ? 'pause' : 'start'}
+                pause
+              </StyledButton>
+            ) : (
+              <StyledButton type="primary" size="large" onClick={handleTimerOn}>
+                start
               </StyledButton>
             )}
           </Form>

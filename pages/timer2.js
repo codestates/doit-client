@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography, Col, Row, Form, Button, Input } from 'antd';
 import { DefaultLayout } from '../components/Layout';
-
 import axios from 'axios';
+// idTodo, idTimelined
+let userIdTodo, userIdTimelined;
 
 const StyledRow = styled(Row)`
   margin-top: 40px;
@@ -29,23 +30,17 @@ const StyledInput = styled(Input)`
 const StyledButton = styled(Button)`
   width: 120px;
   font-size: 1.5em;
+  margin-right: 20px;
 `;
-
-const initialState = {
-  timerOn: false,
-  complete: false,
-  toDoText: '',
-  doneText: '',
-  textOn: true
-};
 
 const Timer = () => {
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(1);
-  const [
-    { timerOn, complete, toDoText, doneText, textOn },
-    setState
-  ] = useState(initialState);
+  const [seconds, setSeconds] = useState(3);
+  const [timerOn, setTimerOn] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const [toDoText, setTodoText] = useState('');
+  const [doneText, setDoneText] = useState('');
+  const [textOn, setTextOn] = useState(true);
 
   const handleMinutes = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
@@ -59,33 +54,67 @@ const Timer = () => {
     }
   };
 
-  const handleTimerOn = () => {
+  // 다시 시작 멈춤 값이 필요함
+  const handleTimerOn = async () => {
+    // start 와 pasuse를 구분하기 위함, 더 나은 코드가 필요할 거 같음
+    let beteweenButton = document.getElementById('test').innerHTML;
+    // axios로부터 아이디값을 받음
+
     if (toDoText.length === 0) {
       alert('ToDo를 작성해주세요.');
     } else {
-      // Todo에 대한 데이터를 업데이트
+      // todo 업테이트
       if (timerOn === false) {
-        // 재시작에 대한 데이터를 업데이트
-        setState({ ...initialState, timerOn: true });
+        // 시작
+        const res = await axios.post(
+          'http://localhost:8085/api/todo',
+          {
+            todoContent: toDoText,
+            duration: 25,
+            startedAt: Date.now()
+          },
+          { withCredentials: true }
+        );
+        userIdTodo = res.data.data.todoId;
+        userIdTimelined = res.data.data.timelineId;
+        console.log('create', res);
+        setTimerOn(true);
       } else {
-        // 멈춤에 대한 데이터를 업데이트
-        setState({ ...initialState, timerOn: false });
+        const res = await axios.post(
+          'http://localhost:8085/api/todo/pause',
+          {
+            todoId: userIdTodo,
+            timelineId: userIdTimelined,
+            endedAt: Date.now()
+          },
+          { withCredentials: true }
+        );
+        console.log('pause', res);
+
+        setTimerOn(false);
       }
     }
   };
 
   const handleTodoText = e => {
-    setState({ ...initialState, toDoText: e.target.value });
+    setTodoText(e.target.value);
   };
 
   const handleDoneText = e => {
-    setState({ ...initialState });
+    setDoneText(e.target.value);
   };
-  const handleComplete = () => {
-    alert('축하합니다! 완료하셨습니다.!');
-    setState({
-      ...initialState
-    });
+  const handleComplete = async () => {
+    // alert('축하합니다! 완료하셨습니다.!');
+
+    // 종료
+
+    setMinutes(0);
+    setSeconds(3);
+    setTodoText('');
+    setDoneText('');
+    setTextOn(true);
+    setTimerOn(false);
+    setComplete(false);
   };
 
   useEffect(() => {
@@ -94,7 +123,7 @@ const Timer = () => {
         clearInterval(myInterval);
         setMinutes(0);
         setSeconds(0);
-        setState({ ...initialState, timerOn: false });
+        setTimerOn(false);
       } else if (timerOn) {
         if (!seconds) {
           setSeconds(0);
@@ -109,9 +138,9 @@ const Timer = () => {
         if (seconds === 0) {
           if (minutes === 0) {
             clearInterval(myInterval);
-            setState({ ...initialState, timerOn: false });
-            setState({ ...initialState, textOn: false });
-            setState({ ...initialState, complete: true });
+            setTimerOn(false);
+            setTextOn(false);
+            setComplete(true);
             alert('Done에 회고를 작성해주세요.');
           } else {
             setMinutes(minutes - 1);
@@ -130,7 +159,7 @@ const Timer = () => {
     <DefaultLayout>
       <StyledRow type="flex" justify="center">
         <StyledCol>
-          <Form id="form">
+          <Form>
             <Typography.Title level={3}>Timer</Typography.Title>
             <Form.Item style={{ textAlign: 'center' }}>
               <Col span={6} offset={5}>
@@ -158,7 +187,6 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>ToDo</Typography.Title>
               <Input.TextArea
-                id="todo"
                 rows="3"
                 value={toDoText}
                 onChange={handleTodoText}
@@ -171,7 +199,6 @@ const Timer = () => {
             <Form.Item>
               <Typography.Title level={3}>Done</Typography.Title>
               <Input.TextArea
-                id="done"
                 rows="3"
                 value={doneText}
                 onChange={handleDoneText}
@@ -191,10 +218,19 @@ const Timer = () => {
                 complete
               </StyledButton>
             ) : (
-              <StyledButton type="primary" size="large" onClick={handleTimerOn}>
+              <StyledButton
+                id="test"
+                type="primary"
+                size="large"
+                onClick={handleTimerOn}
+              >
                 {timerOn ? 'pause' : 'start'}
               </StyledButton>
             )}
+            {/* 리셋 짧게 */}
+            <StyledButton type="primary" size="large" onClick={handleComplete}>
+              reset
+            </StyledButton>
           </Form>
         </StyledCol>
       </StyledRow>

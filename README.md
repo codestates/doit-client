@@ -3,7 +3,7 @@
 집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다.
 DOIT은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.
 
-### 포모도로의 편리함을 기록으로 남기세요!
+### 포모도로의 편리함에 기록을 더하다
 
 ## 기본셋팅
 
@@ -18,6 +18,10 @@ git clone https://github.com/codestates/doit-client.git
 ```javascript
 npm i
 ```
+
+## 사용 설명서
+
+1. sign up & login
 
 ## 주요파일 구조
 

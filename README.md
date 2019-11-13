@@ -19,15 +19,16 @@ git clone https://github.com/codestates/doit-client.git
 npm i
 ```
 
-## 사용 설명서
+## 주요 기능
 
 1. sign up & login
 2. Timer 설정과 할 일 등록
 3. Timer 완료 후 한 일 등록
+4. History를 통해 과거 기록 확인
 
-## 세부 사항
+## 사용 예
 
-1. 세부 사항 1
+1. 사용 예
 
 ## 주요파일 구조
 

@@ -1,5 +1,3 @@
-# Doit 카운트다운
-
 # 기본셋팅
 
 1. 터미널 환경에서 git clone
@@ -13,3 +11,13 @@ git clone https://github.com/codestates/doit-client.git
 ```javascript
 npm i
 ```
+
+# 주요파일 구조
+
+components/
+Login/
+Sign/
+Write/
+Layout.js
+TodoCalendar.js
+TodoCard.js

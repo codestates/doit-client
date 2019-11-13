@@ -14,12 +14,4 @@ npm i
 
 ## 주요파일 구조
 
-<ol>
-components/
-    Login/
-    Sign/
-    Write/
-    Layout.js
-    TodoCalendar.js
-    TodoCard.js
-</ol>
+components/ >>Login/ >>Sign/ >>Write/ >>Layout.js >>TodoCalendar.js >>TodoCard.js

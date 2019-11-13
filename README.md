@@ -22,4 +22,12 @@ components/
     Layout.js
     TodoCalendar.js
     TodoCard.js
+pages/
+    _app.js
+    _document.js
+    index.js
+    login.js
+    sign.js
+    timer.js
+    todoHistory.js
 ```

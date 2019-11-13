@@ -22,6 +22,8 @@ npm i
 ## 사용 설명서
 
 1. sign up & login
+2. Timer 설정과 할 일 등록
+3. Timer 완료 후 한 일 등록
 
 ## 주요파일 구조
 

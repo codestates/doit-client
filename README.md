@@ -1,5 +1,7 @@
 # Doit 카운트다운
 
+## 기본셋팅
+
 1. 터미널 환경에서 git clone
 
 ```javascript

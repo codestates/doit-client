@@ -250,7 +250,10 @@ const Timer = () => {
                 complete
               </StyledButton>
             ) : resume ? (
-              <StyledButton type="primary" size="large" onClick={handleResume}>
+              <StyledButton 
+                type="primary" 
+                size="large" 
+                onClick={handleResume}>
                 resume
               </StyledButton>
             ) : timerOn ? (

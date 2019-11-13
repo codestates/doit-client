@@ -241,21 +241,13 @@ const Timer = () => {
               </Input.TextArea>
             </Form.Item>
 
-            {(!isStart && !isComplete) ? (
+            {(!isStart && !isComplete) && (
               <StyledButton type="primary" size="large" onClick={startTimer}>
                 start
               </StyledButton>
-            ) : (
-              <StyledButton
-                type="primary"
-                size="large"
-                onClick={completeTimer}
-              >
-                complete
-              </StyledButton>
             )}
 
-            {(isStart && !isComplete && !isPause) ? (
+            {(isStart && !isComplete && !isPause) && (
               <StyledButton
                 type="primary"
                 size="large"
@@ -263,9 +255,21 @@ const Timer = () => {
               >
                 pause
               </StyledButton>
-            ) : (
+            )}
+
+            {(isStart && !isComplete && isPause) && (
               <StyledButton type="primary" size="large" onClick={resumeTimer}>
                 resume
+              </StyledButton>
+            )}
+
+            {isComplete && (
+              <StyledButton
+                type="primary"
+                size="large"
+                onClick={completeTimer}
+              >
+                complete
               </StyledButton>
             )}
 

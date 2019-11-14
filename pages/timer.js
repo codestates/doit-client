@@ -91,8 +91,9 @@ const Timer = () => {
         userIdTodo = res.data.data.todoId;
         userIdTimelined = res.data.data.timelineId;
         console.log('create', res);
-        setIsStart(true);
       });
+
+      setIsStart(true);
     }
   };
 
@@ -109,8 +110,9 @@ const Timer = () => {
 
       fetchData('post', 'pause', body).then((res) => {
         console.log('pause', res);
-        setIsPause(true);
       });
+
+      setIsPause(true);
     }
   };
 
@@ -124,8 +126,9 @@ const Timer = () => {
 
     fetchData('post', 'resume', body).then((res) => {
       console.log('resume', res);
-      setIsPause(false);
     });
+
+    setIsPause(false);
   };
 
   // 타이머 완료
@@ -141,8 +144,9 @@ const Timer = () => {
 
     fetchData('patch', 'todo', body).then((res) => {
       console.log('the end', res);
-      initTimer();
     });
+
+    initTimer();
   };
 
   const resetTimer = () => {
@@ -156,7 +160,7 @@ const Timer = () => {
         setMinutes(0);
         setSeconds(0);
         setIsStart(false);
-      } else if (isStart) {
+      } else if (isStart && !isPause) {
         if (!seconds) {
           setSeconds(0);
         }

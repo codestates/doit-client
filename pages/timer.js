@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {
-  Typography, Col, Row, Form, Button, Input,
-} from 'antd';
+import { Typography, Col, Row, Form, Button, Input } from 'antd';
 import fetchData from '../utils/fetchData';
 
 const StyledRow = styled(Row)`
@@ -55,23 +53,23 @@ const Timer = () => {
     setIsComplete(false);
   };
 
-  const handleMinutes = (e) => {
+  const handleMinutes = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
       setMinutes(e.target.value);
     }
   };
 
-  const handleSeconds = (e) => {
+  const handleSeconds = e => {
     if (e.target.value <= 60 && e.target.value >= 0) {
       setSeconds(e.target.value);
     }
   };
 
-  const handleTodoText = (e) => {
+  const handleTodoText = e => {
     setTodoText(e.target.value);
   };
 
-  const handleDoneText = (e) => {
+  const handleDoneText = e => {
     setDoneText(e.target.value);
   };
 
@@ -86,11 +84,14 @@ const Timer = () => {
         startedAt: Date.now(),
       };
 
-      fetchData('post', 'todo', body).then((res) => {
-        userIdTodo = res.data.data.todoId;
-        userIdTimelined = res.data.data.timelineId;
-        console.log('create', res);
-      });
+      fetchData('post', 'todo', body).then(
+        res => {
+          userIdTodo = res.data.data.todoId;
+          userIdTimelined = res.data.data.timelineId;
+          console.log('create', res);
+        },
+        error => console.log(error),
+      );
 
       setIsStart(true);
     }
@@ -107,9 +108,12 @@ const Timer = () => {
         endedAt: Date.now(),
       };
 
-      fetchData('post', 'todo/pause', body).then((res) => {
-        console.log('pause', res);
-      });
+      fetchData('post', 'todo/pause', body).then(
+        res => {
+          console.log('pause', res);
+        },
+        error => console.log(error),
+      );
 
       setIsPause(true);
     }
@@ -122,9 +126,12 @@ const Timer = () => {
       startedAt: userIdTimelined,
     };
 
-    fetchData('post', 'todo/resume', body).then((res) => {
-      console.log('resume', res);
-    });
+    fetchData('post', 'todo/resume', body).then(
+      res => {
+        console.log('resume', res);
+      },
+      error => console.log(error),
+    );
 
     setIsPause(false);
   };
@@ -140,9 +147,12 @@ const Timer = () => {
       endedAt: Date.now(),
     };
 
-    fetchData('patch', 'todo', body).then((res) => {
-      console.log('the end', res);
-    });
+    fetchData('patch', 'todo', body).then(
+      res => {
+        console.log('the end', res);
+      },
+      error => console.log(error),
+    );
 
     initTimer();
   };
@@ -242,40 +252,32 @@ const Timer = () => {
             </Input.TextArea>
           </Form.Item>
 
-          {(!isStart && !isComplete) && (
-          <StyledButton type="primary" size="large" onClick={startTimer}>
-                start
-          </StyledButton>
+          {!isStart && !isComplete && (
+            <StyledButton type="primary" size="large" onClick={startTimer}>
+              start
+            </StyledButton>
           )}
 
-          {(isStart && !isComplete && !isPause) && (
-          <StyledButton
-            type="primary"
-            size="large"
-            onClick={pauseTimer}
-          >
-                pause
-          </StyledButton>
+          {isStart && !isComplete && !isPause && (
+            <StyledButton type="primary" size="large" onClick={pauseTimer}>
+              pause
+            </StyledButton>
           )}
 
-          {(isStart && !isComplete && isPause) && (
-          <StyledButton type="primary" size="large" onClick={resumeTimer}>
-                resume
-          </StyledButton>
+          {isStart && !isComplete && isPause && (
+            <StyledButton type="primary" size="large" onClick={resumeTimer}>
+              resume
+            </StyledButton>
           )}
 
           {isComplete && (
-          <StyledButton
-            type="primary"
-            size="large"
-            onClick={completeTimer}
-          >
-                complete
-          </StyledButton>
+            <StyledButton type="primary" size="large" onClick={completeTimer}>
+              complete
+            </StyledButton>
           )}
 
           <StyledButton type="primary" size="large" onClick={resetTimer}>
-              reset
+            reset
           </StyledButton>
         </Form>
       </StyledCol>

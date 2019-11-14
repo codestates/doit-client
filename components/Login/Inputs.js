@@ -23,7 +23,7 @@ const idHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     setValue(value);
   };
@@ -33,7 +33,7 @@ const pinHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     setValue(value);
   };
@@ -53,39 +53,21 @@ const loginHandler = async (id, pin) => {
     .post(
       'http://localhost:8085/api/user/login',
       { email: id, password: pin },
-      { withCredentials: true }
+      { withCredentials: true },
     )
     .then(
       response => {
         // response 처리해야 함
-        console.log(response);
-        Router.push('/timer');
+        Router.push({
+          pathname: '/timer',
+          query: { nickname: response.data.data.nickname },
+        });
       },
       error => {
         console.log(error);
         alert('잘못된 정보입니다.');
-      }
+      },
     );
-
-  // await axios({
-  //   method: 'post',
-  //   url: 'http://localhost:8085/api/user/login',
-  //   headers: {},
-  //   data: {
-  //     email: id,
-  //     password: pin
-  //   }
-  // }).then(
-  //   response => {
-  //     // response 처리해야 함
-  //     console.log(response);
-  //     Router.push('/timer');
-  //   },
-  //   error => {
-  //     console.log(error);
-  //     alert('잘못된 정보입니다.');
-  //   }
-  // );
 };
 
 const signHandler = () => {

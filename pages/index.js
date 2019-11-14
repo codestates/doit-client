@@ -10,7 +10,7 @@ const Main = styled.div`
   width: 100vw;
   background: lightgray;
 `;
-const Button = styled.button`
+const StyledButton = styled.button`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -22,11 +22,10 @@ const Button = styled.button`
   width: 300px;
 `;
 
-
 const Home = () => (
   <Main>
-    <Link href="/timer">
-      <Button className='btn btn-primary' >Do it!</Button>
+    <Link href="/login">
+      <StyledButton type="primary">Do it!</StyledButton>
     </Link>
   </Main>
 );

@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Icon, Row, Col } from 'antd';
+import { useRouter } from 'next/router';
+import Router from 'next/router';
+import fetchData from '../utils/fetchData';
 
 const { Header, Content } = Layout;
 
+const hanldeIsLogin = nickname => {
+  if (nickname) {
+    return true;
+  }
+  return false;
+};
+
+const hanldeLogout = () => {
+  const body = {};
+  fetchData('post', 'user/logout', body).then(res => {
+    console.log('logout', res);
+  });
+  Router.push('/login');
+};
+
 const DefaultLayout = ({ ...props }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
+  const nickname = router.query.nickname;
+  const isLogin = hanldeIsLogin(nickname);
 
   return (
     <Layout style={{ height: '100vh' }}>
@@ -34,13 +54,13 @@ const DefaultLayout = ({ ...props }) => {
                 mode="horizontal"
                 style={{ lineHeight: '64px' }}
               >
-                <Menu.Item key="3" onClick="">
+                <Menu.Item key="3" onClick={() => hanldeLogout()}>
                   <Icon type="logout" />
                   Logout
                 </Menu.Item>
                 <Menu.Item key="4">
                   <Icon type="user" />
-                  Subin Ha
+                  {nickname}
                 </Menu.Item>
               </Menu>
             ) : (

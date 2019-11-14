@@ -4,7 +4,6 @@ import {
   Typography, Col, Row, Form, Button, Input,
 } from 'antd';
 import fetchData from '../utils/fetchData';
-import { DefaultLayout } from '../components/Layout';
 
 const StyledRow = styled(Row)`
   margin-top: 40px;
@@ -191,98 +190,96 @@ const Timer = () => {
   });
 
   return (
-    <DefaultLayout>
-      <StyledRow type="flex" justify="center">
-        <StyledCol>
-          <Form>
-            <Typography.Title level={3}>Timer</Typography.Title>
-            <Form.Item style={{ textAlign: 'center' }}>
-              <Col span={6} offset={5}>
-                <StyledInput
-                  type="number"
-                  size="large"
-                  value={minutes}
-                  onChange={handleMinutes}
-                  disabled={isStart || isComplete}
-                />
-              </Col>
-              <Col span={2}>
-                <h2 style={{ margin: '0' }}>:</h2>
-              </Col>
-              <Col span={6}>
-                <StyledInput
-                  type="number"
-                  size="large"
-                  value={seconds}
-                  onChange={handleSeconds}
-                  disabled={isStart || isComplete}
-                />
-              </Col>
-            </Form.Item>
-            <Form.Item>
-              <Typography.Title level={3}>ToDo</Typography.Title>
-              <Input.TextArea
-                rows="3"
-                value={toDoText}
-                onChange={handleTodoText}
-                placeholder="할 일을 입력해주세요"
-                disabled={isStart || !textHandler}
-              >
-                {toDoText}
-              </Input.TextArea>
-            </Form.Item>
-            <Form.Item>
-              <Typography.Title level={3}>Done</Typography.Title>
-              <Input.TextArea
-                rows="3"
-                value={doneText}
-                onChange={handleDoneText}
-                placeholder="한 일을 입력해주세요"
-                disabled={textHandler}
-              >
-                {doneText}
-              </Input.TextArea>
-            </Form.Item>
+    <StyledRow type="flex" justify="center">
+      <StyledCol>
+        <Form>
+          <Typography.Title level={3}>Timer</Typography.Title>
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Col span={6} offset={5}>
+              <StyledInput
+                type="number"
+                size="large"
+                value={minutes}
+                onChange={handleMinutes}
+                disabled={isStart || isComplete}
+              />
+            </Col>
+            <Col span={2}>
+              <h2 style={{ margin: '0' }}>:</h2>
+            </Col>
+            <Col span={6}>
+              <StyledInput
+                type="number"
+                size="large"
+                value={seconds}
+                onChange={handleSeconds}
+                disabled={isStart || isComplete}
+              />
+            </Col>
+          </Form.Item>
+          <Form.Item>
+            <Typography.Title level={3}>ToDo</Typography.Title>
+            <Input.TextArea
+              rows="3"
+              value={toDoText}
+              onChange={handleTodoText}
+              placeholder="할 일을 입력해주세요"
+              disabled={isStart || !textHandler}
+            >
+              {toDoText}
+            </Input.TextArea>
+          </Form.Item>
+          <Form.Item>
+            <Typography.Title level={3}>Done</Typography.Title>
+            <Input.TextArea
+              rows="3"
+              value={doneText}
+              onChange={handleDoneText}
+              placeholder="한 일을 입력해주세요"
+              disabled={textHandler}
+            >
+              {doneText}
+            </Input.TextArea>
+          </Form.Item>
 
-            {(!isStart && !isComplete) && (
-              <StyledButton type="primary" size="large" onClick={startTimer}>
+          {(!isStart && !isComplete) && (
+          <StyledButton type="primary" size="large" onClick={startTimer}>
                 start
-              </StyledButton>
-            )}
+          </StyledButton>
+          )}
 
-            {(isStart && !isComplete && !isPause) && (
-              <StyledButton
-                type="primary"
-                size="large"
-                onClick={pauseTimer}
-              >
+          {(isStart && !isComplete && !isPause) && (
+          <StyledButton
+            type="primary"
+            size="large"
+            onClick={pauseTimer}
+          >
                 pause
-              </StyledButton>
-            )}
+          </StyledButton>
+          )}
 
-            {(isStart && !isComplete && isPause) && (
-              <StyledButton type="primary" size="large" onClick={resumeTimer}>
+          {(isStart && !isComplete && isPause) && (
+          <StyledButton type="primary" size="large" onClick={resumeTimer}>
                 resume
-              </StyledButton>
-            )}
+          </StyledButton>
+          )}
 
-            {isComplete && (
-              <StyledButton
-                type="primary"
-                size="large"
-                onClick={completeTimer}
-              >
+          {isComplete && (
+          <StyledButton
+            type="primary"
+            size="large"
+            onClick={completeTimer}
+          >
                 complete
-              </StyledButton>
-            )}
+          </StyledButton>
+          )}
 
-            <StyledButton type="primary" size="large" onClick={resetTimer}>
+          <StyledButton type="primary" size="large" onClick={resetTimer}>
               reset
-            </StyledButton>
-          </Form>
-        </StyledCol>
-      </StyledRow>
-    </DefaultLayout>
+          </StyledButton>
+        </Form>
+      </StyledCol>
+    </StyledRow>
   );
 };
 

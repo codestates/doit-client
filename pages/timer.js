@@ -33,6 +33,9 @@ const StyledButton = styled(Button)`
   margin-right: 20px;
 `;
 
+let userIdTodo;
+let userIdTimelined;
+
 const Timer = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(3);
@@ -42,9 +45,6 @@ const Timer = () => {
   const [toDoText, setTodoText] = useState('');
   const [doneText, setDoneText] = useState('');
   const [textHandler, setTextHandler] = useState(true);
-
-  let userIdTodo;
-  let userIdTimelined;
 
   const initTimer = () => {
     setMinutes(0);
@@ -108,7 +108,7 @@ const Timer = () => {
         endedAt: Date.now(),
       };
 
-      fetchData('post', 'pause', body).then((res) => {
+      fetchData('post', 'todo/pause', body).then((res) => {
         console.log('pause', res);
       });
 
@@ -120,11 +120,10 @@ const Timer = () => {
   const resumeTimer = () => {
     const body = {
       todoId: userIdTodo,
-      timelineId: userIdTimelined,
-      endedAt: Date.now(),
+      startedAt: userIdTimelined,
     };
 
-    fetchData('post', 'resume', body).then((res) => {
+    fetchData('post', 'todo/resume', body).then((res) => {
       console.log('resume', res);
     });
 

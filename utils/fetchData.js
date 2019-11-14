@@ -3,9 +3,9 @@ import axios from 'axios';
 const fetchData = (method, path, data) =>
   axios({
     method,
-    url: `http://localhost:8085/api/${path}`,
+    url: `https://api.mygraphr.com/api/${path}`,
     data,
-    withCredentials: true,
+    credentials: true,
   });
 
 export default fetchData;

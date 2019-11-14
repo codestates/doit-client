@@ -46,7 +46,7 @@ const pinHandler = init => {
 const submitHandler = async (nick, id, pin) => {
   await axios({
     method: 'post',
-    url: 'http://localhost:8085/api/user/signup',
+    url: 'https://api.mygraphr.com/api/user/signup',
     headers: {},
     data: {
       email: id,

@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Main = styled.div`
   position: absolute;
   left: 0;
-  top: 25px;
+  top: 60px;
   height: 100px;
   width: 100%;
   color: #0275d8;
@@ -19,7 +19,7 @@ const Logo = () => {
         <Link href="/">
           <a style={{ cursor: 'pointer', fontSize: '3.2rem' }}>Do it</a>
         </Link>
-        <h2 style={{ marginTop: '60px' }}>회원가입 페이지</h2>
+        <h2 style={{ marginTop: '10px' }}>회원가입 페이지</h2>
       </Main>
     </div>
   );

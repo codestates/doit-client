@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const FormBox = styled.div`
   position: relative;
+  top: -80px;
   height: auto;
   width: 300px;
   margin: 240px auto;
@@ -15,7 +16,7 @@ const nickHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     setValue(value);
   };
@@ -25,7 +26,7 @@ const idHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     setValue(value);
   };
@@ -35,7 +36,7 @@ const pinHandler = init => {
   const [value, setValue] = useState(init);
   const onChange = event => {
     const {
-      target: { value }
+      target: { value },
     } = event;
     setValue(value);
   };
@@ -50,8 +51,8 @@ const submitHandler = async (nick, id, pin) => {
     data: {
       email: id,
       nickname: nick,
-      password: pin
-    }
+      password: pin,
+    },
   }).then(
     response => {
       // response 처리해야 함
@@ -61,7 +62,7 @@ const submitHandler = async (nick, id, pin) => {
     error => {
       console.log(error);
       alert('중복되는 아이디입니다.');
-    }
+    },
   );
 };
 const Inputs = () => {

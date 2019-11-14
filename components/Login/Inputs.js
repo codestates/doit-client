@@ -51,9 +51,9 @@ const loginHandler = async (id, pin) => {
   }
   await axios
     .post(
-      'http://localhost:8085/api/user/login',
+      'https://api.mygraphr.com/api/user/login',
       { email: id, password: pin },
-      { withCredentials: true },
+      { credentials: true },
     )
     .then(
       response => {

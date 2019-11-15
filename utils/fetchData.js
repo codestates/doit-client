@@ -5,7 +5,7 @@ const fetchData = (method, path, data) =>
     method,
     url: `https://api.mygraphr.com/api/${path}`,
     data,
-    credentials: true,
+    withCredentials: true,
   });
 
 export default fetchData;

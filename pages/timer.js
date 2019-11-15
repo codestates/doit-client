@@ -34,8 +34,8 @@ let userIdTodo;
 let userIdTimelined;
 
 const Timer = () => {
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(3);
   const [isStart, setIsStart] = useState(false);
   const [isPause, setIsPause] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -44,8 +44,8 @@ const Timer = () => {
   const [textHandler, setTextHandler] = useState(true);
 
   const initTimer = () => {
-    setMinutes(25);
-    setSeconds(0);
+    setMinutes(0);
+    setSeconds(3);
     setTodoText('');
     setDoneText('');
     setTextHandler(true);
@@ -165,7 +165,7 @@ const Timer = () => {
     const myInterval = setInterval(() => {
       if (minutes < 0) {
         clearInterval(myInterval);
-        setMinutes(25);
+        setMinutes(0);
         setSeconds(0);
         setIsStart(false);
       } else if (isStart && !isPause) {

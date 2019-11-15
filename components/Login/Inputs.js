@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { Icon, Button, Input } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
-import axios from 'axios';
-import { Icon, Button, Input } from 'antd';
+import fetchData from '../../utils/fetchData';
 
 const Main = styled.div`
   position: relative;
@@ -49,25 +49,22 @@ const loginHandler = async (id, pin) => {
     alert('password 입력 부탁해요');
     return;
   }
-  await axios
-    .post(
-      'https://api.mygraphr.com/api/user/login',
-      { email: id, password: pin },
-      { credentials: true },
-    )
-    .then(
-      response => {
-        // response 처리해야 함
-        Router.push({
-          pathname: '/timer',
-          query: { nickname: response.data.data.nickname },
-        });
-      },
-      error => {
-        console.log(error);
-        alert('잘못된 정보입니다.');
-      },
-    );
+
+  const body = {
+    email: id,
+    password: pin,
+  };
+
+  fetchData('post', 'user/login', body).then(
+    res => {
+      console.log('login', res);
+      Router.push({
+        pathname: '/timer',
+        query: { nickname: res.data.data.nickname },
+      });
+    },
+    error => console.log(error),
+  );
 };
 
 const signHandler = () => {

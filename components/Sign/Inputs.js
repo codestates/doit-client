@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Icon, Button, Input } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
-import axios from 'axios';
+import fetchData from '../../utils/fetchData';
 
 const FormBox = styled.div`
   position: relative;
@@ -44,25 +44,20 @@ const pinHandler = init => {
 };
 
 const submitHandler = async (nick, id, pin) => {
-  await axios({
-    method: 'post',
-    url: 'https://api.mygraphr.com/api/user/signup',
-    headers: {},
-    data: {
-      email: id,
-      nickname: nick,
-      password: pin,
+  const body = {
+    email: id,
+    nickname: nick,
+    password: pin,
+  };
+
+  fetchData('post', 'user/signup', body).then(
+    res => {
+      console.log('login', res);
+      Router.push({
+        pathname: '/login',
+      });
     },
-  }).then(
-    response => {
-      // response 처리해야 함
-      console.log(response);
-      Router.push('/login');
-    },
-    error => {
-      console.log(error);
-      alert('중복되는 아이디입니다.');
-    },
+    error => console.log(error),
   );
 };
 const Inputs = () => {

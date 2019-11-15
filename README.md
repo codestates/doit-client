@@ -1,3 +1,8 @@
+## 배경
+
+집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다.
+DOIT은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.
+
 ## 설치안내
 
 1. 터미널 환경에서 git clone
@@ -21,40 +26,19 @@ npm i
 
 ## 사용 안내
 
-1. 사용 예
+1. 홈화면
+2. 사인업
+3. 로그인
+4. 실사용
 
-## Motivation
+## 주의 사항
 
-집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다.
-DOIT은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.
+google로그인과 history 기능은 아직 구현되지 않았습니다
 
-## 주요 파일 목록
-
-```
-components/
-    Login/
-    Sign/
-    Write/
-    Layout.js
-    TodoCalendar.js
-    TodoCard.js
-pages/
-    _app.js
-    _document.js
-    index.js
-    login.js
-    sign.js
-    timer.js
-    todoHistory.js
-```
-
-## 추가 될 요소
+## advanced
 
 1. timer 알람
-2. 헤더
-3. 캘린더 기능 강화
-
-## 알려진 오류
+2. history
 
 ## 배포자 및 사용자 정보
 

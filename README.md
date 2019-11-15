@@ -27,6 +27,7 @@ npm i
 ## 사용 안내
 
 1. 홈화면
+   ![firstPage](./image/firstPage.png)
 2. 사인업
 3. 로그인
 4. 실사용

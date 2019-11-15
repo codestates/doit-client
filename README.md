@@ -29,8 +29,11 @@ npm i
 1. 홈화면
    ![firstPage](./image/firstPage.png)
 2. 사인업
+   ![signPage](./image/signPage.png)
 3. 로그인
-4. 실사용
+   ![loginPage](./image/loginPage.png)
+4. 타이머
+   ![timerPage](./image/timerPage.png)
 
 ## 주의 사항
 

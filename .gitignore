@@ -1,0 +1,11 @@
+## node modulse
+node_modules
+
+## next
+.next
+
+## pem
+*.pem
+
+## script
+connect.sh

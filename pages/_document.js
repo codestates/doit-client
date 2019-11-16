@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
 
     // Step 2: Retrieve styles from components in the page
     const page = renderPage(App => props =>
-      sheet.collectStyles(<App {...props} />)
+      sheet.collectStyles(<App {...props} />),
     );
 
     // Step 3: Extract the styles as <style> tags
@@ -27,10 +27,9 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
-        
+
           {/* Step 5: Output the styles in the head  */}
           {this.props.styleTags}
-          
         </Head>
         <body>
           <Main />

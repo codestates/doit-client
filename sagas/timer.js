@@ -1,6 +1,7 @@
 import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
+import { getCookie } from '../utils/cookieHelper';
 import {
   START_TIMER_AND_TODO_CREATE_SUCCESS,
   START_TIMER_AND_TODO_CREATE_FAILURE,
@@ -12,6 +13,9 @@ import {
 
 function startTimerAndTodoCreateAPI(todoCreateData) {
   // console.log('SAGA: ', todoCreateData);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie(
+    'token',
+  )}`;
   return axios.post(`/todo`, todoCreateData, {
     withCredentials: true,
   });
@@ -26,7 +30,7 @@ function* startTimerAndTodoCreate(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_FAILURE,
       error: e,
@@ -42,6 +46,9 @@ function* watchstartTimerAndTodoCreate() {
 }
 
 function todoCompleteAPI(todoCompleteData) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie(
+    'token',
+  )}`;
   return axios.patch(`/todo`, todoCompleteData, {
     withCredentials: true,
   });
@@ -55,7 +62,7 @@ function* todoComplete(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     yield put({
       type: TODO_COMPLETE_FAILURE,
       error: e,

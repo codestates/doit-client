@@ -1,6 +1,7 @@
 import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
+import { getCookie } from '../utils/cookieHelper';
 import {
   LOAD_TODOS_REQUEST,
   LOAD_TODOS_SUCCESS,
@@ -8,6 +9,9 @@ import {
 } from '../reducers/todoHistory';
 
 function loadTodosAPI(date) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie(
+    'token',
+  )}`;
   return axios.get(`/todos/${date}`, {
     withCredentials: true,
   });
@@ -21,7 +25,7 @@ function* loadTodos(action) {
       data: result.data.data,
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     yield put({
       type: LOAD_TODOS_FAILURE,
       error: e,

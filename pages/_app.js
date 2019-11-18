@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import withReduxSaga from 'next-redux-saga';
 import axios from 'axios';
 
+import { getCookie } from '../utils/cookieHelper';
 import AppLayout from '../components/AppLayout';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
@@ -23,7 +24,7 @@ const DoIt = ({ Component, store, pageProps }) => {
         />
       </Head>
       <AppLayout>
-        <Component {...pageProps}/>
+        <Component {...pageProps} />
       </AppLayout>
     </Provider>
   );
@@ -32,18 +33,23 @@ const DoIt = ({ Component, store, pageProps }) => {
 DoIt.getInitialProps = async (context) => {
   const { ctx, Component } = context;
   // console.log('_app - getInitialProps - ctx: ', ctx);
-  let pageProps = {};
-  const state = ctx.store.getState();
-  const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
-  if (ctx.isServer && cookie) {
-  // axios.defaults.headers.Cookie = '';
-    axios.defaults.headers.Cookie = cookie;
+
+  if (ctx.isServer && ctx.req.headers.cookie) {
+    const token = getCookie('token', ctx.req);
+    // console.log('CTX - isServer: ', token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    axios.defaults.headers.common['Authorization'] = '';
   }
+
+  const state = ctx.store.getState();
   if (!state.user.me) {
     ctx.store.dispatch({
       type: LOAD_USER_REQUEST,
     });
   }
+
+  let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = (await Component.getInitialProps(ctx)) || {};
   }

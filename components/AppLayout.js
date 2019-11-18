@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Menu, Input, Row, Col } from 'antd';
+import { Menu, Input, Row, Col, Icon } from 'antd';
 
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
@@ -14,17 +14,23 @@ const AppLayout = ({ children }) => {
       <Menu mode="horizontal">
         <Menu.Item key="home">
           <Link href="/index">
-            <a>Home</a>
+            <a>
+              <Icon type="home" />
+              Home
+            </a>
           </Link>
         </Menu.Item>
         <Menu.Item key="history">
           <Link href="/todohistory">
-            <a>History</a>
+            <a>
+              <Icon type="history" />
+              History
+            </a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="search">
+        {/* <Menu.Item key="search">
           <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       <Row>
         <Col xs={24} md={6}>

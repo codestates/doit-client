@@ -26,14 +26,14 @@ const LoginForm = () => {
   return (
     <Form onSubmit={onSubmitForm} style={{ padding: '10px' }}>
       <div>
-        <label htmlFor="user-id">Id</label>
+        <label htmlFor="user-id">E-mail</label>
         <br />
-        <Input name="user-id" value={id} onChange={onChangeId} required />
+        <Input type="email" name="user-id" value={id} onChange={onChangeId} required />
       </div>
       <div>
         <label htmlFor="user-password">Password</label>
         <br />
-        <Input name="user-password" value={password} onChange={onChangePassword} type="password" required />
+        <Input type="password" name="user-password" value={password} onChange={onChangePassword} required />
       </div>
       <div style={{ marginTop: '10px' }}>
         <Button type="primary" htmlType="submit" loading={isLoggingIn}>Login</Button>

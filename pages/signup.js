@@ -44,9 +44,9 @@ const Signup = () => {
     <>
       <Form onSubmit={onSubmit} style={{ padding: 10 }}>
         <div>
-          <label htmlFor="user-id">Id</label>
+          <label htmlFor="user-id">E-mail</label>
           <br />
-          <Input name="user-id" value={id} required onChange={onChangeId} />
+          <Input type="email" name="user-id" value={id} required onChange={onChangeId} />
         </div>
         <div>
           <label htmlFor="user-nick">Nickname</label>
@@ -62,8 +62,8 @@ const Signup = () => {
           <label htmlFor="user-password">Password</label>
           <br />
           <Input
-            name="user-password"
             type="password"
+            name="user-password"
             value={password}
             required
             onChange={onChangePassword}

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Calendar } from 'antd';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -15,6 +15,13 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       date: moment(date).format('YYYY-MM-DD'),
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_TODOS_REQUEST,
+      date: moment().format('YYYY-MM-DD'),
     });
   }, []);
 

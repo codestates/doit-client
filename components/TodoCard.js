@@ -1,11 +1,15 @@
 import React from 'react';
-import { Card } from 'antd';
+import moment from 'moment';
+import { Card, Input } from 'antd';
+
+const { TextArea } = Input;
 
 const TodoCard = ({ todo }) => {
   const startTime = todo.timelines[0].startedAt;
+
   return (
     <Card
-      title={startTime}
+      title={moment(startTime).local().format('YYYY-MM-DD HH:mm:ss')}
       style={{
         border: '1px solid #d9d9d9',
         borderRadius: 4,
@@ -21,10 +25,10 @@ const TodoCard = ({ todo }) => {
         }}
       ></p>
       <Card type="inner" title="Todo">
-        {todo.todoContent}
+        <TextArea value={todo.todoContent} disabled style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
       </Card>
       <Card style={{ marginTop: 16 }} type="inner" title="Done">
-        {todo.doneContent}
+        <TextArea value={todo.doneContent} disabled style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
       </Card>
     </Card>
   );

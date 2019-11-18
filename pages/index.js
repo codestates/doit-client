@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Card, Input, Popconfirm, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
+import './index.css';
 
 import {
   ADD_SECOND,
@@ -14,10 +15,11 @@ import {
   TODO_COMPLETE_CLEANUP,
 } from '../reducers/timer';
 
-const messageComplete = `Todo를 모두 완료하셨나요?\n
-Done의 내용을 적어주세요.\n
-내용이 없을 경우 'OK'만 기록됩니다.\n
-이대로 저장하시겠어요?`;
+const alertMessage = {
+  complete: `Todo를 모두 완료하셨나요? Done의 내용을 적어주세요. 내용이 없을 경우 'OK'만 기록됩니다. 이대로 저장하시겠어요?`,
+  reset: '타이머와 Todo가 모두 초기화 됩니다. 진행할까요?',
+  timerEnd: '시간이 종료되었습니다. 계획한 일을 어떻게 되었나요? ​Done 항목에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.'
+}
 
 const Home = () => {
   const { TextArea } = Input;
@@ -26,7 +28,7 @@ const Home = () => {
   const {
     totalTime,
     elapsedTime,
-    isStarting,
+    isLoading,
     isStarted,
     isRunning,
     todoId,
@@ -106,8 +108,20 @@ const Home = () => {
 
   const onReset = useCallback(() => {
     dispatch({
+      type: PAUSE_TIMER,
+    });
+  }, []);
+
+  const onConfirmReset = useCallback(() => {
+    dispatch({
       type: RESET_TIMER,
     });
+    setTodoContent('');
+    setDoneContent('');
+  }, [doneContent]);
+
+  const onCancelReset = useCallback(() => {
+    message.success('취소했습니다.');
   }, []);
 
   const onClickTimeSetting = useCallback(
@@ -138,6 +152,9 @@ const Home = () => {
       setTimer(interval);
     } else {
       clearInterval(timer);
+      if (totalTime === elapsedTime) {
+        alert(alertMessage.timerEnd);
+      }
     }
     return () => clearInterval(timer);
   }, [isRunning]);
@@ -156,16 +173,16 @@ const Home = () => {
   return (
     <div>
       <div style={{ padding: '10px' }}>
-        <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)}>
+        <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)} disabled={isRunning}>
           6s
         </Button>
-        <Button key="m25" type="dashed" onClick={onClickTimeSetting(25)}>
+        <Button key="m25" type="dashed" onClick={onClickTimeSetting(25)} disabled={isRunning}>
           25
         </Button>
-        <Button key="m45" type="dashed" onClick={onClickTimeSetting(45)}>
+        <Button key="m45" type="dashed" onClick={onClickTimeSetting(45)} disabled={isRunning}>
           45
         </Button>
-        <Button key="m60" type="dashed" onClick={onClickTimeSetting(60)}>
+        <Button key="m60" type="dashed" onClick={onClickTimeSetting(60)} disabled={isRunning}>
           60
         </Button>
       </div>
@@ -179,6 +196,7 @@ const Home = () => {
             onChange={onChangeTodoContent}
             placeholder="할 일을 적어주세요."
             autoSize={{ minRows: 2 }}
+            disabled={isStarted}
           />
         </Card>
         <Card style={{ marginTop: 16, width: '80%' }} type="inner" title="Done">
@@ -191,17 +209,17 @@ const Home = () => {
         </Card>
         {!isStarted ? (
           // start button을 클릭하면
-          // isStarting false -> true
+          // isLoading false -> true
           // isStarted: false
           // isRunning: false
           // start request -> success
-          // isStarting true -> false
+          // isLoading true -> false
           // isStarted: true
           // isRunning: true
           <Button
             type="primary"
             onClick={onStart}
-            loading={isStarting}
+            loading={isLoading}
             style={{ width: '70%' }}
           >
             Start
@@ -228,7 +246,7 @@ const Home = () => {
               </Button>
             )}
             <Popconfirm
-              title={messageComplete}
+              title={alertMessage.complete}
               onConfirm={onConfirmComplete}
               onCancel={onCancelComplete}
               okText="Yes"
@@ -244,13 +262,21 @@ const Home = () => {
             </Popconfirm>
           </span>
         )}
-        <Button
-          type="danger"
-          onClick={onReset}
-          style={{ marginTop: '16px', width: '10%' }}
-        >
-          Reset
-        </Button>
+        <Popconfirm
+              title={alertMessage.reset}
+              onConfirm={onConfirmReset}
+              onCancel={onCancelReset}
+              okText="Yes"
+              cancelText="No"
+            >
+          <Button
+            type="danger"
+            onClick={onReset}
+            style={{ marginTop: '16px', width: '10%' }}
+          >
+            Reset
+          </Button>
+        </Popconfirm>
       </div>
     </div>
   );

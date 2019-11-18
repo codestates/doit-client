@@ -24,7 +24,7 @@ const initialState = {
   totalTime: DEFAULT_TIME,
   elapsedTime: 0,
   isStarted: false, // start -> complete
-  isStarting: false, // start -> pause
+  isLoading: false, // start -> pause
   isRunning: false, // pause -> resume
   isSavingTodo: false, // todo 저장 시도 중
   isSaveTodoSuccess: false, // todo 저장 성공 여부
@@ -84,7 +84,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         elapsedTime: 0,
         isStarted: false,
-        isStarting: false,
+        isLoading: false,
         isRunning: false,
       };
     }
@@ -119,7 +119,7 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
   return {
     ...state,
     isStarted: false,
-    isStarting: true,
+    isLoading: true,
     isRunning: false,
   };
 };
@@ -129,7 +129,7 @@ const applyStartTimerAndTodoCreateSuccess = (state, action) => {
   return {
     ...state,
     isStarted: true,
-    isStarting: false,
+    isLoading: false,
     isRunning: true,
     todoId: action.payload.todoId,
     timelineId: action.payload.timelineId,
@@ -140,7 +140,7 @@ const applyStartTimerAndTodoCreateFailure = (state, action) => {
   return {
     ...state,
     isStarted: false,
-    isStarting: false,
+    isLoading: false,
     isRunning: false,
     todoCreateError: action.error,
   };
@@ -162,7 +162,7 @@ const applyTodoCompleteSuccess = (state, action) => {
     ...state,
     elapsedTime: 0,
     isStarted: false,
-    isStarting: false,
+    isLoading: false,
     isSavingTodo: false,
     isSaveTodoSuccess: true,
   };
@@ -173,7 +173,7 @@ const applyTodoCompleteFailure = (state, action) => {
     ...state,
     elapsedTime: 0,
     isStarted: false,
-    isStarting: false,
+    isLoading: false,
     isSavingTodo: false,
     isSaveTodoSuccess: false,
     todoCompleteError: action.error,

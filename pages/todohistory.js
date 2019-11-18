@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Row, Col } from 'antd';
+import { Row, Col, BackTop } from 'antd';
 
 import TodoCalendar from '../components/TodoCalendar';
 import TodoCard from '../components/TodoCard';
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
+
+import './todohistory.css';
 
 const todoHistory = () => {
   const { todos } = useSelector((state) => state.todoHistory);
@@ -22,7 +24,10 @@ const todoHistory = () => {
           })}
         </Col>
       </Row>
-    </div>
+      <BackTop>
+        <div className="ant-back-top-inner">UP</div>
+      </BackTop>
+  </div>
   );
 };
 

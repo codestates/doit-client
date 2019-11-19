@@ -1,12 +1,11 @@
 import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
+import { setCookie, removeCookie } from '../utils/cookieHelper';
 import {
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
-  LOG_OUT_SUCCESS,
-  LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
@@ -22,12 +21,19 @@ function loginAPI(userData) {
 function* login(action) {
   try {
     const result = yield call(loginAPI, action.data);
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${result.data.data.token}`;
+    yield call(setCookie, {
+      key: 'token',
+      value: result.data.data.token,
+    });
     yield put({
       type: LOG_IN_SUCCESS,
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     yield put({
       type: LOG_IN_FAILURE,
       error: e,
@@ -39,23 +45,9 @@ function* watchLogin() {
   yield takeLatest(LOG_IN_REQUEST, login);
 }
 
-function logoutAPI() {
-  return axios.post(`/user/logout`, {}, { withCredentials: true });
-}
-
 function* logout() {
-  try {
-    yield call(logoutAPI);
-    yield put({
-      type: LOG_OUT_SUCCESS,
-    });
-  } catch (e) {
-    console.error(e);
-    yield put({
-      type: LOG_OUT_FAILURE,
-      error: e,
-    });
-  }
+  axios.defaults.headers.common['Authorization'] = '';
+  yield call(removeCookie, 'token');
 }
 
 function* watchLogout() {
@@ -74,7 +66,7 @@ function* loadUser() {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,

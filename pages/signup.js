@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Button, Form, Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../components/useInput';
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 const Signup = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
-  const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [termError, setTermError] = useState(false);
 
   const [id, onChangeId] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
+  const { me } = useSelector((state) => state.user);
+  const { isLoggingIn } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
+  useEffect(()=>{
+    if (me) {
+      window.location='/';
+    }
+  }, []);
+
+  const onSubmit = useCallback((e) => {
     e.preventDefault();
-    if (password !== passwordCheck) {
-      return setPasswordError(true);
-    }
-    if (!term) {
-      return setTermError(true);
-    }
-    console.log({
-      id,
-      nickname,
-      password,
-      passwordCheck,
-      term,
+
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        email: id,
+        nickname,
+        password,
+      },
     });
-  };
+  }, [id, nickname, password]);
 
   const onChangePasswordCheck = (e) => {
     setPasswordError(e.target.value !== password);
     setPasswordCheck(e.target.value);
-  };
-
-  const onChangeTerm = (e) => {
-    setTermError(false);
-    setTerm(e.target.checked);
   };
 
   return (
@@ -83,14 +83,8 @@ const Signup = () => {
             <div style={{ color: 'red' }}>Password is not correct.</div>
           )}
         </div>
-        <div>
-          <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
-            I accept the terms.
-          </Checkbox>
-          {termError && <div style={{ color: 'red' }}>Plz check term.</div>}
-        </div>
         <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isLoggingIn}>
             Signup
           </Button>
         </div>

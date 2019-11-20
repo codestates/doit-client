@@ -31,13 +31,13 @@ const todoHistory = () => {
   );
 };
 
-todoHistory.getInitialProps = async (context) => {
-  const today = moment().format('YYYY-MM-DD');
-  context.store.dispatch({
-    type: LOAD_TODOS_REQUEST,
-    data: today,
-  });
-};
+// todoHistory.getInitialProps = async (context) => {
+//   const today = moment().local().format('YYYY-MM-DD');
+//   context.store.dispatch({
+//     type: LOAD_TODOS_REQUEST,
+//     data: today,
+//   });
+// };
 
 
 export default todoHistory;

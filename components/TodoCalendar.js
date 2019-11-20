@@ -14,14 +14,18 @@ const TodoCalendar = () => {
   const onClickCalendar = useCallback((date) => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
-      date: moment(date).format('YYYY-MM-DD'),
+      data: {
+        date: moment(date).local().format('YYYY-MM-DD')
+      }
     });
   }, []);
 
   useEffect(() => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
-      date: moment().format('YYYY-MM-DD'),
+      data: {
+        date: moment().local().format('YYYY-MM-DD')
+      }
     });
   }, []);
 

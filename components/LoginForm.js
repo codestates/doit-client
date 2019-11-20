@@ -36,8 +36,16 @@ const LoginForm = () => {
         <Input type="password" name="user-password" value={password} onChange={onChangePassword} required />
       </div>
       <div style={{ marginTop: '10px' }}>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>Login</Button>
-        <Link href="/signup"><a><Button>Signup</Button></a></Link>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+          Login
+        </Button>
+        <Link href="/signup">
+          <a>
+            <Button>
+              Signup
+            </Button>
+          </a>
+        </Link>
       </div>
     </Form>
   );

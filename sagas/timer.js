@@ -9,6 +9,7 @@ import {
   TODO_COMPLETE_SUCCESS,
   TODO_COMPLETE_FAILURE,
   TODO_COMPLETE_REQUEST,
+  RESET_TIMER,
 } from '../reducers/timer';
 
 function startTimerAndTodoCreateAPI(todoCreateData) {
@@ -74,7 +75,32 @@ function* watchTodoComplete() {
   yield takeLatest(TODO_COMPLETE_REQUEST, todoComplete);
 }
 function* todoTimerSaga() {
-  yield all([fork(watchstartTimerAndTodoCreate), fork(watchTodoComplete)]);
+  yield all([fork(watchstartTimerAndTodoCreate), fork(watchTodoComplete), fork(watchTodoReset)]);
+}
+
+
+// reset
+function todoResetAPI(todoResetData) {
+  console.log('resetAPI', todoResetData);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie(
+    'token',
+  )}`;
+  return axios.delete(`/todo/${todoResetData.todoId}`, {
+    withCredentials: true,
+  });
+}
+
+function* todoReset(action) {
+  console.log('reset', action);
+  try {
+    yield call(todoResetAPI, action.data);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* watchTodoReset() {
+  yield takeLatest(RESET_TIMER, todoReset);
 }
 
 export default todoTimerSaga;

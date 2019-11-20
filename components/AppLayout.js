@@ -40,6 +40,7 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
       </Row>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">Feedback</a>
     </div>
   );
 };

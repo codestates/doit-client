@@ -64,7 +64,7 @@ const Home = () => {
       data: {
         todoContent: verified,
         duration: timeFormat(totalTime).total,
-        startedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        startedAt: moment().local().format('YYYY-MM-DD HH:mm:ss'),
       },
     });
   }, [todoContent]);
@@ -95,7 +95,7 @@ const Home = () => {
         doneContent: verified || 'OK',
         todoId,
         timelineId,
-        endedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        endedAt: moment().local().format('YYYY-MM-DD HH:mm:ss'),
       },
     });
     setTodoContent('');
@@ -115,10 +115,13 @@ const Home = () => {
   const onConfirmReset = useCallback(() => {
     dispatch({
       type: RESET_TIMER,
+      data: {
+        todoId,
+      },
     });
     setTodoContent('');
     setDoneContent('');
-  }, [doneContent]);
+  }, [todoId]);
 
   const onCancelReset = useCallback(() => {
     message.success('취소했습니다.');
@@ -173,16 +176,16 @@ const Home = () => {
   return (
     <div>
       <div style={{ padding: '10px' }}>
-        <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)} disabled={isRunning}>
+        {/* <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)} disabled={isStarted}>
           6s
-        </Button>
-        <Button key="m25" type="dashed" onClick={onClickTimeSetting(25)} disabled={isRunning}>
+        </Button> */}
+        <Button key="m25" type="dashed" onClick={onClickTimeSetting(25)} disabled={isStarted}>
           25
         </Button>
-        <Button key="m45" type="dashed" onClick={onClickTimeSetting(45)} disabled={isRunning}>
+        <Button key="m45" type="dashed" onClick={onClickTimeSetting(45)} disabled={isStarted}>
           45
         </Button>
-        <Button key="m60" type="dashed" onClick={onClickTimeSetting(60)} disabled={isRunning}>
+        <Button key="m60" type="dashed" onClick={onClickTimeSetting(60)} disabled={isStarted}>
           60
         </Button>
       </div>
@@ -205,6 +208,7 @@ const Home = () => {
             onChange={onChangeDoneContent}
             placeholder="한 일을 적어주세요."
             autoSize={{ minRows: 2 }}
+            disabled={!isStarted || isRunning}
           />
         </Card>
         {!isStarted ? (

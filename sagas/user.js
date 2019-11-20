@@ -79,7 +79,42 @@ function* watchLoadUser() {
 }
 
 function* todoHistorySaga() {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchLoadUser)]);
+  yield all([fork(watchLogin), fork(watchLogout), fork(watchLoadUser), fork(watchSignup)]);
+}
+
+
+//signup
+function signupAPI(userData) {
+  return axios.post(`/user/signup`, userData, {
+    withCredentials: true,
+  });
+}
+
+function* signup(action) {
+  try {
+    const result = yield call(signupAPI, action.data);
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${result.data.data.token}`;
+    yield call(setCookie, {
+      key: 'token',
+      value: result.data.data.token,
+    });
+    yield put({
+      type: LOG_IN_SUCCESS,
+      payload: result.data.data,
+    });
+  } catch (e) {
+    // console.error(e);
+    yield put({
+      type: LOG_IN_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchSignup() {
+  yield takeLatest(LOG_IN_REQUEST, signup);
 }
 
 export default todoHistorySaga;

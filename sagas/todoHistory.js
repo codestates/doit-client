@@ -8,18 +8,18 @@ import {
   LOAD_TODOS_FAILURE,
 } from '../reducers/todoHistory';
 
-function loadTodosAPI(date) {
+function loadTodosAPI(loadData) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${getCookie(
     'token',
   )}`;
-  return axios.get(`/todos/${date}`, {
+  return axios.get(`/todos/${loadData.date}`, {
     withCredentials: true,
   });
 }
 
 function* loadTodos(action) {
   try {
-    const result = yield call(loadTodosAPI, action.date);
+    const result = yield call(loadTodosAPI, action.data);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: result.data.data,

@@ -18,8 +18,9 @@ import {
 const alertMessage = {
   complete: `Todo를 모두 완료하셨나요? Done의 내용을 적어주세요. 내용이 없을 경우 'OK'만 기록됩니다. 이대로 저장하시겠어요?`,
   reset: '타이머와 Todo가 모두 초기화 됩니다. 진행할까요?',
-  timerEnd: '시간이 종료되었습니다. 계획한 일을 어떻게 되었나요? ​Done 항목에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.'
-}
+  timerEnd:
+    '시간이 종료되었습니다. 계획한 일을 어떻게 되었나요? ​Done 항목에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.',
+};
 
 const Home = () => {
   const { TextArea } = Input;
@@ -55,7 +56,13 @@ const Home = () => {
   };
 
   const onStart = useCallback(() => {
-    // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
+    console.log(
+      'UTC: ',
+      moment()
+        .utc()
+        .format(),
+    );
+    console.log('DEFAULT: ', moment().format());
     const verified = verifyContent(todoContent);
     if (!verified) {
       return message.error('Todo에 할 일을 적어주세요.');
@@ -65,7 +72,9 @@ const Home = () => {
       data: {
         todoContent: verified,
         duration: timeFormat(totalTime).total,
-        startedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        startedAt: moment()
+          .utc()
+          .format(),
       },
     });
   }, [todoContent]);
@@ -97,7 +106,9 @@ const Home = () => {
         doneContent: verified || 'OK',
         todoId,
         timelineId,
-        endedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        endedAt: moment()
+          .utc()
+          .format(),
       },
     });
     setTodoContent('');
@@ -181,13 +192,28 @@ const Home = () => {
         {/* <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)} disabled={isStarted}>
           6s
         </Button> */}
-        <Button key="m25" type="dashed" onClick={onClickTimeSetting(25)} disabled={isStarted}>
+        <Button
+          key="m25"
+          type="dashed"
+          onClick={onClickTimeSetting(25)}
+          disabled={isStarted}
+        >
           25
         </Button>
-        <Button key="m45" type="dashed" onClick={onClickTimeSetting(45)} disabled={isStarted}>
+        <Button
+          key="m45"
+          type="dashed"
+          onClick={onClickTimeSetting(45)}
+          disabled={isStarted}
+        >
           45
         </Button>
-        <Button key="m60" type="dashed" onClick={onClickTimeSetting(60)} disabled={isStarted}>
+        <Button
+          key="m60"
+          type="dashed"
+          onClick={onClickTimeSetting(60)}
+          disabled={isStarted}
+        >
           60
         </Button>
       </div>
@@ -269,12 +295,12 @@ const Home = () => {
           </span>
         )}
         <Popconfirm
-              title={alertMessage.reset}
-              onConfirm={onConfirmReset}
-              onCancel={onCancelReset}
-              okText="Yes"
-              cancelText="No"
-            >
+          title={alertMessage.reset}
+          onConfirm={onConfirmReset}
+          onCancel={onCancelReset}
+          okText="Yes"
+          cancelText="No"
+        >
           <Button
             type="danger"
             onClick={onReset}

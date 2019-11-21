@@ -6,7 +6,7 @@ import moment from 'moment';
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
 
 function onPanelChange(value, mode) {
-  console.log(value, mode);
+  // console.log(value, mode);
 }
 
 const TodoCalendar = () => {
@@ -15,7 +15,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment(date).local().format('YYYY-MM-DD')
+        date: moment(date).format('YYYY-MM-DD')
       }
     });
   }, []);
@@ -24,7 +24,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment().local().format('YYYY-MM-DD')
+        date: moment().format('YYYY-MM-DD')
       }
     });
   }, []);

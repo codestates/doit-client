@@ -55,6 +55,7 @@ const Home = () => {
   };
 
   const onStart = useCallback(() => {
+    // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
     const verified = verifyContent(todoContent);
     if (!verified) {
       return message.error('Todo에 할 일을 적어주세요.');
@@ -64,7 +65,7 @@ const Home = () => {
       data: {
         todoContent: verified,
         duration: timeFormat(totalTime).total,
-        startedAt: moment().local().format('YYYY-MM-DD HH:mm:ss'),
+        startedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
     });
   }, [todoContent]);
@@ -88,6 +89,7 @@ const Home = () => {
   }, []);
 
   const onConfirmComplete = useCallback(() => {
+    // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
     const verified = verifyContent(doneContent);
     dispatch({
       type: TODO_COMPLETE_REQUEST,
@@ -95,7 +97,7 @@ const Home = () => {
         doneContent: verified || 'OK',
         todoId,
         timelineId,
-        endedAt: moment().local().format('YYYY-MM-DD HH:mm:ss'),
+        endedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
       },
     });
     setTodoContent('');

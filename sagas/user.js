@@ -10,6 +10,9 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
   LOAD_USER_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
+  SIGN_UP_REQUEST,
 } from '../reducers/user';
 
 function loginAPI(userData) {
@@ -78,11 +81,6 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
-function* todoHistorySaga() {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchLoadUser), fork(watchSignup)]);
-}
-
-
 //signup
 function signupAPI(userData) {
   return axios.post(`/user/signup`, userData, {
@@ -101,20 +99,28 @@ function* signup(action) {
       value: result.data.data.token,
     });
     yield put({
-      type: LOG_IN_SUCCESS,
+      type: SIGN_UP_SUCCESS,
       payload: result.data.data,
     });
   } catch (e) {
-    // console.error(e);
     yield put({
-      type: LOG_IN_FAILURE,
+      type: SIGN_UP_FAILURE,
       error: e,
     });
   }
 }
 
 function* watchSignup() {
-  yield takeLatest(LOG_IN_REQUEST, signup);
+  yield takeLatest(SIGN_UP_REQUEST, signup);
+}
+
+function* todoHistorySaga() {
+  yield all([
+    fork(watchLogin),
+    fork(watchLogout),
+    fork(watchLoadUser),
+    fork(watchSignup),
+  ]);
 }
 
 export default todoHistorySaga;

@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
 
 import useInput from '../components/useInput';
-import { LOG_IN_REQUEST } from '../reducers/user';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 const Signup = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -13,27 +14,30 @@ const Signup = () => {
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const { me } = useSelector((state) => state.user);
-  const { isLoggingIn } = useSelector(state => state.user);
+  const { isSigningUp } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (me) {
-      window.location='/';
+      Router.push('/index');
     }
-  }, []);
+  }, [me && me.id]);
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    dispatch({
-      type: LOG_IN_REQUEST,
-      data: {
-        email: id,
-        nickname,
-        password,
-      },
-    });
-  }, [id, nickname, password]);
+      dispatch({
+        type: SIGN_UP_REQUEST,
+        data: {
+          email: id,
+          nickname,
+          password,
+        },
+      });
+    },
+    [id, nickname, password],
+  );
 
   const onChangePasswordCheck = (e) => {
     setPasswordError(e.target.value !== password);
@@ -46,7 +50,13 @@ const Signup = () => {
         <div>
           <label htmlFor="user-id">E-mail</label>
           <br />
-          <Input type="email" name="user-id" value={id} required onChange={onChangeId} />
+          <Input
+            type="email"
+            name="user-id"
+            value={id}
+            required
+            onChange={onChangeId}
+          />
         </div>
         <div>
           <label htmlFor="user-nick">Nickname</label>
@@ -84,7 +94,7 @@ const Signup = () => {
           )}
         </div>
         <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+          <Button type="primary" htmlType="submit" loading={isSigningUp}>
             Signup
           </Button>
         </div>

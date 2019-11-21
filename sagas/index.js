@@ -10,7 +10,7 @@ import timer from './timer';
 //     ? 'http://api.doitreviews.com:8085/api'
 //     : `http://localhost:8085/api`;
 
-axios.defaults.baseURL = 'http://api.doitreviews.com:8085/api';
+axios.defaults.baseURL = 'http://api.doitreviews.com/api';
 
 function* rootSaga() {
   yield all([call(todoHistory), call(user), call(timer)]);

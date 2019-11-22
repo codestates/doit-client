@@ -105,7 +105,7 @@ function* signup(action) {
   } catch (e) {
     yield put({
       type: SIGN_UP_FAILURE,
-      error: e,
+      error: e.response.data.message,
     });
   }
 }

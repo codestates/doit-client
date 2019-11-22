@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -14,14 +14,17 @@ const Signup = () => {
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const { me } = useSelector((state) => state.user);
-  const { isSigningUp } = useSelector((state) => state.user);
+  const { isSigningUp, signUpError } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (me) {
       Router.push('/index');
     }
-  }, [me && me.id]);
+    if (signUpError !== '') {
+      message.error(signUpError);
+    }
+  }, [me && me.id, signUpError]);
 
   const onSubmit = useCallback(
     (e) => {

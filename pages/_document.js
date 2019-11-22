@@ -4,8 +4,8 @@ import Document, { Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static getInitialProps(context) {
-    const page = context.renderPage((App) => (props) => <App {...props} />);
-    return { ...page, helmet: Helmet.renderStatic() };
+    const app = context.renderPage((App) => (props) => <App {...props} />);
+    return { ...app, helmet: Helmet.renderStatic() };
   }
 
   render() {
@@ -15,9 +15,7 @@ class MyDocument extends Document {
 
     return (
       <html {...htmlAttrs}>
-        <head>
-          {Object.values(helmet).map((el) => el.toComponent())}
-        </head>
+        <head>{Object.values(helmet).map((el) => el.toComponent())}</head>
         <body {...bodyAttrs}>
           <Main />
           <NextScript />

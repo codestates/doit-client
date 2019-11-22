@@ -1,11 +1,11 @@
 import React from 'react';
-import Head from 'next/head';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import createSagaMiddleware from 'redux-saga';
 import withReduxSaga from 'next-redux-saga';
 import axios from 'axios';
+import Helmet from 'react-helmet';
 
 import { getCookie } from '../utils/cookieHelper';
 import AppLayout from '../components/AppLayout';
@@ -16,13 +16,32 @@ import { LOAD_USER_REQUEST } from '../reducers/user';
 const DoIt = ({ Component, store, pageProps }) => {
   return (
     <Provider store={store}>
-      <Head>
-        <title>Do it!</title>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css"
-        />
-      </Head>
+      <Helmet
+        title="DoIt!"
+        htmlAttributes={{ lang: 'ko' }}
+        meta={[
+          { charset: 'UTF-8' },
+          {
+            name: 'description',
+            content:
+              '집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다. DoIt!은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.',
+          },
+          { name: 'og:title', content: 'DoIt!' },
+          {
+            name: 'og:description',
+            content:
+              '집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다. DoIt!은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.',
+          },
+          { property: 'og:type', content: 'website' },
+          { property: 'og:url', content: 'https://doitreviews.com' },
+        ]}
+        link={[
+          {
+            rel: 'stylesheet',
+            href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css',
+          },
+        ]}
+      />
       <AppLayout>
         <Component {...pageProps} />
       </AppLayout>

@@ -12,6 +12,10 @@ import timer from './timer';
 
 axios.defaults.baseURL = 'https://api.doitreviews.com/api';
 
+export const setToken = (f) => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${f()}`;
+};
+
 function* rootSaga() {
   yield all([call(todoHistory), call(user), call(timer)]);
 }

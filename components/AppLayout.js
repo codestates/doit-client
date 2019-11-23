@@ -1,47 +1,101 @@
 import React from 'react';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Menu, Input, Row, Col, Icon } from 'antd';
+import { Layout, Row, Col, Button, Divider } from 'antd';
 
+import Header from './Header';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
+
+const { Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state.user);
 
   return (
-    <div>
-      <Menu mode="horizontal">
-        <Menu.Item key="home">
-          <Link href="/index">
-            <a>
-              <Icon type="home" />
-              Home
-            </a>
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="history">
-          <Link href="/todohistory">
-            <a>
-              <Icon type="history" />
-              History
-            </a>
-          </Link>
-        </Menu.Item>
-        {/* <Menu.Item key="search">
-          <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
-        </Menu.Item> */}
-      </Menu>
-      <Row>
-        <Col xs={24} md={6}>
-          {me ? <UserProfile /> : <LoginForm />}
-        </Col>
-        <Col xs={24} md={18}>
-          {children}
-        </Col>
-      </Row>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">Feedback</a>
-    </div>
+    <Layout>
+      <Header />
+
+      <Content>
+        <div className="wrapper">
+          <Row>
+            <Col xs={24} md={{ span: 8 }}>
+              <div className="user">
+                {me ? <UserProfile /> : <LoginForm />}
+              </div>
+              <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
+                Feedback
+              </Button>
+              <Divider className="user-bottom-line" />
+            </Col>
+            <Col xs={24} md={{ span: 14, push: 2 }}>
+              {children}
+            </Col>
+          </Row>
+        </div>
+      </Content>
+      <style jsx global>{`
+        .wrapper {
+          max-width: 800px;
+          width: 95%;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        .ant-col>button {
+          width: 100%;
+        }
+
+        button.ant-btn {
+          margin-bottom: 10px;
+        }
+
+        a.ant-btn {
+          width: 100%;
+        }
+
+        div.user {
+          margin: 20px 0;
+          padding: 10px;
+          background: #fff;
+          border: 1px solid #ededed;
+          border-radius: 4px;
+          height: 120px;
+          display: flex;
+        }
+        
+        section.ant-layout {
+          background: #fff;
+          margin-bottom: 40px;
+        }
+        
+        ul.ant-menu-horizontal {
+          /* border: 0; */
+        }
+        
+        textarea.ant-input {
+          resize: none;
+        }
+
+        .user-bottom-line {
+          margin: 30px 0; 
+        }
+        @media (min-width: 768px) {
+          .user-bottom-line {
+            display: none;
+          }  
+        }
+
+        .feedback {
+          background: rgba(0, 0, 0, 0.85);
+          color: #fff;
+          border: 0;
+        }
+        .feedback:hover {
+          background: rgba(0, 0, 0, 0.7);
+          color: #fff;
+        }
+      `}</style>
+    </Layout>
   );
 };
 

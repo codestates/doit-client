@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button, Form, Input } from 'antd';
-import Link from 'next/link';
+import { Row, Col, Button, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from './useInput';
@@ -24,29 +23,39 @@ const LoginForm = () => {
   }, [id, password]);
 
   return (
-    <Form onSubmit={onSubmitForm} style={{ padding: '10px' }}>
-      <div>
-        <label htmlFor="user-id">E-mail</label>
-        <br />
-        <Input type="email" name="user-id" value={id} onChange={onChangeId} required />
-      </div>
-      <div>
-        <label htmlFor="user-password">Password</label>
-        <br />
-        <Input type="password" name="user-password" value={password} onChange={onChangePassword} required />
-      </div>
-      <div style={{ marginTop: '10px' }}>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
-          Login
-        </Button>
-        <Link href="/signup">
-          <a>
-            <Button>
-              Signup
-            </Button>
-          </a>
-        </Link>
-      </div>
+    <Form onSubmit={onSubmitForm}>
+      <Row type="flex" justify="space-between" align="middle">
+        <Col xs={16}>
+          <label htmlFor="user-id">
+            <Input type="email" name="user-id" value={id} onChange={onChangeId} placeholder="E-mail" required />
+          </label>
+          <label htmlFor="user-password">
+            <Input type="password" name="user-password" value={password} onChange={onChangePassword} placeholder="Password" required />
+          </label>
+        </Col>
+
+        <Col xs={7}>
+          <Button className="btn-login" type="primary" htmlType="submit" loading={isLoggingIn}>
+            Login
+          </Button>
+        </Col>
+      </Row>
+      <style jsx global>{`
+        form.ant-form {
+          display: flex;
+          width: 100%;
+        }
+        form.ant-form>div {
+          width: 100%;
+        }
+        form.ant-form input {
+          margin: 5px 0;
+        }
+        .btn-login {
+          height: 73px;
+          margin: 5px 0;
+        }
+      `}</style>
     </Form>
   );
 };

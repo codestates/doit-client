@@ -24,11 +24,19 @@ const TodoCard = ({ todo }) => {
           fontWeight: 500,
         }}
       ></p>
-      <Card type="inner" title="Todo">
-        <TextArea value={todo.todoContent} disabled style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
+      <Card type="inner" title="Todo" style={{ borderRadius: 4 }}>
+        <TextArea
+          value={todo.todoContent}
+          disabled
+          autoSize={{ minRows: 2 }}
+          style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
       </Card>
-      <Card style={{ marginTop: 16 }} type="inner" title="Done">
-        <TextArea value={todo.doneContent} disabled style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
+      <Card type="inner" title="Done" style={{ marginTop: 10, borderRadius: 4 }}>
+        <TextArea
+          value={todo.doneContent}
+          autoSize={{ minRows: 2 }}
+          disabled
+          style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
       </Card>
     </Card>
   );

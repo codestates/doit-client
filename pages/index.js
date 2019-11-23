@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Layout, Typography, Row, Col, Radio, Button, Card, Input, Popconfirm, message } from 'antd';
+import {
+  Typography,
+  Row,
+  Col,
+  Radio,
+  Button,
+  Card,
+  Input,
+  Popconfirm,
+  message,
+} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -13,13 +23,7 @@ import {
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
 } from '../reducers/timer';
-
-const alertMessage = {
-  complete: `Todo를 모두 완료하셨나요? Done의 내용을 적어주세요. 내용이 없을 경우 'OK'만 기록됩니다. 이대로 저장하시겠어요?`,
-  reset: '타이머와 Todo가 모두 초기화 됩니다. 진행할까요?',
-  timerEnd:
-    '시간이 종료되었습니다. 계획한 일을 어떻게 되었나요? ​Done 항목에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.',
-};
+import messages from '../config/messages';
 
 const { Title } = Typography;
 
@@ -58,16 +62,9 @@ const Home = () => {
   };
 
   const onStart = useCallback(() => {
-    console.log(
-      'UTC: ',
-      moment()
-        .utc()
-        .format(),
-    );
-    console.log('DEFAULT: ', moment().format());
     const verified = verifyContent(todoContent);
     if (!verified) {
-      return message.error('Todo에 할 일을 적어주세요.');
+      return message.error(messages.todoContentEmpty);
     }
     dispatch({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
@@ -118,7 +115,7 @@ const Home = () => {
   }, [doneContent, todoId, timelineId]);
 
   const onCancelComplete = useCallback(() => {
-    message.success('취소했습니다.');
+    message.success(messages.cancel);
   }, []);
 
   const onReset = useCallback(() => {
@@ -139,7 +136,7 @@ const Home = () => {
   }, [todoId]);
 
   const onCancelReset = useCallback(() => {
-    message.success('취소했습니다.');
+    message.success(messages.cancel);
   }, []);
 
   const onClickTimeSetting = useCallback((e) => {
@@ -168,7 +165,7 @@ const Home = () => {
     } else {
       clearInterval(timer);
       if (totalTime === elapsedTime) {
-        alert(alertMessage.timerEnd);
+        alert(messages.timerEnd);
       }
     }
     return () => clearInterval(timer);
@@ -176,9 +173,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!isSavingTodo && isSaveTodoSuccess) {
-      message.success(
-        '수고하셨습니다! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ) 조금 쉬시고 다시 시작하세요~',
-      );
+      message.success(messages.complete);
       dispatch({
         type: TODO_COMPLETE_CLEANUP,
       });
@@ -189,7 +184,11 @@ const Home = () => {
     <div className="timer">
       <div className="clock">
         <Title level={2}>{timeFormat(totalTime - elapsedTime).total}</Title>
-        <Radio.Group className="select-time" onChange={onClickTimeSetting} disabled={isStarted || !me}>
+        <Radio.Group
+          className="select-time"
+          onChange={onClickTimeSetting}
+          disabled={isStarted || !me}
+        >
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>
@@ -202,7 +201,7 @@ const Home = () => {
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
-              placeholder="할 일을 적어주세요."
+              placeholder={messages.writeTodo}
               autoSize={{ minRows: 2 }}
               disabled={isStarted || !me}
             />
@@ -211,7 +210,7 @@ const Home = () => {
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}
-              placeholder="한 일을 적어주세요."
+              placeholder={messages.writeDone}
               autoSize={{ minRows: 2 }}
               disabled={!isStarted || isRunning}
             />
@@ -244,17 +243,13 @@ const Home = () => {
           <>
             <Col xs={24} md={4}>
               <Popconfirm
-                title={alertMessage.reset}
+                title={messages.reset}
                 onConfirm={onConfirmReset}
                 onCancel={onCancelReset}
                 okText="Yes"
                 cancelText="No"
               >
-                <Button
-                  type="danger"
-                  ghost
-                  onClick={onReset}
-                >
+                <Button type="danger" ghost onClick={onReset}>
                   Reset
                 </Button>
               </Popconfirm>
@@ -262,26 +257,18 @@ const Home = () => {
 
             <Col xs={24} md={9}>
               {isRunning ? (
-                <Button
-                  type="primary"
-                  ghost
-                  onClick={onPause}
-                >
+                <Button type="primary" ghost onClick={onPause}>
                   Pause
                 </Button>
               ) : (
-                <Button
-                  type="primary"
-                  ghost
-                  onClick={onResume}
-                >
+                <Button type="primary" ghost onClick={onResume}>
                   Resume
                 </Button>
               )}
             </Col>
             <Col xs={24} md={9}>
               <Popconfirm
-                title={alertMessage.complete}
+                title={messages.doneContentEmpty}
                 onConfirm={onConfirmComplete}
                 onCancel={onCancelComplete}
                 okText="Yes"
@@ -300,10 +287,10 @@ const Home = () => {
         )}
       </Row>
       <style jsx global>{`
-        .timer>div {
+        .timer > div {
           margin-top: 20px;
         }
-        
+
         div.clock {
           text-align: center;
           padding-bottom: 10px;
@@ -312,22 +299,22 @@ const Home = () => {
           border-radius: 20px;
         }
 
-        .clock>h2.ant-typography {
+        .clock > h2.ant-typography {
           font-size: 8vw;
           margin-bottom: 0;
         }
-      
+
         @media (max-width: 767px) {
-          .clock>h2.ant-typography {
+          .clock > h2.ant-typography {
             font-size: 20vw;
           }
         }
-        
+
         .select-time {
           width: 100%;
           text-align: center;
         }
-        
+
         .ant-popover-message-title {
           width: 300px;
         }

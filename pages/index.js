@@ -242,7 +242,7 @@ const Home = () => {
           </Col>
         ) : (
           <>
-            <Col xs={24} lg={4}>
+            <Col xs={24} md={4}>
               <Popconfirm
                 title={alertMessage.reset}
                 onConfirm={onConfirmReset}
@@ -260,7 +260,7 @@ const Home = () => {
               </Popconfirm>
             </Col>
 
-            <Col xs={24} lg={9}>
+            <Col xs={24} md={9}>
               {isRunning ? (
                 <Button
                   type="primary"
@@ -279,7 +279,7 @@ const Home = () => {
                 </Button>
               )}
             </Col>
-            <Col xs={24} lg={9}>
+            <Col xs={24} md={9}>
               <Popconfirm
                 title={alertMessage.complete}
                 onConfirm={onConfirmComplete}

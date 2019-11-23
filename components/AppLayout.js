@@ -46,7 +46,8 @@ const AppLayout = ({ children }) => {
         }
 
         button.ant-btn {
-          margin-bottom: 10px;
+          margin-top: 5px;
+          margin-bottom: 5px;
         }
 
         a.ant-btn {

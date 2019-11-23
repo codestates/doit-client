@@ -13,7 +13,7 @@ app.prepare().then(() => {
   const server = express();
 
   if (process.env.NODE_ENV === 'production') {
-    server.use(morgan('conbined'));
+    server.use(morgan('combined'));
   } else {
     server.use(morgan('dev'));
   }

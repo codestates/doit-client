@@ -13,9 +13,9 @@ app.prepare().then(() => {
   const server = express();
 
   if (process.env.NODE_ENV === 'production') {
-    server.use(morgan('dev'));
-  } else {
     server.use(morgan('conbined'));
+  } else {
+    server.use(morgan('dev'));
   }
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));

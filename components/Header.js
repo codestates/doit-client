@@ -20,15 +20,16 @@ const HeaderComponent = () => {
               </a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="history">
-            <Link href="/todohistory">
-              <a>
-                <Icon type="history" />
-                History
-              </a>
-            </Link>
-          </Menu.Item>
-          {!me && (
+          {me ? (
+            <Menu.Item key="history">
+              <Link href="/todohistory">
+                <a>
+                  <Icon type="history" />
+                  History
+                </a>
+              </Link>
+            </Menu.Item>
+            ) : (
             <Menu.Item key="signup">
               <Link href="/signup">
                 <a>

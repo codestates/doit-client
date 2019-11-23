@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, Card, Input, Popconfirm, message } from 'antd';
+import { Layout, Typography, Row, Col, Radio, Button, Card, Input, Popconfirm, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import './index.css';
 
 import {
   ADD_SECOND,
@@ -22,6 +21,8 @@ const alertMessage = {
     '시간이 종료되었습니다. 계획한 일을 어떻게 되었나요? ​Done 항목에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.',
 };
 
+const { Title } = Typography;
+
 const Home = () => {
   const { TextArea } = Input;
   const [todoContent, setTodoContent] = useState('');
@@ -37,6 +38,7 @@ const Home = () => {
     isSavingTodo,
     isSaveTodoSuccess,
   } = useSelector((state) => state.timer);
+  const { me } = useSelector((state) => state.user);
   const [timer, setTimer] = useState('');
   const dispatch = useDispatch();
 
@@ -140,15 +142,12 @@ const Home = () => {
     message.success('취소했습니다.');
   }, []);
 
-  const onClickTimeSetting = useCallback(
-    (time) => () => {
-      dispatch({
-        type: SET_TIMER,
-        time: time * 60,
-      });
-    },
-    [],
-  );
+  const onClickTimeSetting = useCallback((e) => {
+    dispatch({
+      type: SET_TIMER,
+      time: e.target.value * 60,
+    });
+  }, []);
 
   const onChangeTodoContent = useCallback((e) => {
     setTodoContent(e.target.value);
@@ -187,129 +186,157 @@ const Home = () => {
   }, [isSavingTodo === false, isSaveTodoSuccess === true]);
 
   return (
-    <div>
-      <div style={{ padding: '10px' }}>
-        {/* <Button key="s1" type="dashed" onClick={onClickTimeSetting(0.1)} disabled={isStarted}>
-          6s
-        </Button> */}
-        <Button
-          key="m25"
-          type="dashed"
-          onClick={onClickTimeSetting(25)}
-          disabled={isStarted}
-        >
-          25
-        </Button>
-        <Button
-          key="m45"
-          type="dashed"
-          onClick={onClickTimeSetting(45)}
-          disabled={isStarted}
-        >
-          45
-        </Button>
-        <Button
-          key="m60"
-          type="dashed"
-          onClick={onClickTimeSetting(60)}
-          disabled={isStarted}
-        >
-          60
-        </Button>
+    <div className="timer">
+      <div className="clock">
+        <Title level={2}>{timeFormat(totalTime - elapsedTime).total}</Title>
+        <Radio.Group className="select-time" onChange={onClickTimeSetting} disabled={isStarted || !me}>
+          <Radio.Button value="25">25</Radio.Button>
+          <Radio.Button value="45">45</Radio.Button>
+          <Radio.Button value="60">60</Radio.Button>
+        </Radio.Group>
       </div>
-      <div style={{ fontSize: '80px', padding: '10px' }}>
-        <div>{timeFormat(totalTime - elapsedTime).total}</div>
-      </div>
-      <div>
-        <Card type="inner" title="Todo" style={{ width: '80%' }}>
-          <TextArea
-            value={todoContent}
-            onChange={onChangeTodoContent}
-            placeholder="할 일을 적어주세요."
-            autoSize={{ minRows: 2 }}
-            disabled={isStarted}
-          />
-        </Card>
-        <Card style={{ marginTop: 16, width: '80%' }} type="inner" title="Done">
-          <TextArea
-            value={doneContent}
-            onChange={onChangeDoneContent}
-            placeholder="한 일을 적어주세요."
-            autoSize={{ minRows: 2 }}
-            disabled={!isStarted || isRunning}
-          />
-        </Card>
+
+      <Row>
+        <Col>
+          <Card type="inner" title="Todo">
+            <TextArea
+              value={todoContent}
+              onChange={onChangeTodoContent}
+              placeholder="할 일을 적어주세요."
+              autoSize={{ minRows: 2 }}
+              disabled={isStarted || !me}
+            />
+          </Card>
+          <Card type="inner" title="Done">
+            <TextArea
+              value={doneContent}
+              onChange={onChangeDoneContent}
+              placeholder="한 일을 적어주세요."
+              autoSize={{ minRows: 2 }}
+              disabled={!isStarted || isRunning}
+            />
+          </Card>
+        </Col>
+      </Row>
+
+      <Row type="flex" justify="space-between">
+        {/* start button을 클릭하면
+            isLoading false -> true
+            isStarted: false
+            isRunning: false
+            start request -> success
+            isLoading true -> false
+            isStarted: true
+            isRunning: true
+        */}
         {!isStarted ? (
-          // start button을 클릭하면
-          // isLoading false -> true
-          // isStarted: false
-          // isRunning: false
-          // start request -> success
-          // isLoading true -> false
-          // isStarted: true
-          // isRunning: true
-          <Button
-            type="primary"
-            onClick={onStart}
-            loading={isLoading}
-            style={{ width: '70%' }}
-          >
-            Start
-          </Button>
-        ) : (
-          <span>
-            {isRunning ? (
-              <Button
-                type="primary"
-                ghost
-                onClick={onPause}
-                style={{ width: '35%' }}
-              >
-                Pause
-              </Button>
-            ) : (
-              <Button
-                type="primary"
-                ghost
-                onClick={onResume}
-                style={{ width: '35%' }}
-              >
-                Resume
-              </Button>
-            )}
-            <Popconfirm
-              title={alertMessage.complete}
-              onConfirm={onConfirmComplete}
-              onCancel={onCancelComplete}
-              okText="Yes"
-              cancelText="No"
+          <Col xs={24}>
+            <Button
+              type="primary"
+              onClick={onStart}
+              loading={isLoading}
+              disabled={!me}
             >
-              <Button
-                onClick={onComplete}
-                loading={isSavingTodo}
-                style={{ width: '35%' }}
+              Start
+            </Button>
+          </Col>
+        ) : (
+          <>
+            <Col xs={24} lg={4}>
+              <Popconfirm
+                title={alertMessage.reset}
+                onConfirm={onConfirmReset}
+                onCancel={onCancelReset}
+                okText="Yes"
+                cancelText="No"
               >
-                Complete!
-              </Button>
-            </Popconfirm>
-          </span>
+                <Button
+                  type="danger"
+                  ghost
+                  onClick={onReset}
+                >
+                  Reset
+                </Button>
+              </Popconfirm>
+            </Col>
+
+            <Col xs={24} lg={9}>
+              {isRunning ? (
+                <Button
+                  type="primary"
+                  ghost
+                  onClick={onPause}
+                >
+                  Pause
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  ghost
+                  onClick={onResume}
+                >
+                  Resume
+                </Button>
+              )}
+            </Col>
+            <Col xs={24} lg={9}>
+              <Popconfirm
+                title={alertMessage.complete}
+                onConfirm={onConfirmComplete}
+                onCancel={onCancelComplete}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  type="primary"
+                  onClick={onComplete}
+                  loading={isSavingTodo}
+                >
+                  Complete!
+                </Button>
+              </Popconfirm>
+            </Col>
+          </>
         )}
-        <Popconfirm
-          title={alertMessage.reset}
-          onConfirm={onConfirmReset}
-          onCancel={onCancelReset}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button
-            type="danger"
-            onClick={onReset}
-            style={{ marginTop: '16px', width: '10%' }}
-          >
-            Reset
-          </Button>
-        </Popconfirm>
-      </div>
+      </Row>
+      <style jsx global>{`
+        .timer>div {
+          margin-top: 20px;
+        }
+        
+        div.clock {
+          text-align: center;
+          padding-bottom: 10px;
+          background: #fafafa;
+          border: 1px solid #ededed;
+          border-radius: 20px;
+        }
+
+        .clock>h2.ant-typography {
+          font-size: 8vw;
+          margin-bottom: 0;
+        }
+      
+        @media (max-width: 767px) {
+          .clock>h2.ant-typography {
+            font-size: 20vw;
+          }
+        }
+        
+        .select-time {
+          width: 100%;
+          text-align: center;
+        }
+        
+        .ant-popover-message-title {
+          width: 300px;
+        }
+
+        .timer div.ant-card {
+          border-radius: 4px;
+          margin-bottom: 10px;
+        }
+      `}</style>
     </div>
   );
 };

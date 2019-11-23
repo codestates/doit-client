@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Row, Col, Button, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -48,61 +48,74 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <Form onSubmit={onSubmit} style={{ padding: 10 }}>
-        <div>
-          <label htmlFor="user-id">E-mail</label>
-          <br />
-          <Input
-            type="email"
-            name="user-id"
-            value={id}
-            required
-            onChange={onChangeId}
-          />
-        </div>
-        <div>
-          <label htmlFor="user-nick">Nickname</label>
-          <br />
-          <Input
-            name="user-nick"
-            value={nickname}
-            required
-            onChange={onChangeNickname}
-          />
-        </div>
-        <div>
-          <label htmlFor="user-password">Password</label>
-          <br />
-          <Input
-            type="password"
-            name="user-password"
-            value={password}
-            required
-            onChange={onChangePassword}
-          />
-        </div>
-        <div>
-          <label htmlFor="user-password-check">Confirm password</label>
-          <br />
-          <Input
-            name="user-password-check"
-            type="password"
-            value={passwordCheck}
-            required
-            onChange={onChangePasswordCheck}
-          />
+    <Form className="signup" onSubmit={onSubmit}>
+      <Row>
+        <Col>
+          <label htmlFor="user-id">
+            E-mail
+            <Input
+              type="email"
+              name="user-id"
+              value={id}
+              required
+              onChange={onChangeId}
+            />
+          </label>
+        </Col>
+        <Col>
+          <label htmlFor="user-nick">
+            Nickname
+            <Input
+              name="user-nick"
+              value={nickname}
+              required
+              onChange={onChangeNickname}
+            />
+          </label>
+        </Col>
+        <Col>
+          <label htmlFor="user-password">
+            Password
+            <Input
+              type="password"
+              name="user-password"
+              value={password}
+              required
+              onChange={onChangePassword}
+            />
+          </label>
+        </Col>
+        <Col>
+          <label htmlFor="user-password-check">
+            Confirm password
+            <Input
+              name="user-password-check"
+              type="password"
+              value={passwordCheck}
+              required
+              onChange={onChangePasswordCheck}
+            />
           {passwordError && (
             <div style={{ color: 'red' }}>Password is not correct.</div>
           )}
-        </div>
-        <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit" loading={isSigningUp}>
+          </label>
+        </Col>
+        <Col>
+          <Button className="btn-signup" type="primary" htmlType="submit" loading={isSigningUp}>
             Signup
           </Button>
-        </div>
-      </Form>
-    </>
+        </Col>
+      </Row>
+      <style jsx global>{`
+        .signup>div {
+          margin-top: 20px;
+          width: 100%;
+        }
+        .signup .ant-col:last-child {
+          margin-top: 20px;
+        }
+      `}</style>
+    </Form>
   );
 };
 

@@ -12,6 +12,7 @@ import AppLayout from '../components/AppLayout';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+import messages from '../config/messages';
 
 const DoIt = ({ Component, store, pageProps }) => {
   return (
@@ -23,14 +24,12 @@ const DoIt = ({ Component, store, pageProps }) => {
           { charset: 'UTF-8' },
           {
             name: 'description',
-            content:
-              '집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다. DoIt!은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.',
+            content: messages.metaContent,
           },
           { name: 'og:title', content: 'DoIt!' },
           {
             name: 'og:description',
-            content:
-              '집중해서 쓴 시간과 그렇지 않은 시간의 차이는 큽니다. DoIt!은 집중력과 시간관리를 위한 작지만 강력한 툴입니다.',
+            content: messages.metaContent,
           },
           { property: 'og:type', content: 'website' },
           { property: 'og:url', content: 'https://doitreviews.com' },

@@ -14,6 +14,7 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
 } from '../reducers/user';
+import { setToken } from '../sagas';
 
 function loginAPI(userData) {
   return axios.post(`/user/login`, userData, {
@@ -24,9 +25,7 @@ function loginAPI(userData) {
 function* login(action) {
   try {
     const result = yield call(loginAPI, action.data);
-    axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${result.data.data.token}`;
+    setToken(() => result.data.data.token);
     yield call(setCookie, {
       key: 'token',
       value: result.data.data.token,
@@ -36,7 +35,6 @@ function* login(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    // console.error(e);
     yield put({
       type: LOG_IN_FAILURE,
       error: e,
@@ -49,7 +47,7 @@ function* watchLogin() {
 }
 
 function* logout() {
-  axios.defaults.headers.common['Authorization'] = '';
+  setToken(() => '');
   yield call(removeCookie, 'token');
 }
 
@@ -69,7 +67,6 @@ function* loadUser() {
       payload: result.data.data,
     });
   } catch (e) {
-    // console.error(e);
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,
@@ -91,9 +88,7 @@ function signupAPI(userData) {
 function* signup(action) {
   try {
     const result = yield call(signupAPI, action.data);
-    axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${result.data.data.token}`;
+    setToken(() => result.data.data.token);
     yield call(setCookie, {
       key: 'token',
       value: result.data.data.token,
@@ -114,7 +109,7 @@ function* watchSignup() {
   yield takeLatest(SIGN_UP_REQUEST, signup);
 }
 
-function* todoHistorySaga() {
+function* todoUserSaga() {
   yield all([
     fork(watchLogin),
     fork(watchLogout),
@@ -123,4 +118,4 @@ function* todoHistorySaga() {
   ]);
 }
 
-export default todoHistorySaga;
+export default todoUserSaga;

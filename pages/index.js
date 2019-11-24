@@ -94,11 +94,10 @@ const Home = () => {
     dispatch({
       type: PAUSE_TIMER,
     });
-  }, []);
-
-  const onConfirmComplete = useCallback(() => {
-    // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
     const verified = verifyContent(doneContent);
+    if (!verified) {
+      return message.warning(messages.doneContentEmpty);
+    }
     dispatch({
       type: TODO_COMPLETE_REQUEST,
       data: {
@@ -113,10 +112,6 @@ const Home = () => {
     setTodoContent('');
     setDoneContent('');
   }, [doneContent, todoId, timelineId]);
-
-  const onCancelComplete = useCallback(() => {
-    message.success(messages.cancel);
-  }, []);
 
   const onReset = useCallback(() => {
     dispatch({
@@ -267,21 +262,13 @@ const Home = () => {
               )}
             </Col>
             <Col xs={24} md={9}>
-              <Popconfirm
-                title={messages.doneContentEmpty}
-                onConfirm={onConfirmComplete}
-                onCancel={onCancelComplete}
-                okText="Yes"
-                cancelText="No"
+              <Button
+                type="primary"
+                onClick={onComplete}
+                loading={isSavingTodo}
               >
-                <Button
-                  type="primary"
-                  onClick={onComplete}
-                  loading={isSavingTodo}
-                >
-                  Complete!
-                </Button>
-              </Popconfirm>
+                Complete!
+              </Button>
             </Col>
           </>
         )}

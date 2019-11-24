@@ -1,6 +1,6 @@
 const messages = {
   todoContentEmpty: 'Todo에 할 일을 적어주세요.',
-  doneContentEmpty: 'Todo를 완료하셨군요! Done에 내용을 입력하시겠어요?',
+  doneContentEmpty: 'Todo를 완료하셨군요! Done에 내용을 입력해주세요.',
   reset: '타이머와 Todo를 모두 초기화하시겠어요?',
   timerEnd:
     '시간이 종료되었습니다. 계획한 일은 어떻게 되었나요? ​Done에 한 일, 다 못한 일, 간단한 반성 등을 적어 주세요.',

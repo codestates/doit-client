@@ -1,4 +1,3 @@
-export const START_TIMER = 'START_TIMER';
 export const START_TIMER_AND_TODO_CREATE_REQUEST =
   'START_TIMER_AND_TODO_CREATE_REQUEST';
 export const START_TIMER_AND_TODO_CREATE_SUCCESS =
@@ -11,10 +10,8 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
-export const STOP_TIMER = 'STOP_TIMER';
 export const PAUSE_TIMER = 'PAUSE_TIMER';
 export const RESUME_TIMER = 'RESUME_TIMER';
-export const TODO_COMPLETE = 'TODO_COMPLETE';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_TIMER = 'SET_TIMER';
 export const ADD_SECOND = 'ADD_SECOND';
@@ -23,6 +20,7 @@ const DEFAULT_TIME = 25 * 60; // 25 minutes
 const initialState = {
   totalTime: DEFAULT_TIME,
   elapsedTime: 0,
+  isSetInterval: false,
   isStarted: false, // start -> complete
   isLoading: false, // start -> pause
   isRunning: false, // pause -> resume
@@ -38,13 +36,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case START_TIMER: {
-      return {
-        ...state,
-        isStarted: false,
-        isRunning: true,
-      };
-    }
     case START_TIMER_AND_TODO_CREATE_REQUEST: {
       return applyStartTimerAndTodoCreateRequest(state, action);
     }
@@ -78,7 +69,6 @@ const reducer = (state = initialState, action) => {
         isRunning: true,
       };
     }
-    case TODO_COMPLETE:
     case RESET_TIMER: {
       return {
         ...state,
@@ -125,7 +115,6 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
 };
 
 const applyStartTimerAndTodoCreateSuccess = (state, action) => {
-  // console.log('REDUCER: ', action.payload);
   return {
     ...state,
     isStarted: true,
@@ -157,7 +146,6 @@ const applyTodoCompleteRequest = (state, action) => {
 };
 
 const applyTodoCompleteSuccess = (state, action) => {
-  // console.log('REDUCER: ', action.payload);
   return {
     ...state,
     elapsedTime: 0,

@@ -1,4 +1,13 @@
-import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
+import {
+  all,
+  fork,
+  takeLatest,
+  call,
+  put,
+  take,
+  delay,
+  cancel,
+} from 'redux-saga/effects';
 import axios from 'axios';
 
 import { getCookie } from '../utils/cookieHelper';
@@ -11,7 +20,30 @@ import {
   TODO_COMPLETE_FAILURE,
   TODO_COMPLETE_REQUEST,
   RESET_TIMER,
+  ADD_SECOND,
+  PAUSE_TIMER,
+  RESUME_TIMER,
 } from '../reducers/timer';
+
+function* startTimer() {
+  const timerTask = yield fork(tick);
+  yield take([PAUSE_TIMER, RESET_TIMER]);
+  yield cancel(timerTask);
+}
+
+function* tick() {
+  while (true) {
+    yield delay(1000);
+    yield put({ type: ADD_SECOND });
+  }
+}
+
+function* watchStartTimer() {
+  yield takeLatest(
+    [START_TIMER_AND_TODO_CREATE_REQUEST, RESUME_TIMER],
+    startTimer,
+  );
+}
 
 function startTimerAndTodoCreateAPI(todoCreateData) {
   setToken(() => getCookie('token'));
@@ -93,6 +125,7 @@ function* todoTimerSaga() {
     fork(watchstartTimerAndTodoCreate),
     fork(watchTodoComplete),
     fork(watchTodoReset),
+    fork(watchStartTimer),
   ]);
 }
 

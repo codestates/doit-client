@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import {
-  ADD_SECOND,
   PAUSE_TIMER,
   RESUME_TIMER,
   RESET_TIMER,
@@ -43,17 +42,12 @@ const Home = () => {
     isSaveTodoSuccess,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
-  const [timer, setTimer] = useState('');
   const dispatch = useDispatch();
 
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
-    return {
-      total: `${min}:${sec}`,
-      minutes: min,
-      seconds: sec,
-    };
+    return `${min}:${sec}`;
   };
 
   const verifyContent = (content) => {
@@ -70,7 +64,7 @@ const Home = () => {
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
       data: {
         todoContent: verified,
-        duration: timeFormat(totalTime).total,
+        duration: timeFormat(totalTime),
         startedAt: moment()
           .utc()
           .format(),
@@ -150,21 +144,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (isRunning) {
-      const interval = setInterval(() => {
-        dispatch({
-          type: ADD_SECOND,
-        });
-      }, 1000);
-      setTimer(interval);
-    } else {
-      clearInterval(timer);
-      if (totalTime === elapsedTime) {
-        alert(messages.timerEnd);
-      }
+    if (totalTime === elapsedTime) {
+      alert(messages.timerEnd);
+      dispatch({
+        type: PAUSE_TIMER,
+      });
     }
-    return () => clearInterval(timer);
-  }, [isRunning]);
+  }, [elapsedTime && totalTime === elapsedTime]);
 
   useEffect(() => {
     if (!isSavingTodo && isSaveTodoSuccess) {
@@ -178,7 +164,7 @@ const Home = () => {
   return (
     <div className="timer">
       <div className="clock">
-        <Title level={2}>{timeFormat(totalTime - elapsedTime).total}</Title>
+        <Title level={2}>{timeFormat(totalTime - elapsedTime)}</Title>
         <Radio.Group
           className="select-time"
           onChange={onClickTimeSetting}

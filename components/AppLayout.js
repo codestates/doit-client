@@ -5,6 +5,7 @@ import { Layout, Row, Col, Button, Divider } from 'antd';
 import Header from './Header';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
+import TimelineAnchors from './TimelineAnchors';
 
 const { Content } = Layout;
 
@@ -25,6 +26,7 @@ const AppLayout = ({ children }) => {
               <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
                 Feedback
               </Button>
+              <TimelineAnchors />
               <Divider className="user-bottom-line" />
             </Col>
             <Col xs={24} md={{ span: 14, push: 2 }}>

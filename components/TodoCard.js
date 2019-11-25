@@ -9,7 +9,10 @@ const TodoCard = ({ todo }) => {
 
   return (
     <Card
-      title={moment(startTime).local().format('YYYY-MM-DD HH:mm:ss')}
+      id={todo.id}
+      title={moment(startTime)
+        .local()
+        .format('YYYY-MM-DD HH:mm:ss')}
       style={{
         border: '1px solid #d9d9d9',
         borderRadius: 4,
@@ -29,14 +32,30 @@ const TodoCard = ({ todo }) => {
           value={todo.todoContent}
           disabled
           autoSize={{ minRows: 2 }}
-          style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
+          style={{
+            border: '0px',
+            background: 'transparent',
+            resize: 'none',
+            color: '#000',
+          }}
+        />
       </Card>
-      <Card type="inner" title="Done" style={{ marginTop: 10, borderRadius: 4 }}>
+      <Card
+        type="inner"
+        title="Done"
+        style={{ marginTop: 10, borderRadius: 4 }}
+      >
         <TextArea
           value={todo.doneContent}
           autoSize={{ minRows: 2 }}
           disabled
-          style={{ border: '0px', background: 'transparent', resize: 'none', color: '#000' }}/>
+          style={{
+            border: '0px',
+            background: 'transparent',
+            resize: 'none',
+            color: '#000',
+          }}
+        />
       </Card>
     </Card>
   );

@@ -6,6 +6,7 @@ import Header from './Header';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
 import TimelineAnchors from './TimelineAnchors';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 const { Content } = Layout;
 
@@ -20,10 +21,14 @@ const AppLayout = ({ children }) => {
         <div className="wrapper">
           <Row>
             <Col xs={24} md={{ span: 8 }}>
-              <div className="user">
-                {me ? <UserProfile /> : <LoginForm />}
-              </div>
-              <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
+              <div className="user">{me ? <UserProfile /> : <LoginForm />}</div>
+              {me ? '' : <GoogleLoginButton />}
+              <Button
+                className="feedback"
+                type="link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1"
+                target="_blank"
+              >
                 Feedback
               </Button>
               <TimelineAnchors />
@@ -43,7 +48,7 @@ const AppLayout = ({ children }) => {
           padding: 0 24px;
         }
 
-        .ant-col>button {
+        .ant-col > button {
           width: 100%;
         }
 
@@ -65,27 +70,27 @@ const AppLayout = ({ children }) => {
           height: 120px;
           display: flex;
         }
-        
+
         section.ant-layout {
           background: #fff;
           margin-bottom: 40px;
         }
-        
+
         ul.ant-menu-horizontal {
           /* border: 0; */
         }
-        
+
         textarea.ant-input {
           resize: none;
         }
 
         .user-bottom-line {
-          margin: 30px 0; 
+          margin: 30px 0;
         }
         @media (min-width: 768px) {
           .user-bottom-line {
             display: none;
-          }  
+          }
         }
 
         .feedback {

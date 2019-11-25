@@ -5,6 +5,7 @@ import Router from 'next/router';
 
 import TodoCalendar from '../components/TodoCalendar';
 import TodoCard from '../components/TodoCard';
+import TimelineAnchors from '../components/TimelineAnchors';
 
 const todoHistory = () => {
   const { todos } = useSelector((state) => state.todoHistory);
@@ -18,12 +19,14 @@ const todoHistory = () => {
 
   return (
     <div>
-      <Row>
-        <Col xs={24}>
-          <TodoCalendar />
+      <Row type="flex" justify="space-between">
+        <Col xs={24} md={8}>
+          <TimelineAnchors />
         </Col>
 
-        <Col xs={24}>
+        <Col xs={24} md={14}>
+          <TodoCalendar />
+
           {todos.length ? (
             todos.map((todo) => <TodoCard key={todo.id} todo={todo} />)
           ) : (

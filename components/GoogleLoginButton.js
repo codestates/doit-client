@@ -1,16 +1,29 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
+import { useDispatch } from 'react-redux';
+
+import { GOOGLE_CLIENT_ID } from '../config/key.json';
+import { GOOGLE_AUTH_REQUEST } from '../reducers/user';
 
 const GoogleLoginButton = () => {
-  const responseGoogle = (response) => {
+  const dispatch = useDispatch();
+  const responseSuccess = (response) => {
+    console.log(response);
+    const { id_token } = response.tokenObj;
+    dispatch({
+      type: GOOGLE_AUTH_REQUEST,
+      token: id_token,
+    });
+  };
+  const responseFail = (response) => {
     console.log(response);
   };
   return (
     <GoogleLogin
-      clientId="88835068458-89fvsmndtj2kememi970thfpq9p9i0tt.apps.googleusercontent.com"
+      clientId={GOOGLE_CLIENT_ID}
       buttonText="Login"
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
+      onSuccess={responseSuccess}
+      onFailure={responseFail}
       cookiePolicy={'single_host_origin'}
     />
   );

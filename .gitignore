@@ -12,3 +12,6 @@ connect.sh
 
 # env 
 .env
+
+# key
+config/key.json

@@ -41,6 +41,14 @@ const Home = () => {
     isSavingTodo,
     isSaveTodoSuccess,
   } = useSelector((state) => state.timer);
+  /* start button을 클릭하면
+    isLoading false -> true
+    isStarted: false
+    isRunning: false
+    start request -> success
+    isLoading true -> false
+    isStarted: true
+    isRunning: true */
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -163,21 +171,65 @@ const Home = () => {
 
   return (
     <div className="timer">
-      <div className="clock">
-        <Title level={2}>{timeFormat(totalTime - elapsedTime)}</Title>
-        <Radio.Group
-          className="select-time"
-          onChange={onClickTimeSetting}
-          disabled={isStarted || !me}
-        >
-          <Radio.Button value="25">25</Radio.Button>
-          <Radio.Button value="45">45</Radio.Button>
-          <Radio.Button value="60">60</Radio.Button>
-        </Radio.Group>
-      </div>
+      <Row type="flex" justify="space-between">
+        <Col xs={24} md={8}>
+          <div className="clock">
+          <Title level={2}>{timeFormat(totalTime - elapsedTime)}</Title>
+            <Radio.Group
+              className="select-time"
+              onChange={onClickTimeSetting}
+              disabled={isStarted || !me}
+            >
+              <Radio.Button value="25">25</Radio.Button>
+              <Radio.Button value="45">45</Radio.Button>
+              <Radio.Button value="60">60</Radio.Button>
+            </Radio.Group>
+          </div>
+          <Row type="flex" justify="space-between">
+            {!isStarted ? (
+            <Col xs={24}>
+              <Button
+                type="primary"
+                onClick={onStart}
+                loading={isLoading}
+                disabled={!me}
+              >
+                Start
+              </Button>
+            </Col>
+          ) : (
+            <>
+              <Col xs={24} md={8}>
+                <Popconfirm
+                  title={messages.reset}
+                  onConfirm={onConfirmReset}
+                  onCancel={onCancelReset}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button type="danger" ghost onClick={onReset}>
+                    Reset
+                  </Button>
+                </Popconfirm>
+              </Col>
 
-      <Row>
-        <Col>
+              <Col xs={24} md={14}>
+                {isRunning ? (
+                  <Button type="primary" ghost onClick={onPause}>
+                    Pause
+                  </Button>
+                ) : (
+                  <Button type="primary" ghost onClick={onResume}>
+                    Resume
+                  </Button>
+                )}
+              </Col>
+            </>
+            )}
+          </Row>
+        </Col>
+
+        <Col xs={24} md={14}>
           <Card type="inner" title="Todo">
             <TextArea
               value={todoContent}
@@ -196,69 +248,20 @@ const Home = () => {
               disabled={!isStarted || isRunning}
             />
           </Card>
+          <Button
+            type="primary"
+            onClick={onComplete}
+            loading={isSavingTodo}
+            disabled={!isStarted}
+          >
+            Complete!
+          </Button>
+          <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
+            Feedback
+          </Button>
         </Col>
       </Row>
-
-      <Row type="flex" justify="space-between">
-        {/* start button을 클릭하면
-            isLoading false -> true
-            isStarted: false
-            isRunning: false
-            start request -> success
-            isLoading true -> false
-            isStarted: true
-            isRunning: true
-        */}
-        {!isStarted ? (
-          <Col xs={24}>
-            <Button
-              type="primary"
-              onClick={onStart}
-              loading={isLoading}
-              disabled={!me}
-            >
-              Start
-            </Button>
-          </Col>
-        ) : (
-          <>
-            <Col xs={24} md={4}>
-              <Popconfirm
-                title={messages.reset}
-                onConfirm={onConfirmReset}
-                onCancel={onCancelReset}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button type="danger" ghost onClick={onReset}>
-                  Reset
-                </Button>
-              </Popconfirm>
-            </Col>
-
-            <Col xs={24} md={9}>
-              {isRunning ? (
-                <Button type="primary" ghost onClick={onPause}>
-                  Pause
-                </Button>
-              ) : (
-                <Button type="primary" ghost onClick={onResume}>
-                  Resume
-                </Button>
-              )}
-            </Col>
-            <Col xs={24} md={9}>
-              <Button
-                type="primary"
-                onClick={onComplete}
-                loading={isSavingTodo}
-              >
-                Complete!
-              </Button>
-            </Col>
-          </>
-        )}
-      </Row>
+      
       <style jsx global>{`
         .timer > div {
           margin-top: 20px;
@@ -270,10 +273,11 @@ const Home = () => {
           background: #fafafa;
           border: 1px solid #ededed;
           border-radius: 20px;
+          margin-bottom: 20px;
         }
 
         .clock > h2.ant-typography {
-          font-size: 8vw;
+          font-size: 6vw;
           margin-bottom: 0;
         }
 
@@ -295,6 +299,16 @@ const Home = () => {
         .timer div.ant-card {
           border-radius: 4px;
           margin-bottom: 10px;
+        }
+
+        .feedback {
+          background: rgba(0, 0, 0, 0.85);
+          color: #fff;
+          border: 0;
+        }
+        .feedback:hover {
+          background: rgba(0, 0, 0, 0.7);
+          color: #fff;
         }
       `}</style>
     </div>

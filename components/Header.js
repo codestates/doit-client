@@ -3,6 +3,10 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { Layout, Menu, Icon } from 'antd';
 
+import LoginForm from './LoginForm';
+import UserProfile from './UserProfile';
+
+
 const { Header } = Layout;
 
 const HeaderComponent = () => {
@@ -39,13 +43,27 @@ const HeaderComponent = () => {
               </Link>
             </Menu.Item>
           )}
-        </Menu>    
+        </Menu>
+        <div>
+          <div className="user">
+            {me ? <UserProfile /> : <LoginForm />}
+          </div>
+        </div>
       </div>
       <style jsx global>{`
           header.ant-layout-header {
-              background: #fff;
-              height: auto;
-              padding: 0;
+            background: #fff;
+            height: auto;
+            padding: 0;
+          }
+          div.user {
+            margin: 20px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ededed;
+            border-radius: 4px;
+            height: 120px;
+            display: flex;
           }
       `}</style>
     </Header>

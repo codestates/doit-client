@@ -15,12 +15,17 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
+export const GOOGLE_AUTH_REQUEST = 'GOOGLE_AUTH_REQUEST';
+export const GOOGLE_AUTH_SUCCESS = 'GOOGLE_AUTH_SUCCESS';
+export const GOOGLE_AUTH_FAILURE = 'GOOGLE_AUTH_FAILURE';
+
 // INITIAL
 const initialState = {
   isLoggingIn: false,
   loginError: '',
   isSigningUp: false,
   signUpError: '',
+  googleAuthError: '', // isLogginIn 사용
   me: null,
 };
 
@@ -56,6 +61,12 @@ const reducer = (state = initialState, action) => {
       return applySignUpSuccess(state, action);
     case SIGN_UP_FAILURE:
       return applySignUpFailure(state, action);
+    case GOOGLE_AUTH_REQUEST:
+      return applyGoogleAuthRequest(state, action);
+    case GOOGLE_AUTH_SUCCESS:
+      return applyGoogleAuthSuccess(state, action);
+    case GOOGLE_AUTH_FAILURE:
+      return applyGoogleAuthFailure(state, action);
     default: {
       return state;
     }
@@ -144,5 +155,30 @@ const applySignUpFailure = (state, action) => {
   };
 };
 
+const applyGoogleAuthRequest = (state, action) => {
+  return {
+    ...state,
+    isLoggingIn: true,
+    googleAuthError: '',
+    me: null,
+  };
+};
+
+const applyGoogleAuthSuccess = (state, action) => {
+  return {
+    ...state,
+    isLoggingIn: false,
+    me: action.payload,
+  };
+};
+
+const applyGoogleAuthFailure = (state, action) => {
+  return {
+    ...state,
+    isLoggingIn: false,
+    googleAuthError: action.error,
+    me: null,
+  };
+};
 
 export default reducer;

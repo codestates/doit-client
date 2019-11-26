@@ -13,6 +13,9 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
+  GOOGLE_AUTH_SUCCESS,
+  GOOGLE_AUTH_FAILURE,
+  GOOGLE_AUTH_REQUEST,
 } from '../reducers/user';
 import { setToken } from '../sagas';
 
@@ -109,12 +112,44 @@ function* watchSignup() {
   yield takeLatest(SIGN_UP_REQUEST, signup);
 }
 
+//google auth
+function googleAuthAPI(token) {
+  return axios.post(`/user/auth/google`, token, {
+    withCredentials: true,
+  });
+}
+
+function* googleAuth(action) {
+  try {
+    const result = yield call(googleAuthAPI, action.token);
+    setToken(() => result.data.data.token);
+    yield call(setCookie, {
+      key: 'token',
+      value: result.data.data.token,
+    });
+    yield put({
+      type: GOOGLE_AUTH_SUCCESS,
+      payload: result.data.data,
+    });
+  } catch (e) {
+    yield put({
+      type: GOOGLE_AUTH_FAILURE,
+      error: e.response.data.message,
+    });
+  }
+}
+
+function* watchGoogleAuth() {
+  yield takeLatest(GOOGLE_AUTH_REQUEST, googleAuth);
+}
+
 function* todoUserSaga() {
   yield all([
     fork(watchLogin),
     fork(watchLogout),
     fork(watchLoadUser),
     fork(watchSignup),
+    fork(watchGoogleAuth),
   ]);
 }
 

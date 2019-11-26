@@ -12,8 +12,8 @@ const GoogleLoginButton = () => {
     const { id_token } = response.tokenObj;
     dispatch({
       type: GOOGLE_AUTH_REQUEST,
-      token: {
-        id_token,
+      data: {
+        token: id_token,
       },
     });
   };

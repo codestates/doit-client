@@ -113,15 +113,15 @@ function* watchSignup() {
 }
 
 //google auth
-function googleAuthAPI(token) {
-  return axios.post(`/user/auth/google`, token, {
+function googleAuthAPI(data) {
+  return axios.post(`/user/auth/google`, data, {
     withCredentials: true,
   });
 }
 
 function* googleAuth(action) {
   try {
-    const result = yield call(googleAuthAPI, action.token);
+    const result = yield call(googleAuthAPI, action.data);
     setToken(() => result.data.data.token);
     yield call(setCookie, {
       key: 'token',

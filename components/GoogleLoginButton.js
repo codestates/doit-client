@@ -12,7 +12,9 @@ const GoogleLoginButton = () => {
     const { id_token } = response.tokenObj;
     dispatch({
       type: GOOGLE_AUTH_REQUEST,
-      token: id_token,
+      token: {
+        id_token,
+      },
     });
   };
   const responseFail = (response) => {

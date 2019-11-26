@@ -1,17 +1,21 @@
 import React from 'react';
 import { Layout } from 'antd';
+import { useSelector } from 'react-redux';
 
 import Header from './Header';
+// import GoogleLoginButton from '../components/GoogleLoginButton';
 
 const { Content } = Layout;
 
 const AppLayout = ({ children }) => {
-
+  const { me } = useSelector((state) => state.user);
+  
   return (
     <Layout>
       <Header />
 
       <Content className="wrapper">
+        {/* {me ? '' : <GoogleLoginButton />} */}
         {children}
       </Content>
       <style jsx global>{`
@@ -22,7 +26,7 @@ const AppLayout = ({ children }) => {
           padding: 0 24px;
         }
 
-        .ant-col>button {
+        .ant-col > button {
           width: 100%;
         }
 
@@ -39,11 +43,11 @@ const AppLayout = ({ children }) => {
           background: #fff;
           margin-bottom: 40px;
         }
-        
+
         ul.ant-menu-horizontal {
           /* border: 0; */
         }
-        
+
         textarea.ant-input {
           resize: none;
         }

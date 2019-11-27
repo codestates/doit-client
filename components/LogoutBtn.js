@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { LOG_OUT_REQUEST } from '../reducers/user';
-
-import { Button } from 'antd';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`

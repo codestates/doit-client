@@ -287,6 +287,12 @@ const Home = () => {
           }
         }
 
+        @media (min-width: 1200px) {
+          .clock > h2.ant-typography {
+            font-size: 72px;
+          }
+        }
+
         .select-time {
           width: 100%;
           text-align: center;

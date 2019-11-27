@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Anchor } from 'antd';
-// import moment from 'moment';
-
-// import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
+import moment from 'moment';
 
 const { Link } = Anchor;
 
@@ -13,21 +11,12 @@ const LinkItems = ({ todo }) => {
 
 const TimelineAnchors = () => {
   const { me } = useSelector((state) => state.user);
-  const { todos } = useSelector((state) => state.todoHistory);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: LOAD_TODOS_REQUEST,
-  //     data: {
-  //       date: moment().format('YYYY-MM-DD'),
-  //     },
-  //   });
-  // }, [me && me.id]);
+  const { date, todos } = useSelector((state) => state.todoHistory);
 
   return (
     <div style={{ marginTop: '20px' }}>
       <Anchor>
+        <Link href="#" title={moment(date).format('YYYY-MM-DD')} />
         {me && todos && todos.length ? (
           todos.map((todo) => <LinkItems key={todo.id} todo={todo} />)
         ) : (

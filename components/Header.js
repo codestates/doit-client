@@ -25,39 +25,53 @@ const Logo = styled.h1`
   align-items: center;
 `;
 
+const MenuItem = styled(Menu.Item)`
+  &:hover {
+    border-bottom: 2px solid transparent !important;
+  }
+`;
+
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
 
   return (
     <StyledHeader>
-      <div className="wrapper">
+      <div className="container">
         <Link href="/">
           <a>
             <Logo>
-              DO IT
+              두잇
             </Logo>
           </a>
         </Link>
         {me ? (
-          <Menu style={{ float: 'right' }} mode="horizontal" defaultSelectedKeys={['1']}>
-            <Menu.Item key="2">
+          <Menu style={{ float: 'right' }} mode="horizontal">
+            <MenuItem key="1">
+              <Link href="/">
+                <a>
+                  <Icon type="clock-circle" />
+                  타이머
+                </a>
+              </Link>
+            </MenuItem>
+            <MenuItem key="2">
               <Link href="/todohistory">
                 <a>
                   <Icon type="history" />
-                  History
+                  히스토리
                 </a>
               </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
+            </MenuItem>
+            <MenuItem key="3">
               <Icon type="logout" />
               <LogoutBtn />
-            </Menu.Item>
+            </MenuItem>
           </Menu>
         ) : (
           <Menu mode="horizontal" style={{ float: 'right' }}>
-            <Menu.Item key="4">
+            <MenuItem key="4">
               <GoogleLoginButton />
-            </Menu.Item>
+            </MenuItem>
           </Menu>
         )}
         {!me && <LoginForm />}

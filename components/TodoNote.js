@@ -36,8 +36,6 @@ const TodoNote = ({
 }) => {
   const { TextArea } = Input;
   const {
-    totalTime,
-    elapsedTime,
     isStarted,
     isRunning,
     todoId,
@@ -89,45 +87,27 @@ const TodoNote = ({
     setDoneContent(e.target.value);
   }, []);
 
-  useEffect(() => {
-    if (totalTime === elapsedTime) {
-      alert(messages.timerEnd);
-      dispatch({
-        type: PAUSE_TIMER,
-      });
-    }
-  }, [elapsedTime && totalTime === elapsedTime]);
-
-  useEffect(() => {
-    if (!isSavingTodo && isSaveTodoSuccess) {
-      message.success(messages.complete);
-      dispatch({
-        type: TODO_COMPLETE_CLEANUP,
-      });
-    }
-  }, [isSavingTodo === false, isSaveTodoSuccess === true]);
-
   return (
     <Wrapper>
-      <Row gutter={24} type="flex" justify="space-between">
-        <Col xs={24} md={12}>
-          <Card type="inner" title="Todo">
+      <Row className="todoRow" gutter={24} type="flex" justify="space-between">
+        <Col xs={24} lg={12}>
+          <Card type="inner" title="당장 할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
               placeholder={messages.writeTodo}
-              autoSize={{ minRows: 4 }}
+              rows={10}
               disabled={isStarted || !me}
             />
           </Card>
         </Col>
-        <Col xs={24} md={12}>
-          <Card type="inner" title="Done">
+        <Col xs={24} lg={12}>
+          <Card type="inner" title="결국 한일">
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}
               placeholder={messages.writeDone}
-              autoSize={{ minRows: 4 }}
+              rows={10}
               disabled={!isStarted || isRunning}
             />
           </Card>
@@ -140,10 +120,10 @@ const TodoNote = ({
         loading={isSavingTodo}
         disabled={!isStarted}
       >
-        Complete!
+        할일 다 했으면 언제든 컴플릿!
       </Button>
       <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
-        Feedback
+        저희를 위해 피드백을 주세욧
       </Button>
     </Wrapper>
   );

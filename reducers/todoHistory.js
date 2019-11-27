@@ -5,6 +5,7 @@ export const LOAD_TODOS_FAILURE = 'LOAD_TODOS_FAILURE';
 
 // INITIAL
 const initialState = {
+  date: '',
   todos: [],
 };
 
@@ -14,6 +15,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_TODOS_REQUEST: {
       return {
         ...state,
+        date: action.data.date,
         todos: [],
       };
     }

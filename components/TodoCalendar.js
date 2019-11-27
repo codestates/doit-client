@@ -15,7 +15,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment(date).local().format()
+        date: moment(date).startOf('day').local().format()
       }
     });
   }, []);
@@ -24,7 +24,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment().local().format()
+        date: moment().startOf('day').local().format()
       }
     });
   }, []);

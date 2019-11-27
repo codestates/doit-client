@@ -20,11 +20,11 @@ const todoHistory = () => {
   return (
     <div>
       <Row type="flex" justify="space-between">
-        <Col xs={24} md={8}>
+        <Col xs={24} lg={8}>
           <TimelineAnchors />
         </Col>
 
-        <Col xs={24} md={14}>
+        <Col xs={24} lg={16}>
           <TodoCalendar />
 
           {todos.length ? (

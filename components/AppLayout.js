@@ -17,7 +17,7 @@ const AppLayout = ({ children }) => {
       </Content>
       <style jsx global>{`
         .wrapper {
-          max-width: 800px;
+          max-width: 1024px;
           width: 95%;
           margin: 0 auto;
           padding: 0 24px;
@@ -42,7 +42,7 @@ const AppLayout = ({ children }) => {
         }
 
         ul.ant-menu-horizontal {
-          /* border: 0; */
+          border: 0;
         }
 
         textarea.ant-input {

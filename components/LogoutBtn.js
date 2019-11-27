@@ -7,6 +7,7 @@ const StyledButton = styled.button`
   border: 0;
   padding: 0;
   outline: 0;
+  cursor: pointer;
 `;
 
 const LogoutBtn = () => {
@@ -22,7 +23,7 @@ const LogoutBtn = () => {
     <StyledButton
       onClick={onLogout}
     >
-      Logout
+      로그아웃
     </StyledButton>
   );
 };

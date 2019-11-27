@@ -28,24 +28,35 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
     background: #fafafa;
     border: 1px solid #ededed;
-    border-radius: 20px;
+    border-radius: 4px;
+    height: 250px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: keep-all;
   
     & > h2.ant-typography {
-      font-size: 6vw;
+      color: #333;
+      font-size: 5vw;
       margin-bottom: 0;
   
       @media (max-width: 767px) {
-        font-size: 20vw;
+        font-size: 14vw;
       }
   
       @media (min-width: 1200px) {
-        font-size: 72px;
+        font-size: 60px;
     }
-  
-    & .select-time {
-      width: 100%;
-      text-align: center;
-    }
+  }
+`;
+
+const RadioGroup = styled(Radio.Group)`
+  width: 100%;
+
+  &>label {
+    width: 33.33333%;
+    text-align: center;
   }
 `;
 
@@ -78,7 +89,7 @@ const Timer = ({
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
-    return `${min}:${sec}`;
+    return `${min}분 ${sec}초 남았습니다`;
   };
 
   const onStart = useCallback(() => {
@@ -140,17 +151,19 @@ const Timer = ({
 
   return (
     <Wrapper>
-      <div className="clock">
-        <Title level={2}>{timeFormat(totalTime - elapsedTime)}</Title>
-        <Radio.Group
-          className="select-time"
+      <div className="clockRow">
+        <div className="clock">
+          <Title level={2}>{timeFormat(totalTime - elapsedTime)}</Title>
+        </div>
+        <RadioGroup
           onChange={onClickTimeSetting}
+          defaultValue="25"
           disabled={isStarted || !me}
         >
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>
-        </Radio.Group>
+        </RadioGroup>
       </div>
 
       <Row type="flex" justify="space-between">
@@ -162,7 +175,7 @@ const Timer = ({
             loading={isLoading}
             disabled={!me}
           >
-            Start
+            타이머 스타트!
           </Button>
         </Col>
       ) : (
@@ -176,7 +189,7 @@ const Timer = ({
               cancelText="No"
             >
               <Button type="danger" ghost onClick={onReset}>
-                Reset
+                리셋
               </Button>
             </Popconfirm>
           </Col>
@@ -184,11 +197,11 @@ const Timer = ({
           <Col xs={14}>
             {isRunning ? (
               <Button type="primary" ghost onClick={onPause}>
-                Pause
+                잠깐 화장실
               </Button>
             ) : (
               <Button type="primary" ghost onClick={onResume}>
-                Resume
+                다시 스타트
               </Button>
             )}
           </Col>

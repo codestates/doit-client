@@ -10,7 +10,11 @@ import TodoNote from '../components/TodoNote';
 
 const Wrapper = styled.div`
   & > div {
-    margin-top: 20px;
+    margin-top: 40px;
+  }
+
+  .clockRow, .todoRow {
+    min-height: 310px;
   }
 `;
 

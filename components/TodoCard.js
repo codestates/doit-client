@@ -4,15 +4,28 @@ import { Card, Input } from 'antd';
 
 const { TextArea } = Input;
 
+const timeFormat = (timestamp) => {
+  const isValid = timestamp && moment(timestamp);
+  return isValid
+    ? moment(timestamp)
+        .local()
+        .format('HH:mm')
+    : 'x';
+};
+
 const TodoCard = ({ todo }) => {
   const startTime = todo.timelines[0].startedAt;
+  const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
+  const realDuration =
+    startTime && endTime
+      ? moment(endTime).diff(moment(startTime), 'minutes')
+      : 'x';
+  const todoCardTitle = `${timeFormat(startTime)} ~ ${timeFormat(endTime)}`;
 
   return (
     <Card
       id={todo.id}
-      title={moment(startTime)
-        .local()
-        .format('YYYY-MM-DD HH:mm:ss')}
+      title={`${todoCardTitle} [${todo.duration}][${realDuration}]`}
       style={{
         border: '1px solid #d9d9d9',
         borderRadius: 4,

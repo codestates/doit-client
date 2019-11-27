@@ -15,7 +15,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment(date).format('YYYY-MM-DD')
+        date: moment(date).local().format()
       }
     });
   }, []);
@@ -24,7 +24,7 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment().format('YYYY-MM-DD')
+        date: moment().local().format()
       }
     });
   }, []);

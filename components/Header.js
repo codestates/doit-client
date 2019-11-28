@@ -1,12 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Switch } from 'antd';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import GoogleLoginButton from './GoogleLoginButton';
 import LogoutBtn from './LogoutBtn';
 import LoginForm from './LoginForm';
+import { TOGGLE_SOUND_ON_OFF } from '../reducers/timer';
 
 const { Header } = Layout;
 
@@ -34,20 +35,30 @@ const MenuItem = styled(Menu.Item)`
 
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const onChangeSound = (checked) => {
+    dispatch({
+      type: TOGGLE_SOUND_ON_OFF,
+      data: checked,
+    });
+  };
 
   return (
     <StyledHeader>
       <div className="container">
         <Link href="/">
           <a>
-            <Logo>
-              두잇
-            </Logo>
+            <Logo>두잇</Logo>
           </a>
         </Link>
         {me ? (
           <>
-            <Menu mode="horizontal" defaultSelectedKeys="1" style={{ float: 'left' }} >
+            <Menu
+              mode="horizontal"
+              defaultSelectedKeys="1"
+              style={{ float: 'left' }}
+            >
               <MenuItem key="1">
                 <Link href="/">
                   <a>
@@ -64,9 +75,13 @@ const HeaderComponent = () => {
                   </a>
                 </Link>
               </MenuItem>
-            </Menu>
-            <Menu mode="horizontal" style={{float: 'right'}} >
               <MenuItem key="3">
+                <Switch size="small" defaultChecked onChange={onChangeSound} />{' '}
+                sound on/off
+              </MenuItem>
+            </Menu>
+            <Menu mode="horizontal" style={{ float: 'right' }}>
+              <MenuItem key="4">
                 <Icon type="logout" />
                 <LogoutBtn />
               </MenuItem>
@@ -74,7 +89,7 @@ const HeaderComponent = () => {
           </>
         ) : (
           <Menu mode="horizontal" style={{ float: 'right' }}>
-            <MenuItem key="4">
+            <MenuItem key="5">
               <GoogleLoginButton />
             </MenuItem>
           </Menu>

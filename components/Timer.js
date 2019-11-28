@@ -3,6 +3,8 @@ import { Typography, Row, Col, Popconfirm, Radio, Button, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import { Howl, Howler } from 'howler';
+
 import {
   PAUSE_TIMER,
   RESUME_TIMER,
@@ -67,18 +69,32 @@ const Timer = ({
     isStarted,
     isRunning,
     todoId,
+    isSoundOn,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const sound = new Howl({
+    src: ['Christmas_Village_64.mp3'],
+    onplayerror: function() {
+      sound.once('unlock', function() {
+        sound.play();
+      });
+    },
+  });
 
   useEffect(() => {
     if (totalTime === elapsedTime) {
-      alert(messages.timerEnd);
+      if (isSoundOn) {
+        sound.play();
+      }
       dispatch({
         type: PAUSE_TIMER,
       });
+      if (!alert(messages.timerEnd)) {
+        sound.stop();
+      }
     }
-  }, [elapsedTime && totalTime === elapsedTime]);
+  }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
 
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
@@ -154,6 +170,7 @@ const Timer = ({
           defaultValue="25"
           disabled={isStarted || !me}
         >
+          <Radio.Button value="0.1">0.1</Radio.Button>
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>

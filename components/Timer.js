@@ -1,5 +1,14 @@
 import React, { useEffect, useCallback } from 'react';
-import { Typography, Row, Col, Popconfirm, Radio, Button, message } from 'antd';
+import {
+  Typography,
+  Row,
+  Col,
+  Popconfirm,
+  Radio,
+  Button,
+  message,
+  Modal,
+} from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -84,15 +93,18 @@ const Timer = ({
 
   useEffect(() => {
     if (totalTime === elapsedTime) {
-      if (isSoundOn) {
-        sound.play();
-      }
       dispatch({
         type: PAUSE_TIMER,
       });
-      if (!alert(messages.timerEnd)) {
-        sound.stop();
+      if (isSoundOn) {
+        sound.play();
       }
+      Modal.success({
+        title: messages.timerEnd,
+        onOk() {
+          sound.stop();
+        },
+      });
     }
   }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
 
@@ -211,7 +223,12 @@ const Timer = ({
                   잠깐 화장실
                 </Button>
               ) : (
-                <Button type="primary" ghost onClick={onResume} disabled={totalTime === elapsedTime}>
+                <Button
+                  type="primary"
+                  ghost
+                  onClick={onResume}
+                  disabled={totalTime === elapsedTime}
+                >
                   다시 스타트
                 </Button>
               )}

@@ -27,13 +27,13 @@ import {
 
 function* startTimer() {
   const timerTask = yield fork(tick);
-  yield take([PAUSE_TIMER, RESET_TIMER]);
+  yield take([PAUSE_TIMER, RESET_TIMER, START_TIMER_AND_TODO_CREATE_FAILURE]);
   yield cancel(timerTask);
 }
 
 function* tick() {
   while (true) {
-    yield delay(1000);
+    yield delay(950);
     yield put({ type: ADD_SECOND });
   }
 }

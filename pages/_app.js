@@ -33,6 +33,7 @@ const DoIt = ({ Component, store, pageProps }) => {
           },
           { property: 'og:type', content: 'website' },
           { property: 'og:url', content: 'https://doitreviews.com' },
+          { name: 'viewport', content: 'width=device-width,initial-scale=1'}
         ]}
         link={[
           {

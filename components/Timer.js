@@ -1,16 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  Typography,
-  Row,
-  Col,
-  Popconfirm,
-  Radio,
-  Button,
-  message
-} from 'antd';
+import { Typography, Row, Col, Popconfirm, Radio, Button, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import { Howl, Howler } from 'howler';
+
 import {
   PAUSE_TIMER,
   RESUME_TIMER,
@@ -35,19 +29,20 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     word-break: keep-all;
-  
+
     & > h2.ant-typography {
       color: #777;
       font-size: 5vw;
       font-weight: 300;
       margin-bottom: 0;
-  
+
       @media (max-width: 767px) {
         font-size: 14vw;
       }
-  
+
       @media (min-width: 1200px) {
         font-size: 60px;
+      }
     }
   }
 `;
@@ -55,7 +50,7 @@ const Wrapper = styled.div`
 const RadioGroup = styled(Radio.Group)`
   width: 100%;
 
-  &>label {
+  & > label {
     width: 33.33333%;
     text-align: center;
   }
@@ -65,7 +60,7 @@ const Timer = ({
   verifyContent,
   todoContent,
   setTodoContent,
-  setDoneContent
+  setDoneContent,
 }) => {
   const {
     totalTime,
@@ -74,18 +69,32 @@ const Timer = ({
     isStarted,
     isRunning,
     todoId,
+    isSoundOn,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const sound = new Howl({
+    src: ['Christmas_Village_64.mp3'],
+    onplayerror: function() {
+      sound.once('unlock', function() {
+        sound.play();
+      });
+    },
+  });
 
   useEffect(() => {
     if (totalTime === elapsedTime) {
-      alert(messages.timerEnd);
+      if (isSoundOn) {
+        sound.play();
+      }
       dispatch({
         type: PAUSE_TIMER,
       });
+      if (!alert(messages.timerEnd)) {
+        sound.stop();
+      }
     }
-  }, [elapsedTime && totalTime === elapsedTime]);
+  }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
 
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
@@ -102,7 +111,7 @@ const Timer = ({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
       data: {
         todoContent: verified,
-        duration: timeFormat(totalTime),
+        duration: totalTime / 60,
         startedAt: moment()
           .utc()
           .format(),
@@ -161,6 +170,7 @@ const Timer = ({
           defaultValue="25"
           disabled={isStarted || !me}
         >
+          <Radio.Button value="0.1">0.1</Radio.Button>
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>
@@ -169,44 +179,44 @@ const Timer = ({
 
       <Row type="flex" justify="space-between">
         {!isStarted ? (
-        <Col xs={24}>
-          <Button
-            type="primary"
-            onClick={onStart}
-            loading={isLoading}
-            disabled={!me}
-          >
-            타이머 스타트!
-          </Button>
-        </Col>
-      ) : (
-        <>
-          <Col xs={8}>
-            <Popconfirm
-              title={messages.reset}
-              onConfirm={onConfirmReset}
-              onCancel={onCancelReset}
-              okText="Yes"
-              cancelText="No"
+          <Col xs={24}>
+            <Button
+              type="primary"
+              onClick={onStart}
+              loading={isLoading}
+              disabled={!me}
             >
-              <Button type="danger" ghost onClick={onReset}>
-                리셋
-              </Button>
-            </Popconfirm>
+              타이머 스타트!
+            </Button>
           </Col>
+        ) : (
+          <>
+            <Col xs={8}>
+              <Popconfirm
+                title={messages.reset}
+                onConfirm={onConfirmReset}
+                onCancel={onCancelReset}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="danger" ghost onClick={onReset}>
+                  리셋
+                </Button>
+              </Popconfirm>
+            </Col>
 
-          <Col xs={14}>
-            {isRunning ? (
-              <Button type="primary" ghost onClick={onPause}>
-                잠깐 화장실
-              </Button>
-            ) : (
-              <Button type="primary" ghost onClick={onResume}>
-                다시 스타트
-              </Button>
-            )}
-          </Col>
-        </>
+            <Col xs={14}>
+              {isRunning ? (
+                <Button type="primary" ghost onClick={onPause}>
+                  잠깐 화장실
+                </Button>
+              ) : (
+                <Button type="primary" ghost onClick={onResume}>
+                  다시 스타트
+                </Button>
+              )}
+            </Col>
+          </>
         )}
       </Row>
     </Wrapper>

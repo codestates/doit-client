@@ -1,9 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
   a {
     text-decoration: none;
     color:inherit;
+  }
+  
+  body {
+    background: #fafafa;
+    font-family: 'Spoqa Han Sans', 'Sans-serif';
   }
 
   .container {
@@ -14,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   section.ant-layout {
-    background: #fff;
+    background: #fafafa;
   }
 
   .ant-col > button {

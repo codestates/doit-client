@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   .clock {
     text-align: center;
     padding-bottom: 10px;
-    background: #fafafa;
+    background: #fff;
     border: 1px solid #ededed;
     border-radius: 4px;
     height: 250px;
@@ -37,8 +37,9 @@ const Wrapper = styled.div`
     word-break: keep-all;
   
     & > h2.ant-typography {
-      color: #333;
+      color: #777;
       font-size: 5vw;
+      font-weight: 300;
       margin-bottom: 0;
   
       @media (max-width: 767px) {

@@ -20,6 +20,15 @@ import messages from '../config/messages';
 const Wrapper = styled.div`
   .ant-card {
     border-radius: 4px;
+    
+    & .ant-card-body {
+      padding: 0;
+
+      &>textarea {
+        border: 0;
+        border-top: 1px solid #ededed;  
+      }
+    }
   }
 
   button {
@@ -90,8 +99,8 @@ const TodoNote = ({
   return (
     <Wrapper>
       <Row className="todoRow" gutter={24} type="flex" justify="space-between">
-        <Col xs={24} lg={12}>
-          <Card type="inner" title="당장 할일">
+        <Col xs={24} md={12}>
+          <Card title="당장 할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
@@ -101,8 +110,8 @@ const TodoNote = ({
             />
           </Card>
         </Col>
-        <Col xs={24} lg={12}>
-          <Card type="inner" title="결국 한일">
+        <Col xs={24} md={12}>
+          <Card title="결국 한일">
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}
@@ -123,7 +132,7 @@ const TodoNote = ({
         할일 다 했으면 언제든 컴플릿!
       </Button>
       <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
-        저희를 위해 피드백을 주세욧
+        두잇 팀을 위해 피드백을 주세욧
       </Button>
     </Wrapper>
   );

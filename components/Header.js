@@ -23,6 +23,7 @@ const Logo = styled.h1`
   margin: auto 10px;
   display: flex;
   align-items: center;
+  font-weight: 600;
 `;
 
 const MenuItem = styled(Menu.Item)`
@@ -45,28 +46,32 @@ const HeaderComponent = () => {
           </a>
         </Link>
         {me ? (
-          <Menu style={{ float: 'right' }} mode="horizontal">
-            <MenuItem key="1">
-              <Link href="/">
-                <a>
-                  <Icon type="clock-circle" />
-                  타이머
-                </a>
-              </Link>
-            </MenuItem>
-            <MenuItem key="2">
-              <Link href="/todohistory">
-                <a>
-                  <Icon type="history" />
-                  히스토리
-                </a>
-              </Link>
-            </MenuItem>
-            <MenuItem key="3">
-              <Icon type="logout" />
-              <LogoutBtn />
-            </MenuItem>
-          </Menu>
+          <>
+            <Menu mode="horizontal" defaultSelectedKeys="1" style={{ float: 'left' }} >
+              <MenuItem key="1">
+                <Link href="/">
+                  <a>
+                    <Icon type="clock-circle" />
+                    타이머
+                  </a>
+                </Link>
+              </MenuItem>
+              <MenuItem key="2">
+                <Link href="/todohistory">
+                  <a>
+                    <Icon type="history" />
+                    히스토리
+                  </a>
+                </Link>
+              </MenuItem>
+            </Menu>
+            <Menu mode="horizontal" style={{float: 'right'}} >
+              <MenuItem key="3">
+                <Icon type="logout" />
+                <LogoutBtn />
+              </MenuItem>
+            </Menu>
+          </>
         ) : (
           <Menu mode="horizontal" style={{ float: 'right' }}>
             <MenuItem key="4">

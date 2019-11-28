@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const START_TIMER_AND_TODO_CREATE_REQUEST =
   'START_TIMER_AND_TODO_CREATE_REQUEST';
 export const START_TIMER_AND_TODO_CREATE_SUCCESS =
@@ -32,6 +34,8 @@ const initialState = {
   doneContent: '',
   todoId: 0,
   timelineId: 0,
+  startTime: '',
+  elapsedTimeBackup: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -61,18 +65,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isRunning: false,
+        elapsedTimeBackup: state.elapsedTime,
       };
     }
     case RESUME_TIMER: {
       return {
         ...state,
         isRunning: true,
+        startTime: moment().local(),
       };
     }
     case RESET_TIMER: {
       return {
         ...state,
         elapsedTime: 0,
+        elapsedTimeBackup: 0,
         isStarted: false,
         isLoading: false,
         isRunning: false,
@@ -83,6 +90,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isRunning: false,
         elapsedTime: 0,
+        elapsedTimeBackup: 0,
         totalTime: action.time,
       };
     }
@@ -90,7 +98,11 @@ const reducer = (state = initialState, action) => {
       if (state.elapsedTime < state.totalTime) {
         return {
           ...state,
-          elapsedTime: state.elapsedTime + 1,
+          elapsedTime:
+            parseInt(
+              moment.duration(moment().local() - state.startTime).asSeconds(),
+              10,
+            ) + state.elapsedTimeBackup,
         };
       } else {
         return {
@@ -122,6 +134,7 @@ const applyStartTimerAndTodoCreateSuccess = (state, action) => {
     isRunning: true,
     todoId: action.payload.todoId,
     timelineId: action.payload.timelineId,
+    startTime: moment().local(),
   };
 };
 
@@ -149,6 +162,7 @@ const applyTodoCompleteSuccess = (state, action) => {
   return {
     ...state,
     elapsedTime: 0,
+    elapsedTimeBackup: 0,
     isStarted: false,
     isLoading: false,
     isSavingTodo: false,
@@ -160,6 +174,7 @@ const applyTodoCompleteFailure = (state, action) => {
   return {
     ...state,
     elapsedTime: 0,
+    elapsedTimeBackup: 0,
     isStarted: false,
     isLoading: false,
     isSavingTodo: false,

@@ -1,13 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  Typography,
-  Row,
-  Col,
-  Popconfirm,
-  Radio,
-  Button,
-  message
-} from 'antd';
+import { Typography, Row, Col, Popconfirm, Radio, Button, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,19 +27,20 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     word-break: keep-all;
-  
+
     & > h2.ant-typography {
       color: #777;
       font-size: 5vw;
       font-weight: 300;
       margin-bottom: 0;
-  
+
       @media (max-width: 767px) {
         font-size: 14vw;
       }
-  
+
       @media (min-width: 1200px) {
         font-size: 60px;
+      }
     }
   }
 `;
@@ -55,7 +48,7 @@ const Wrapper = styled.div`
 const RadioGroup = styled(Radio.Group)`
   width: 100%;
 
-  &>label {
+  & > label {
     width: 33.33333%;
     text-align: center;
   }
@@ -65,7 +58,7 @@ const Timer = ({
   verifyContent,
   todoContent,
   setTodoContent,
-  setDoneContent
+  setDoneContent,
 }) => {
   const {
     totalTime,
@@ -102,7 +95,7 @@ const Timer = ({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
       data: {
         todoContent: verified,
-        duration: timeFormat(totalTime),
+        duration: totalTime / 60,
         startedAt: moment()
           .utc()
           .format(),
@@ -169,44 +162,44 @@ const Timer = ({
 
       <Row type="flex" justify="space-between">
         {!isStarted ? (
-        <Col xs={24}>
-          <Button
-            type="primary"
-            onClick={onStart}
-            loading={isLoading}
-            disabled={!me}
-          >
-            타이머 스타트!
-          </Button>
-        </Col>
-      ) : (
-        <>
-          <Col xs={8}>
-            <Popconfirm
-              title={messages.reset}
-              onConfirm={onConfirmReset}
-              onCancel={onCancelReset}
-              okText="Yes"
-              cancelText="No"
+          <Col xs={24}>
+            <Button
+              type="primary"
+              onClick={onStart}
+              loading={isLoading}
+              disabled={!me}
             >
-              <Button type="danger" ghost onClick={onReset}>
-                리셋
-              </Button>
-            </Popconfirm>
+              타이머 스타트!
+            </Button>
           </Col>
+        ) : (
+          <>
+            <Col xs={8}>
+              <Popconfirm
+                title={messages.reset}
+                onConfirm={onConfirmReset}
+                onCancel={onCancelReset}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="danger" ghost onClick={onReset}>
+                  리셋
+                </Button>
+              </Popconfirm>
+            </Col>
 
-          <Col xs={14}>
-            {isRunning ? (
-              <Button type="primary" ghost onClick={onPause}>
-                잠깐 화장실
-              </Button>
-            ) : (
-              <Button type="primary" ghost onClick={onResume}>
-                다시 스타트
-              </Button>
-            )}
-          </Col>
-        </>
+            <Col xs={14}>
+              {isRunning ? (
+                <Button type="primary" ghost onClick={onPause}>
+                  잠깐 화장실
+                </Button>
+              ) : (
+                <Button type="primary" ghost onClick={onResume}>
+                  다시 스타트
+                </Button>
+              )}
+            </Col>
+          </>
         )}
       </Row>
     </Wrapper>

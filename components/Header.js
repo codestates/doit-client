@@ -20,13 +20,15 @@ const StyledHeader = styled(Header)`
 const Logo = styled.h1`
   float: left;
   height: 46px;
-  margin: auto 10px;
+  margin: auto 30px auto 5px;
   display: flex;
   align-items: center;
   font-weight: 600;
 `;
 
 const MenuItem = styled(Menu.Item)`
+  border-bottom: 2px solid transparent !important;
+
   &:hover {
     border-bottom: 2px solid transparent !important;
   }

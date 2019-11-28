@@ -77,12 +77,12 @@ const HeaderComponent = () => {
                   </a>
                 </Link>
               </MenuItem>
-              <MenuItem key="3">
-                <Switch size="small" defaultChecked onChange={onChangeSound} />{' '}
-                sound on/off
-              </MenuItem>
             </Menu>
             <Menu mode="horizontal" style={{ float: 'right' }}>
+              <MenuItem key="3">
+                <Switch size="small" defaultChecked onChange={onChangeSound} />{' '}
+                소리 켬/끔  
+              </MenuItem>
               <MenuItem key="4">
                 <Icon type="logout" />
                 <LogoutBtn />

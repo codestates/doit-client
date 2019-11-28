@@ -211,7 +211,7 @@ const Timer = ({
                   잠깐 화장실
                 </Button>
               ) : (
-                <Button type="primary" ghost onClick={onResume}>
+                <Button type="primary" ghost onClick={onResume} disabled={totalTime === elapsedTime}>
                   다시 스타트
                 </Button>
               )}

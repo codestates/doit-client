@@ -100,7 +100,7 @@ const TodoNote = ({
     <Wrapper>
       <Row className="todoRow" gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={12}>
-          <Card title="당장 할일">
+          <Card title="지금 할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}

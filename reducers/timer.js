@@ -17,6 +17,7 @@ export const RESUME_TIMER = 'RESUME_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_TIMER = 'SET_TIMER';
 export const ADD_SECOND = 'ADD_SECOND';
+export const TOGGLE_SOUND_ON_OFF = 'TOGGLE_SOUND_ON_OFF';
 
 const DEFAULT_TIME = 25 * 60; // 25 minutes
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   timelineId: 0,
   startTime: '',
   elapsedTimeBackup: 0,
+  isSoundOn: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -110,6 +112,12 @@ const reducer = (state = initialState, action) => {
           isRunning: false,
         };
       }
+    }
+    case TOGGLE_SOUND_ON_OFF: {
+      return {
+        ...state,
+        isSoundOn: action.data,
+      };
     }
     default: {
       return state;

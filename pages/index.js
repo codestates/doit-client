@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Row, Col, Input } from 'antd';
 import styled from 'styled-components';
 
@@ -26,6 +26,8 @@ const Home = () => {
     return verified && verified.length > 0 ? verified : null;
   };
 
+  const inputEl = useRef(null);
+
   return (
     <Wrapper>
       <Row gutter={24} type="flex" justify="space-between">
@@ -35,6 +37,7 @@ const Home = () => {
             todoContent={todoContent}
             setTodoContent={setTodoContent}
             setDoneContent={setDoneContent}
+            inputEl={inputEl}
           />
         </Col>
 
@@ -45,6 +48,7 @@ const Home = () => {
             setTodoContent={setTodoContent}
             doneContent={doneContent}
             setDoneContent={setDoneContent}
+            inputEl={inputEl}
           />
         </Col>
       </Row>

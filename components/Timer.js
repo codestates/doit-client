@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import {
   Typography,
   Row,
@@ -70,6 +70,7 @@ const Timer = ({
   todoContent,
   setTodoContent,
   setDoneContent,
+  inputEl,
 }) => {
   const {
     totalTime,
@@ -103,6 +104,7 @@ const Timer = ({
         title: messages.timerEnd,
         onOk() {
           sound.stop();
+          inputEl.current.focus();
         },
       });
     }
@@ -117,7 +119,7 @@ const Timer = ({
   const onStart = useCallback(() => {
     const verified = verifyContent(todoContent);
     if (!verified) {
-      return message.error(messages.todoContentEmpty);
+      return message.warning(messages.todoContentEmpty);
     }
     dispatch({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,

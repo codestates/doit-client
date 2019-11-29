@@ -26,9 +26,9 @@ const Wrapper = styled.div`
     & .ant-card-body {
       padding: 0;
 
-      &>textarea {
+      & > textarea {
         border: 0;
-        border-top: 1px solid #ededed;  
+        border-top: 1px solid #ededed;
       }
     }
   }
@@ -43,7 +43,7 @@ const TodoNote = ({
   todoContent,
   setTodoContent,
   doneContent,
-  setDoneContent
+  setDoneContent,
 }) => {
   const { TextArea } = Input;
   const {

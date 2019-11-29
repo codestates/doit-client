@@ -20,21 +20,19 @@ const timeFormat = (timestamp) => {
   return isValid
     ? moment(timestamp)
         .local()
-        .format('HH시 mm분')
-    : '알 수 없는 시간';
+        .format('HH:mm')
+    : '??';
 };
 
-const HistoryCard = ({ todo }) => {
-  // console.log(todo);
+const HistoryCard = ({ todo, index }) => {
+  console.log(todo);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const realDuration =
     startTime && endTime
       ? moment(endTime).diff(moment(startTime), 'minutes')
       : '0';
-  const todoCardTitle = `${timeFormat(
-    startTime,
-  )}부터 ${realDuration}분동안 ${timeFormat(endTime)}까지 열정을 다했음`;
+  const todoCardTitle = `#${index+1} (${realDuration}분 소요) ${timeFormat(startTime)} ~ ${timeFormat(endTime)}`;
 
   return (
     <Wrapper id={todo.id}>
@@ -45,7 +43,7 @@ const HistoryCard = ({ todo }) => {
           <Card title="할일">
             <TextArea
               value={todo.todoContent}
-              autoSize={{ minRows: 6 }}
+              autoSize={{ minRows: 4 }}
               disabled
             />
           </Card>
@@ -54,7 +52,7 @@ const HistoryCard = ({ todo }) => {
           <Card title="결국 한일">
             <TextArea
               value={todo.doneContent}
-              autoSize={{ minRows: 6 }}
+              autoSize={{ minRows: 4 }}
               disabled
             />
           </Card>

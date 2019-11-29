@@ -71,7 +71,7 @@ const TodoCalendar = () => {
     return (
       <div>
         {listData.map((item) => (
-          <Badge key={item.createdDate} color="#F8D755" style={{ paddingLeft: 7 }} />
+          <Badge key={item.createdDate} color="#D86056" style={{ paddingLeft: 7 }} />
         ))}
       </div>
     );

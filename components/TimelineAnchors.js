@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   
   & .ant-anchor-wrapper {
     background: transparent;
+    
+    &>.ant-anchor {
+      margin-bottom: 40px;
+    }
   }
 
   @media (max-width: 767px) {
@@ -38,7 +42,7 @@ const TimelineAnchors = () => {
         {me && todos && todos.length ? (
           todos.map(todo => <LinkItems key={todo.id} todo={todo} />)
         ) : (
-          <Link href="#" title="한일이 없습니다.." />
+          <Link href="#" title="한일이 없어용" />
         )}
       </Anchor>
     </Wrapper>

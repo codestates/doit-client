@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import ButtonStyle from './ButtonStyle';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -70,23 +71,15 @@ const GlobalStyle = createGlobalStyle`
     background: #fafafa;
   }
 
-  button.ant-btn {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  a.ant-btn {
-    width: 100%;
-  }
-  
   ul.ant-menu-horizontal {
     border: 0;
   }
   
-
   textarea.ant-input {
     resize: none;
   }
+
+  ${ButtonStyle}
 
   .ant-card {
     margin-bottom: 20px;

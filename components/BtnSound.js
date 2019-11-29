@@ -14,7 +14,11 @@ const Wrapper = styled.div`
 
   button {
     margin-right: 5px;
-  }
+
+    &.ant-switch.ant-switch-checked {
+      background-color: #252525;
+    }  
+  }    
 `;
 
 const BtnSound = () => {

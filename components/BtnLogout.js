@@ -35,7 +35,7 @@ const BtnLogout = () => {
     >
       <StyledButton>
         <Icon type="logout" />
-        그만두기
+        로그아웃
       </StyledButton>
     </Popconfirm>
   );

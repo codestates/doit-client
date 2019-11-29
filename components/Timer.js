@@ -239,7 +239,6 @@ const Timer = ({
                 <Button
                   type="danger"
                   size="large"
-                  ghost
                   onClick={onReset}
                 >
                   <Icon type="reload" />
@@ -250,15 +249,16 @@ const Timer = ({
 
             <Col xs={14}>
               {isRunning ? (
-                <Button type="primary" size="large" ghost onClick={onPause}>
+                <Button
+                  size="large"
+                  onClick={onPause}
+                >
                   <Icon type="stop" />
                   잠깐 화장실 좀
                 </Button>
               ) : (
                 <Button
-                  type="primary"
                   size="large"
-                  ghost
                   onClick={onResume}
                   disabled={totalTime === elapsedTime}
                 >

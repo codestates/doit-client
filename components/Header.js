@@ -18,6 +18,14 @@ const StyledHeader = styled(Header)`
 
   & .ant-menu-item {
     padding: 0 10px;
+
+    &.ant-menu-item-selected>a,
+    &>a:hover,
+    &>a:focus,
+    &>button:hover,
+    &>button:focus {
+      color: #252525;
+    }
   }
 `;
 
@@ -62,7 +70,7 @@ const HeaderComponent = () => {
                 <Link href="/todohistory">
                   <a>
                     {/* <Icon type="history" /> */}
-                    끝난일
+                    기록 보기
                   </a>
                 </Link>
               </MenuItem>

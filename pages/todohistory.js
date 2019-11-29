@@ -52,7 +52,7 @@ const todoHistory = () => {
 
         <Col xs={24} md={16}>
           {todos.length ? (
-            todos.map(todo => <HistoryCard key={todo.id} todo={todo} />)
+            todos.map((todo, index) => <HistoryCard key={todo.id} todo={todo} index={index} />)
           ) : (
             <Empty
              description={

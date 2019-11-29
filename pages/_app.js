@@ -22,6 +22,10 @@ const DoIt = ({ Component, store, pageProps }) => {
         htmlAttributes={{ lang: 'ko' }}
         meta={[
           { charset: 'UTF-8' },
+          { 
+            name: 'viewport',
+            content: 'width=device-width,initial-scale=1'
+          },
           {
             name: 'description',
             content: messages.metaContent,
@@ -33,13 +37,13 @@ const DoIt = ({ Component, store, pageProps }) => {
           },
           { property: 'og:type', content: 'website' },
           { property: 'og:url', content: 'https://doitreviews.com' },
-          { name: 'viewport', content: 'width=device-width,initial-scale=1'}
         ]}
         link={[
           {
             rel: 'stylesheet',
             href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css',
           },
+          { rel: 'shortcut icon', href: 'favicon.ico' },
         ]}
       />
       <AppLayout>

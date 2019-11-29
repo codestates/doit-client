@@ -102,7 +102,7 @@ const TodoNote = ({
     <Wrapper>
       <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={12}>
-          <Card title="할일">
+          <Card title={<><Icon type="file-text" /> 할일</>}>
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
@@ -113,7 +113,7 @@ const TodoNote = ({
           </Card>
         </Col>
         <Col xs={24} md={12}>
-          <Card title="결국 한일">
+          <Card title={<><Icon type="file-done" /> 결국 한일</>}>
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}

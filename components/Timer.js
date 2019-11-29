@@ -34,7 +34,7 @@ const Clock = styled.div`
   border: 1px solid #d9d9d9;
   border-radius: 4px 4px 0 0;
   border-bottom: 0;
-  height: 214px;
+  min-height: 214px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +46,7 @@ const Clock = styled.div`
     margin-bottom: 0;
 
     @media (max-width: 767px) {
-      font-size: 14vw;
+      font-size: 15vw;
     }
 
     @media (min-width: 1200px) {
@@ -223,7 +223,7 @@ const Timer = ({
                   ghost
                   onClick={onReset}
                 >
-                  <Icon type="redo" />
+                  <Icon type="reload" />
                   리셋
                 </Button>
               </Popconfirm>

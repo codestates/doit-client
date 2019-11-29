@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Row, Col, Breadcrumb, Card, Input } from 'antd';
+import { Row, Col, Breadcrumb, Card, Input, Icon } from 'antd';
 import styled from 'styled-components';
 
 const { TextArea } = Input;
@@ -59,7 +59,7 @@ const TodoCard = ({ todo, index }) => {
 
       <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={12}>
-          <Card title="할일">
+          <Card title={<><Icon type="file-text" /> 할일</>}>
             <TextArea
               value={todo.todoContent}
               autoSize={{ minRows: 6 }}
@@ -68,7 +68,7 @@ const TodoCard = ({ todo, index }) => {
           </Card>
         </Col>
         <Col xs={24} md={12}>
-          <Card title="결국 한일">
+          <Card title={<><Icon type="file-done" /> 결국 한일</>}>
             <TextArea
               value={todo.doneContent}
               autoSize={{ minRows: 6 }}

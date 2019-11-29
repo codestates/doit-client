@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import {
-  Row,
-  Col
-} from 'antd';
+import { Row, Col, Input } from 'antd';
 import styled from 'styled-components';
 
 import Timer from '../components/Timer';
 import TodoNote from '../components/TodoNote';
+import Feedback from '../components/Feedback';
 
 const Wrapper = styled.div`
   & > div {
     margin-top: 40px;
   }
 
-  .clockRow, .todoRow {
+  .clockRow,
+  .todoRow {
     min-height: 310px;
   }
 `;
@@ -40,7 +39,7 @@ const Home = () => {
         </Col>
 
         <Col xs={24} lg={16}>
-          <TodoNote 
+          <TodoNote
             verifyContent={verifyContent}
             todoContent={todoContent}
             setTodoContent={setTodoContent}
@@ -49,6 +48,10 @@ const Home = () => {
           />
         </Col>
       </Row>
+      <br />
+      <hr />
+      <br />
+      <Feedback />
     </Wrapper>
   );
 };

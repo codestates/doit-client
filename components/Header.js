@@ -1,13 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Icon, Switch } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import GoogleLoginButton from './GoogleLoginButton';
-import LogoutBtn from './LogoutBtn';
+import BtnLogout from './BtnLogout';
 import LoginForm from './LoginForm';
-import { TOGGLE_SOUND_ON_OFF } from '../reducers/timer';
 
 const { Header } = Layout;
 
@@ -16,15 +15,19 @@ const StyledHeader = styled(Header)`
   height: auto;
   padding: 0;
   border: 1px solid #ededed;
+
+  & .ant-menu-item {
+    padding: 0 10px;
+  }
 `;
 
 const Logo = styled.h1`
   float: left;
   height: 46px;
-  margin: auto 30px auto 5px;
+  margin: auto;
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const MenuItem = styled(Menu.Item)`
@@ -37,23 +40,10 @@ const MenuItem = styled(Menu.Item)`
 
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  const onChangeSound = (checked) => {
-    dispatch({
-      type: TOGGLE_SOUND_ON_OFF,
-      data: checked,
-    });
-  };
 
   return (
     <StyledHeader>
       <div className="container">
-        <Link href="/">
-          <a>
-            <Logo>두잇</Logo>
-          </a>
-        </Link>
         {me ? (
           <>
             <Menu
@@ -64,34 +54,28 @@ const HeaderComponent = () => {
               <MenuItem key="1">
                 <Link href="/">
                   <a>
-                    <Icon type="clock-circle" />
-                    타이머
+                    <Logo>두잇</Logo>
                   </a>
                 </Link>
               </MenuItem>
               <MenuItem key="2">
                 <Link href="/todohistory">
                   <a>
-                    <Icon type="history" />
-                    히스토리
+                    {/* <Icon type="history" /> */}
+                    지난두잇
                   </a>
                 </Link>
               </MenuItem>
             </Menu>
             <Menu mode="horizontal" style={{ float: 'right' }}>
               <MenuItem key="3">
-                <Switch size="small" defaultChecked onChange={onChangeSound} />{' '}
-                소리 켬/끔  
-              </MenuItem>
-              <MenuItem key="4">
-                <Icon type="logout" />
-                <LogoutBtn />
+                <BtnLogout />
               </MenuItem>
             </Menu>
           </>
         ) : (
           <Menu mode="horizontal" style={{ float: 'right' }}>
-            <MenuItem key="5">
+            <MenuItem key="4">
               <GoogleLoginButton />
             </MenuItem>
           </Menu>

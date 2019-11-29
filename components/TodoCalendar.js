@@ -1,9 +1,17 @@
 import React, { useCallback, useEffect } from 'react';
 import { Calendar, Badge } from 'antd';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
+
+const Wrapper = styled.div`
+  border: 1px solid #ededed;
+  border-radius: 4px;
+  margin: 0 10px 20px 10px;
+  background: #fff;
+`;
 
 const TodoCalendar = () => {
   const { todosCount } = useSelector((state) => state.todoHistory);
@@ -42,28 +50,22 @@ const TodoCalendar = () => {
   function dateCellRender(value) {
     const listData = getListData(value);
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div>
         {listData.map((item) => (
-          <Badge key={item.createdDate} color="blue" />
+          <Badge key={item.createdDate} color="blue" style={{ paddingLeft: 7 }} />
         ))}
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        border: '1px solid #d9d9d9',
-        borderRadius: 4,
-        margin: '10px',
-      }}
-    >
+    <Wrapper>
       <Calendar
         fullscreen={false}
         onSelect={onClickCalendar}
         dateCellRender={dateCellRender}
       />
-    </div>
+    </Wrapper>
   );
 };
 

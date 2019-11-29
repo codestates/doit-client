@@ -1,13 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Card,
-  Input,
-  Icon,
-  message
-} from 'antd';
+import { Row, Col, Button, Card, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -45,6 +37,7 @@ const TodoNote = ({
   doneContent,
   setDoneContent,
   inputEl,
+  todoEl,
 }) => {
   const { TextArea } = Input;
   const {
@@ -75,7 +68,6 @@ const TodoNote = ({
 
     const verified = verifyContent(doneContent);
     if (!verified) {
-      console.log(1);
       message.warning(messages.doneContentEmpty);
       return setTimeout(() => {
         inputEl.current.focus();
@@ -115,6 +107,7 @@ const TodoNote = ({
               placeholder={messages.writeTodo}
               rows={10}
               disabled={isStarted || !me}
+              ref={todoEl}
             />
           </Card>
         </Col>

@@ -1,7 +1,6 @@
 import cookie from 'js-cookie';
 
 export const setCookie = ({ key, value }) => {
-  // console.log(process.browser);
   if (process.browser) {
     cookie.set(key, value, {
       expires: 1,

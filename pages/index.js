@@ -46,6 +46,7 @@ const Home = () => {
   };
 
   const inputEl = useRef(null);
+  const todoEl = useRef(null);
 
   return (
     <Wrapper>
@@ -57,6 +58,7 @@ const Home = () => {
             setTodoContent={setTodoContent}
             setDoneContent={setDoneContent}
             inputEl={inputEl}
+            todoEl={todoEl}
           />
         </Col>
 
@@ -68,6 +70,7 @@ const Home = () => {
             doneContent={doneContent}
             setDoneContent={setDoneContent}
             inputEl={inputEl}
+            todoEl={todoEl}
           />
         </Col>
       </Row>

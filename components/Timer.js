@@ -78,6 +78,7 @@ const Timer = ({
   setTodoContent,
   setDoneContent,
   inputEl,
+  todoEl,
 }) => {
   const {
     totalTime,
@@ -126,7 +127,10 @@ const Timer = ({
   const onStart = useCallback(() => {
     const verified = verifyContent(todoContent);
     if (!verified) {
-      return message.warning(messages.todoContentEmpty);
+      message.warning(messages.todoContentEmpty);
+      return setTimeout(() => {
+        todoEl.current.focus();
+      }, 500);
     }
     dispatch({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
@@ -219,12 +223,7 @@ const Timer = ({
                 okText="넵 다시 시작할게요"
                 cancelText="아니요 계속 합니다"
               >
-                <Button
-                  type="danger"
-                  size="large"
-                  ghost
-                  onClick={onReset}
-                >
+                <Button type="danger" size="large" ghost onClick={onReset}>
                   <Icon type="redo" />
                   리셋
                 </Button>
@@ -233,12 +232,7 @@ const Timer = ({
 
             <Col xs={14}>
               {isRunning ? (
-                <Button
-                  type="primary"
-                  size="large"
-                  ghost
-                  onClick={onPause}
-                >
+                <Button type="primary" size="large" ghost onClick={onPause}>
                   <Icon type="stop" />
                   잠깐 화장실 좀
                 </Button>

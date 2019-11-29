@@ -18,8 +18,8 @@ const Wrapper = styled.div`
 
     & .ant-card-body {
       padding: 0;
-  
-      &>textarea:disabled {
+
+      & > textarea:disabled {
         border: 0;
         border-top: 1px solid #ededed;
         background: #fff;
@@ -39,14 +39,16 @@ const timeFormat = (timestamp) => {
 };
 
 const TodoCard = ({ todo, index }) => {
-  console.log(todo);
+  // console.log(todo);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const realDuration =
     startTime && endTime
       ? moment(endTime).diff(moment(startTime), 'minutes')
       : '0분';
-  const todoCardTitle = `${timeFormat(startTime)}부터 ${timeFormat(endTime)}까지 했음`;
+  const todoCardTitle = `${timeFormat(startTime)}부터 ${timeFormat(
+    endTime,
+  )}까지 했음`;
 
   return (
     <Wrapper id={todo.id}>
@@ -75,7 +77,7 @@ const TodoCard = ({ todo, index }) => {
               disabled
             />
           </Card>
-        </Col>        
+        </Col>
       </Row>
     </Wrapper>
   );

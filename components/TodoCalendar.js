@@ -7,10 +7,29 @@ import moment from 'moment';
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
 
 const Wrapper = styled.div`
-  border: 1px solid #ededed;
+  border: 1px solid #d9d9d9;
   border-radius: 4px;
-  margin: 0 10px 20px 10px;
+  margin-bottom: 20px;
   background: #fff;
+
+  .ant-fullcalendar-header {
+    background: #D86056;
+    border: 0;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .ant-radio-button-wrapper-checked {
+    color: #fff !important;
+    background: #252525 !important;
+    border-color: #252525 !important;
+    box-shadow: none;
+  }
+
+  .ant-fullcalendar-selected-day .ant-fullcalendar-value,
+  .ant-fullcalendar-month-panel-selected-cell .ant-fullcalendar-value {
+    background: #252525 !important;
+    box-shadow: none;
+  }
 `;
 
 const TodoCalendar = () => {
@@ -52,7 +71,7 @@ const TodoCalendar = () => {
     return (
       <div>
         {listData.map((item) => (
-          <Badge key={item.createdDate} color="blue" style={{ paddingLeft: 7 }} />
+          <Badge key={item.createdDate} color="#F8D755" style={{ paddingLeft: 7 }} />
         ))}
       </div>
     );

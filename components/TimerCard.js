@@ -19,26 +19,12 @@ import {
 import messages from '../config/messages';
 
 const Wrapper = styled.div`
-  .ant-card {
-    border-radius: 4px;
-    margin-bottom: 20px;
-
-    & .ant-card-body {
-      padding: 0;
-
-      & > textarea {
-        border: 0;
-        border-top: 1px solid #ededed;
-      }
-    }
-  }
-
   button {
     width: 100%;
   }
 `;
 
-const TodoNote = ({
+const TimerCard = ({
   verifyContent,
   todoContent,
   setTodoContent,
@@ -108,23 +94,23 @@ const TodoNote = ({
     <Wrapper>
       <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={12}>
-          <Card title={<><Icon type="file-text" /> 할일</>}>
+          <Card title="할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
               placeholder={messages.writeTodo}
-              rows={10}
+              rows={7}
               disabled={isStarted || !me}
             />
           </Card>
         </Col>
         <Col xs={24} md={12}>
-          <Card title={<><Icon type="file-done" /> 결국 한일</>}>
+          <Card title="결국 한일">
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}
               placeholder={messages.writeDone}
-              rows={10}
+              rows={7}
               disabled={!isStarted || isRunning}
               ref={inputEl}
             />
@@ -146,4 +132,4 @@ const TodoNote = ({
   );
 };
 
-export default TodoNote;
+export default TimerCard;

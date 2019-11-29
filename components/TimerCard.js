@@ -11,26 +11,12 @@ import {
 import messages from '../config/messages';
 
 const Wrapper = styled.div`
-  .ant-card {
-    border-radius: 4px;
-    margin-bottom: 20px;
-
-    & .ant-card-body {
-      padding: 0;
-
-      & > textarea {
-        border: 0;
-        border-top: 1px solid #ededed;
-      }
-    }
-  }
-
   button {
     width: 100%;
   }
 `;
 
-const TodoNote = ({
+const TimerCard = ({
   verifyContent,
   todoContent,
   setTodoContent,
@@ -105,7 +91,7 @@ const TodoNote = ({
               value={todoContent}
               onChange={onChangeTodoContent}
               placeholder={messages.writeTodo}
-              rows={10}
+              rows={7}
               disabled={isStarted || !me}
               ref={todoEl}
             />
@@ -117,7 +103,7 @@ const TodoNote = ({
               value={doneContent}
               onChange={onChangeDoneContent}
               placeholder={messages.writeDone}
-              rows={10}
+              rows={7}
               disabled={!isStarted || isRunning}
               ref={inputEl}
             />
@@ -139,4 +125,4 @@ const TodoNote = ({
   );
 };
 
-export default TodoNote;
+export default TimerCard;

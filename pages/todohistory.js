@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Router from 'next/router';
 
 import TodoCalendar from '../components/TodoCalendar';
-import TodoCard from '../components/TodoCard';
+import HistoryCard from '../components/HistoryCard';
 import TimelineAnchors from '../components/TimelineAnchors';
 
 const Wrapper = styled.div`
@@ -44,7 +44,7 @@ const todoHistory = () => {
 
   return (
     <Wrapper>
-      <Row type="flex" justify="space-between">
+      <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={8}>
           <TodoCalendar />
           <TimelineAnchors />
@@ -52,7 +52,7 @@ const todoHistory = () => {
 
         <Col xs={24} md={16}>
           {todos.length ? (
-            todos.map((todo, index) => <TodoCard key={todo.id} todo={todo} index={index+1} />)
+            todos.map(todo => <HistoryCard key={todo.id} todo={todo} />)
           ) : (
             <Empty
              description={

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Switch, Input, Row, Col, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
 import styled from 'styled-components';
 
 import Timer from '../components/Timer';
-import TodoNote from '../components/TodoNote';
+import TimerCard from '../components/TimerCard';
 import Feedback from '../components/Feedback';
 
 const Wrapper = styled.div`
@@ -63,7 +63,7 @@ const Home = () => {
         </Col>
 
         <Col xs={24} md={16}>
-          <TodoNote
+          <TimerCard
             verifyContent={verifyContent}
             todoContent={todoContent}
             setTodoContent={setTodoContent}

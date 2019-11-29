@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Row, Col, Button, Form, Input, message } from 'antd';
+import { Row, Col, Button, Form, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,12 @@ const { TextArea } = Input;
 
 const StyledForm = styled(Form)`
   margin-top: 60px;
+
+  @media (min-width: 768px) {
+    button {
+      height: 93px;
+    }  
+  }
 `;
 
 const Feedback = () => {
@@ -52,7 +58,7 @@ const Feedback = () => {
   return (
     <StyledForm onSubmit={onSubmitForm}>
       <Row gutter={24} type="flex" justify="end">
-        <Col xs={24} lg={24}>
+        <Col xs={24} md={18}>
           <TextArea
             rows={4}
             placeholder={messages.feedback}
@@ -60,14 +66,16 @@ const Feedback = () => {
             value={content}
             required
           />
+        </Col>
+        <Col xs={24} md={6}>
           <Button
-            type="primary"
             size="large"
             htmlType="submit"
             loading={isSubmitting}
             disabled={content.trim().length === 0}
           >
-            피드백 보내기!
+            <Icon type="highlight" />
+            피드백 보내기
           </Button>
         </Col>
       </Row>

@@ -30,33 +30,35 @@ const { Title } = Typography;
 const Clock = styled.div`
   text-align: center;
   padding-bottom: 10px;
-  background: #fff;
+  background: #252525;
   border: 1px solid #d9d9d9;
   border-radius: 4px 4px 0 0;
-  border-bottom: 0;
-  height: 214px;
+  min-height: 220px;
   display: flex;
   justify-content: center;
   align-items: center;
   word-break: keep-all;
 
   & > h2.ant-typography {
-    font-size: 5vw;
+    color: #fff;
+    font-size: 10vw;
     font-weight: 300;
+    font-family: 'digital-clock-font';
     margin-bottom: 0;
 
     @media (max-width: 767px) {
-      font-size: 14vw;
+      font-size: 30vw;
     }
 
     @media (min-width: 1200px) {
-      font-size: 60px;
+      font-size: 120px;
     }
   }
 `;
 
 const RadioGroup = styled(Radio.Group)`
   width: 100%;
+  border-top: 0;
 
   .ant-radio-button-wrapper:first-child {
     border-radius: 0 0 0 4px;
@@ -69,6 +71,17 @@ const RadioGroup = styled(Radio.Group)`
   & > label {
     width: 33.33333%;
     text-align: center;
+    border-top: 0;
+
+    &:hover {
+      color: #252525;
+    }
+
+    &.ant-radio-button-wrapper-checked {
+      background: #252525 !important;
+      border-color: #d9d9d9 !important;
+      box-shadow: none !important;
+    }
   }
 `;
 
@@ -121,7 +134,7 @@ const Timer = ({
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
-    return `${min}분 ${sec}초 남았습니다`;
+    return `${min}:${sec}`;
   };
 
   const onStart = useCallback(() => {
@@ -223,8 +236,13 @@ const Timer = ({
                 okText="넵 다시 시작할게요"
                 cancelText="아니요 계속 합니다"
               >
-                <Button type="danger" size="large" ghost onClick={onReset}>
-                  <Icon type="redo" />
+                <Button
+                  type="danger"
+                  size="large"
+                  ghost
+                  onClick={onReset}
+                >
+                  <Icon type="reload" />
                   리셋
                 </Button>
               </Popconfirm>

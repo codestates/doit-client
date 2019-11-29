@@ -36,7 +36,7 @@ const Feedback = () => {
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      console.log('me', me);
+      // console.log('me', me);
       dispatch({
         type: FEEDBACK_REQUEST,
         payload: { content, userId: me.userId, nickname: me.nickname },

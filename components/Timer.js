@@ -91,6 +91,7 @@ const Timer = ({
   setTodoContent,
   setDoneContent,
   inputEl,
+  todoEl,
 }) => {
   const {
     totalTime,
@@ -139,7 +140,10 @@ const Timer = ({
   const onStart = useCallback(() => {
     const verified = verifyContent(todoContent);
     if (!verified) {
-      return message.warning(messages.todoContentEmpty);
+      message.warning(messages.todoContentEmpty);
+      return setTimeout(() => {
+        todoEl.current.focus();
+      }, 500);
     }
     dispatch({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,

@@ -1,13 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Card,
-  Input,
-  Icon,
-  message
-} from 'antd';
+import { Row, Col, Button, Card, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -31,6 +23,7 @@ const TimerCard = ({
   doneContent,
   setDoneContent,
   inputEl,
+  todoEl,
 }) => {
   const { TextArea } = Input;
   const {
@@ -61,7 +54,6 @@ const TimerCard = ({
 
     const verified = verifyContent(doneContent);
     if (!verified) {
-      console.log(1);
       message.warning(messages.doneContentEmpty);
       return setTimeout(() => {
         inputEl.current.focus();
@@ -101,6 +93,7 @@ const TimerCard = ({
               placeholder={messages.writeTodo}
               rows={7}
               disabled={isStarted || !me}
+              ref={todoEl}
             />
           </Card>
         </Col>

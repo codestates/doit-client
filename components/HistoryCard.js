@@ -56,7 +56,7 @@ const HistoryCard = ({ todo, index }) => {
               disabled
             />
           </Card>
-        </Col>        
+        </Col>
       </Row>
     </Wrapper>
   );

@@ -14,7 +14,7 @@ const StyledHeader = styled(Header)`
   background: #fff;
   height: auto;
   padding: 0;
-  border: 1px solid #ededed;
+  border: 1px solid #d9d9d9;
 
   & .ant-menu-item {
     padding: 0 10px;
@@ -62,7 +62,7 @@ const HeaderComponent = () => {
                 <Link href="/todohistory">
                   <a>
                     {/* <Icon type="history" /> */}
-                    지난두잇
+                    끝난일
                   </a>
                 </Link>
               </MenuItem>

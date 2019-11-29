@@ -1,12 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  Card,
-  Input,
-  message,
-} from 'antd';
+import { Row, Col, Button, Card, Input, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,13 +13,13 @@ import messages from '../config/messages';
 const Wrapper = styled.div`
   .ant-card {
     border-radius: 4px;
-    
+
     & .ant-card-body {
       padding: 0;
 
-      &>textarea {
+      & > textarea {
         border: 0;
-        border-top: 1px solid #ededed;  
+        border-top: 1px solid #ededed;
       }
     }
   }
@@ -41,7 +34,7 @@ const TodoNote = ({
   todoContent,
   setTodoContent,
   doneContent,
-  setDoneContent
+  setDoneContent,
 }) => {
   const { TextArea } = Input;
   const {
@@ -130,9 +123,6 @@ const TodoNote = ({
         disabled={!isStarted}
       >
         할일 다 했으면 언제든 컴플릿!
-      </Button>
-      <Button className="feedback" type="link" href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1" target="_blank">
-        두잇 팀을 위해 피드백을 주세욧
       </Button>
     </Wrapper>
   );

@@ -1,24 +1,18 @@
-import React, { useState } from 'react';
-import {
-  Switch,
-  Row,
-  Col,
-  Button
-} from 'antd';
+import React, { useState, useRef } from 'react';
+import { Switch, Input, Row, Col, Button } from 'antd';
 import styled from 'styled-components';
 
 import Timer from '../components/Timer';
 import TodoNote from '../components/TodoNote';
 import Feedback from '../components/Feedback';
 
-
 const Wrapper = styled.div`
   margin-top: 40px;
 
   @media (max-width: 767px) {
-    &>div>.ant-col {
+    & > div > .ant-col {
       margin-bottom: 40px;
-    }  
+    }
   }
 `;
 
@@ -51,6 +45,8 @@ const Home = () => {
     return verified && verified.length > 0 ? verified : null;
   };
 
+  const inputEl = useRef(null);
+
   return (
     <Wrapper>
       <Row gutter={24} type="flex" justify="space-between">
@@ -60,6 +56,7 @@ const Home = () => {
             todoContent={todoContent}
             setTodoContent={setTodoContent}
             setDoneContent={setDoneContent}
+            inputEl={inputEl}
           />
         </Col>
 
@@ -70,6 +67,7 @@ const Home = () => {
             setTodoContent={setTodoContent}
             doneContent={doneContent}
             setDoneContent={setDoneContent}
+            inputEl={inputEl}
           />
         </Col>
       </Row>

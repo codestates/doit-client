@@ -44,6 +44,7 @@ const TodoNote = ({
   setTodoContent,
   doneContent,
   setDoneContent,
+  inputEl,
 }) => {
   const { TextArea } = Input;
   const {
@@ -71,9 +72,14 @@ const TodoNote = ({
     dispatch({
       type: PAUSE_TIMER,
     });
+
     const verified = verifyContent(doneContent);
     if (!verified) {
-      return message.warning(messages.doneContentEmpty);
+      console.log(1);
+      message.warning(messages.doneContentEmpty);
+      return setTimeout(() => {
+        inputEl.current.focus();
+      }, 500);
     }
     dispatch({
       type: TODO_COMPLETE_REQUEST,
@@ -120,6 +126,7 @@ const TodoNote = ({
               placeholder={messages.writeDone}
               rows={10}
               disabled={!isStarted || isRunning}
+              ref={inputEl}
             />
           </Card>
         </Col>

@@ -18,7 +18,7 @@ const DoIt = ({ Component, store, pageProps }) => {
   return (
     <Provider store={store}>
       <Helmet
-        title="DoIt!"
+        title="두잇"
         htmlAttributes={{ lang: 'ko' }}
         meta={[
           { charset: 'UTF-8' },
@@ -26,13 +26,14 @@ const DoIt = ({ Component, store, pageProps }) => {
             name: 'description',
             content: messages.metaContent,
           },
-          { name: 'og:title', content: 'DoIt!' },
+          { name: 'og:title', content: '두잇' },
           {
             name: 'og:description',
             content: messages.metaContent,
           },
           { property: 'og:type', content: 'website' },
           { property: 'og:url', content: 'https://doitreviews.com' },
+          { name: 'viewport', content: 'width=device-width,initial-scale=1'}
         ]}
         link={[
           {

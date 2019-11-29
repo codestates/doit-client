@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect } from 'react';
-import { Calendar } from 'antd';
-import { useDispatch } from 'react-redux';
+import { Calendar, Badge } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
 
-function onPanelChange(value, mode) {
-  // console.log(value, mode);
-}
-
 const TodoCalendar = () => {
+  const { todosCount } = useSelector((state) => state.todoHistory);
   const dispatch = useDispatch();
   const onClickCalendar = useCallback((date) => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment(date).startOf('day').local().format()
-      }
+        date: moment(date)
+          .startOf('day')
+          .local()
+          .format(),
+      },
     });
   }, []);
 
@@ -24,10 +24,31 @@ const TodoCalendar = () => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {
-        date: moment().startOf('day').local().format()
-      }
+        date: moment()
+          .startOf('day')
+          .local()
+          .format(),
+      },
     });
   }, []);
+
+  function getListData(value) {
+    const listData = todosCount.filter(
+      (item) => item.createdDate === value.format('YYYY-MM-DD'),
+    );
+    return listData;
+  }
+
+  function dateCellRender(value) {
+    const listData = getListData(value);
+    return (
+      <div style={{ textAlign: 'center' }}>
+        {listData.map((item) => (
+          <Badge key={item.createdDate} color="blue" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -39,8 +60,8 @@ const TodoCalendar = () => {
     >
       <Calendar
         fullscreen={false}
-        onPanelChange={onPanelChange}
         onSelect={onClickCalendar}
+        dateCellRender={dateCellRender}
       />
     </div>
   );

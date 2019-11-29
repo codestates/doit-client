@@ -7,6 +7,7 @@ export const LOAD_TODOS_FAILURE = 'LOAD_TODOS_FAILURE';
 const initialState = {
   date: '',
   todos: [],
+  todosCount: [],
 };
 
 // REDUCERS
@@ -23,7 +24,9 @@ const reducer = (state = initialState, action) => {
       // console.log(action.data);
       return {
         ...state,
-        todos: action.data.length === 0 ? [] : action.data,
+        todos: action.data.todos.length === 0 ? [] : action.data.todos,
+        todosCount:
+          action.data.todosCount.length === 0 ? [] : action.data.todosCount,
       };
     }
     case LOAD_TODOS_FAILURE: {
@@ -32,6 +35,7 @@ const reducer = (state = initialState, action) => {
         todos: [],
       };
     }
+
     default: {
       return state;
     }

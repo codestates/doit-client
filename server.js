@@ -2,6 +2,7 @@ const express = require('express');
 const next = require('next');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const path = require('path');
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -17,6 +18,7 @@ app.prepare().then(() => {
   } else {
     server.use(morgan('dev'));
   }
+  server.use('/', express.static(path.join(__dirname, 'public')));
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
 

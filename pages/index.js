@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <Wrapper>
       <Row gutter={24} type="flex" justify="space-between">
-        <Col xs={24} lg={8}>
+        <Col xs={24} md={8}>
           <Timer
             verifyContent={verifyContent}
             todoContent={todoContent}
@@ -38,7 +38,7 @@ const Home = () => {
           />
         </Col>
 
-        <Col xs={24} lg={16}>
+        <Col xs={24} md={16}>
           <TodoNote
             verifyContent={verifyContent}
             todoContent={todoContent}

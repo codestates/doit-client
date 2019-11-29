@@ -1,5 +1,5 @@
 const messages = {
-  todoContentEmpty: '당장 할일을 적어주세요',
+  todoContentEmpty: '지금 할일을 적어주세요',
   doneContentEmpty: '할일을 다 하셨군요! 결국 무슨 일을 했는지 입력해주세요',
   reset: '모두 초기화하시겠습니까',
   timerEnd:

@@ -13,6 +13,15 @@ import messages from '../config/messages';
 const Wrapper = styled.div`
   .ant-card {
     border-radius: 4px;
+
+    & .ant-card-body {
+      padding: 0;
+
+      & > textarea {
+        border: 0;
+        border-top: 1px solid #ededed;
+      }
+    }
   }
 
   button {
@@ -83,8 +92,8 @@ const TodoNote = ({
   return (
     <Wrapper>
       <Row className="todoRow" gutter={24} type="flex" justify="space-between">
-        <Col xs={24} lg={12}>
-          <Card type="inner" title="당장 할일">
+        <Col xs={24} md={12}>
+          <Card title="지금 할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
@@ -94,8 +103,8 @@ const TodoNote = ({
             />
           </Card>
         </Col>
-        <Col xs={24} lg={12}>
-          <Card type="inner" title="결국 한일">
+        <Col xs={24} md={12}>
+          <Card title="결국 한일">
             <TextArea
               value={doneContent}
               onChange={onChangeDoneContent}

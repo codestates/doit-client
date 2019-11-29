@@ -1,5 +1,13 @@
 import React, { useEffect, useCallback } from 'react';
-import { Row, Col, Button, Card, Input, message } from 'antd';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  Input,
+  Icon,
+  message
+} from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +21,7 @@ import messages from '../config/messages';
 const Wrapper = styled.div`
   .ant-card {
     border-radius: 4px;
+    margin-bottom: 20px;
 
     & .ant-card-body {
       padding: 0;
@@ -97,9 +106,9 @@ const TodoNote = ({
 
   return (
     <Wrapper>
-      <Row className="todoRow" gutter={24} type="flex" justify="space-between">
+      <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={12}>
-          <Card title="지금 할일">
+          <Card title="할일">
             <TextArea
               value={todoContent}
               onChange={onChangeTodoContent}
@@ -125,10 +134,12 @@ const TodoNote = ({
 
       <Button
         type="primary"
+        size="large"
         onClick={onComplete}
         loading={isSavingTodo}
         disabled={!isStarted}
       >
+        <Icon type="check-circle" />
         할일 다 했으면 언제든 컴플릿!
       </Button>
     </Wrapper>

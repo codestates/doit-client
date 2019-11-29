@@ -1,76 +1,83 @@
 import React from 'react';
 import moment from 'moment';
-import { Card, Input } from 'antd';
+import { Row, Col, Breadcrumb, Card, Input } from 'antd';
+import styled from 'styled-components';
 
 const { TextArea } = Input;
+
+const Wrapper = styled.div`
+  margin: 0 10px;
+
+  .ant-breadcrumb {
+    margin-bottom: 10px;
+  }
+
+  .ant-card {
+    border-radius: 4px;
+    margin-bottom: 20px;
+
+    & .ant-card-body {
+      padding: 0;
+  
+      &>textarea:disabled {
+        border: 0;
+        border-top: 1px solid #ededed;
+        background: #fff;
+        color: rgba(0, 0, 0, 0.85);
+      }
+    }
+  }
+`;
 
 const timeFormat = (timestamp) => {
   const isValid = timestamp && moment(timestamp);
   return isValid
     ? moment(timestamp)
         .local()
-        .format('HH:mm')
-    : 'x';
+        .format('HH시 mm분')
+    : '??';
 };
 
-const TodoCard = ({ todo }) => {
+const TodoCard = ({ todo, index }) => {
+  console.log(todo);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const realDuration =
     startTime && endTime
       ? moment(endTime).diff(moment(startTime), 'minutes')
-      : 'x';
-  const todoCardTitle = `${timeFormat(startTime)} ~ ${timeFormat(endTime)}`;
+      : '0분';
+  const todoCardTitle = `${timeFormat(startTime)}부터 ${timeFormat(endTime)}까지 했음`;
 
   return (
-    <Card
-      id={todo.id}
-      title={`${todoCardTitle} [${todo.duration}][${realDuration}]`}
-      style={{
-        border: '1px solid #d9d9d9',
-        borderRadius: 4,
-        margin: '10px',
-      }}
-    >
-      <p
-        style={{
-          fontSize: 14,
-          color: 'rgba(0, 0, 0, 0.85)',
-          marginBottom: 16,
-          fontWeight: 500,
-        }}
-      ></p>
-      <Card type="inner" title="Todo" style={{ borderRadius: 4 }}>
-        <TextArea
-          value={todo.todoContent}
-          disabled
-          autoSize={{ minRows: 2 }}
-          style={{
-            border: '0px',
-            background: 'transparent',
-            resize: 'none',
-            color: '#000',
-          }}
-        />
-      </Card>
-      <Card
-        type="inner"
-        title="Done"
-        style={{ marginTop: 10, borderRadius: 4 }}
-      >
-        <TextArea
-          value={todo.doneContent}
-          autoSize={{ minRows: 2 }}
-          disabled
-          style={{
-            border: '0px',
-            background: 'transparent',
-            resize: 'none',
-            color: '#000',
-          }}
-        />
-      </Card>
-    </Card>
+    <Wrapper id={todo.id}>
+      <Breadcrumb separator="/">
+        <Breadcrumb.Item>{index}번째</Breadcrumb.Item>
+        <Breadcrumb.Item>{todoCardTitle}</Breadcrumb.Item>
+        {/* <Breadcrumb.Item>{todo.duration}분</Breadcrumb.Item>
+        <Breadcrumb.Item>{realDuration}분</Breadcrumb.Item> */}
+      </Breadcrumb>
+
+      <Row gutter={24} type="flex" justify="space-between">
+        <Col xs={24} md={12}>
+          <Card title="할일">
+            <TextArea
+              value={todo.todoContent}
+              autoSize={{ minRows: 6 }}
+              disabled
+            />
+          </Card>
+        </Col>
+        <Col xs={24} md={12}>
+          <Card title="결국 한일">
+            <TextArea
+              value={todo.doneContent}
+              autoSize={{ minRows: 6 }}
+              disabled
+            />
+          </Card>
+        </Col>        
+      </Row>
+    </Wrapper>
   );
 };
 

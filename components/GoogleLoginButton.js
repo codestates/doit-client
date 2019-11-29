@@ -24,7 +24,7 @@ const StyledGoogleLogin = styled(GoogleLogin)`
 const GoogleLoginButton = () => {
   const dispatch = useDispatch();
   const responseSuccess = (response) => {
-    console.log(response);
+    // console.log(response);
     const { id_token } = response.tokenObj;
     dispatch({
       type: GOOGLE_AUTH_REQUEST,

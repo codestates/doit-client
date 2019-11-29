@@ -21,7 +21,6 @@ const reducer = (state = initialState, action) => {
       };
     }
     case LOAD_TODOS_SUCCESS: {
-      // console.log(action.data);
       return {
         ...state,
         todos: action.data.todos.length === 0 ? [] : action.data.todos,

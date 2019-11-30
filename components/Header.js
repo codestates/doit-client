@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Howl } from 'howler';
 
 import GoogleLoginButton from './GoogleLoginButton';
 import BtnLogout from './BtnLogout';
 import LoginForm from './LoginForm';
+import { PAUSE_TIMER } from '../reducers/timer';
+import messages from '../config/messages';
 
 const { Header } = Layout;
 
@@ -19,12 +22,12 @@ const StyledHeader = styled(Header)`
   & .ant-menu-item {
     padding: 0 10px;
 
-    &.ant-menu-item-selected>a,
-    &.ant-menu-item-selected>button,
-    &>a:hover,
-    &>a:focus,
-    &>button:hover,
-    &>button:focus {
+    &.ant-menu-item-selected > a,
+    &.ant-menu-item-selected > button,
+    & > a:hover,
+    & > a:focus,
+    & > button:hover,
+    & > button:focus {
       color: #252525;
     }
   }
@@ -50,6 +53,37 @@ const MenuItem = styled(Menu.Item)`
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
 
+  const { totalTime, elapsedTime, isSoundOn } = useSelector(
+    (state) => state.timer,
+  );
+  const dispatch = useDispatch();
+
+  const sound = new Howl({
+    src: ['/sounds/Christmas_Village_64.mp3'],
+    onplayerror: function() {
+      sound.once('unlock', function() {
+        sound.play();
+      });
+    },
+  });
+
+  useEffect(() => {
+    if (totalTime === elapsedTime) {
+      dispatch({
+        type: PAUSE_TIMER,
+      });
+      if (isSoundOn) {
+        sound.play();
+      }
+      Modal.success({
+        title: messages.timerEnd,
+        onOk() {
+          sound.stop();
+        },
+      });
+    }
+  }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
+
   return (
     <StyledHeader>
       <div className="container">
@@ -70,7 +104,6 @@ const HeaderComponent = () => {
               <MenuItem key="2">
                 <Link href="/todohistory">
                   <a>
-                    {/* <Icon type="history" /> */}
                     기록 보기
                   </a>
                 </Link>

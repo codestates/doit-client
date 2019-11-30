@@ -27,10 +27,10 @@ const BtnLogout = () => {
 
   return (
     <Popconfirm
-      title="설마 로그아웃 하실건가요?"
+      title="로그아웃 하실건가요?"
       onConfirm={onLogout}
       onCancel={onNotLogout}
-      okText="네. 다신 하고 싶지 않습니다."
+      okText="네. 좀 더 둘러보고 올게요."
       cancelText="아닙니당;;"
     >
       <StyledButton>

@@ -25,14 +25,16 @@ const timeFormat = (timestamp) => {
 };
 
 const HistoryCard = ({ todo, index }) => {
-  console.log(todo);
+  // console.log(todo);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const realDuration =
     startTime && endTime
       ? moment(endTime).diff(moment(startTime), 'minutes')
       : '0';
-  const todoCardTitle = `#${index+1} (${realDuration}분 소요) ${timeFormat(startTime)} ~ ${timeFormat(endTime)}`;
+  const todoCardTitle = `#${index + 1} (${realDuration}분 소요) ${timeFormat(
+    startTime,
+  )} ~ ${timeFormat(endTime)}`;
 
   return (
     <Wrapper id={todo.id}>

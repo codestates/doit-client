@@ -75,15 +75,6 @@ const Home = () => {
         </Col>
       </Row>
       <Feedback />
-
-      {/* <FeedbackLast
-        type="link"
-        size="large"
-        href="https://docs.google.com/forms/d/e/1FAIpQLScnUOEzRw9EvgVkLU8WKSidIlImg48gj_N8TB_rbsqF9thWbA/viewform?vc=0&c=0&w=1"
-        target="_blank"
-      >
-        두잇 팀을 위해 피드백을 주세욧
-      </FeedbackLast> */}
     </Wrapper>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   Typography,
   Row,
@@ -187,6 +187,7 @@ const Timer = ({
   }, [todoId]);
 
   const onClickTimeSetting = useCallback((e) => {
+    // (e) => setSelectedTime(e.target.value);
     dispatch({
       type: SET_TIMER,
       time: e.target.value * 60,
@@ -201,7 +202,7 @@ const Timer = ({
         </Clock>
         <RadioGroup
           onChange={onClickTimeSetting}
-          defaultValue="25"
+          defaultValue={totalTime ? String(totalTime / 60) : '25'}
           buttonStyle="solid"
           disabled={isStarted || !me}
         >
@@ -236,11 +237,7 @@ const Timer = ({
                 okText="넵 다시 시작할게요"
                 cancelText="아니요 계속 합니다"
               >
-                <Button
-                  type="danger"
-                  size="large"
-                  onClick={onReset}
-                >
+                <Button type="danger" size="large" onClick={onReset}>
                   <Icon type="reload" />
                   리셋
                 </Button>
@@ -249,10 +246,7 @@ const Timer = ({
 
             <Col xs={14}>
               {isRunning ? (
-                <Button
-                  size="large"
-                  onClick={onPause}
-                >
+                <Button size="large" onClick={onPause}>
                   <Icon type="stop" />
                   잠깐 화장실 좀
                 </Button>

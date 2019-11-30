@@ -84,10 +84,10 @@ const GlobalStyle = createGlobalStyle`
   .ant-card {
     margin-bottom: 20px;
     border-radius: 4px;
-    border-color: #d9d9d9;
+    border-color: #999;
 
     & .ant-card-head {
-      background: #F8D755;
+      background: #ffde5a;
 
       & .ant-card-head-title {
         font-weight: 400;

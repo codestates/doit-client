@@ -6,14 +6,17 @@ import styled from 'styled-components';
 import { GOOGLE_CLIENT_ID } from '../config/key.json';
 import { GOOGLE_AUTH_REQUEST } from '../reducers/user';
 
+import Router from 'next/router';
+
 const StyledGoogleLogin = styled(GoogleLogin)`
   display: flex !important;
   box-shadow: none !important;
   font-family: inherit !important;
-  height: 46px;
+  width: 240px;
+  height: 60px;
   outline: 0;
 
-  &>* {
+  & > * {
     display: flex;
     padding: 0 !important;
     color: rgba(0, 0, 0, 0.65);
@@ -32,6 +35,7 @@ const GoogleLoginButton = () => {
         token: id_token,
       },
     });
+    Router.push('/');
   };
   const responseFail = (response) => {
     console.log(response);
@@ -39,7 +43,8 @@ const GoogleLoginButton = () => {
   return (
     <StyledGoogleLogin
       clientId={GOOGLE_CLIENT_ID}
-      buttonText="로그인"
+      buttonText="Sign in with Google"
+      longtitle="true"
       onSuccess={responseSuccess}
       onFailure={responseFail}
       cookiePolicy={'single_host_origin'}

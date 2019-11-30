@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DetailWithImg from '../components/DetailWithImg';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 const DoitDiv = styled.div`
   position: relative;
@@ -9,33 +10,37 @@ const DoitDiv = styled.div`
   padding: 200px 0;
   background-image: url('/static/images/introBackground.jpeg');
   background-size: cover;
-  opacity: 0.7;
+  filter: brightness(40%);
 `;
 
-const DoitText = styled.span`
-  font-size: 5rem;
+const DoitText = styled.div`
+  position: absolute;
+  top: 210px;
+  font-size: 4rem;
   font-weight: bold;
+  color: white;
   z-index: 1;
 `;
 
-const InfoTutoDiv = styled.div`
+const GoogleLoginButtonDiv = styled.div`
   position: relative;
-  top: 60px;
-  padding: 25px;
-  font-size: 2rem;
+  top: 20px;
+  left: 5px;
 `;
 
 const intro = () => {
   return (
     <div>
       <div>
-        <DoitDiv>
-          <DoitText style={{ fontSize: '5rem', fontWeight: 'bold' }}>
-            두잇
-          </DoitText>
+        <DoitDiv />
+        <DoitText>
+          <span style={{ fontSize: '7rem' }}>두잇</span>
           <br />
           <span>이제부터 시작하세요</span>
-        </DoitDiv>
+          <GoogleLoginButtonDiv>
+            <GoogleLoginButton />
+          </GoogleLoginButtonDiv>
+        </DoitText>
       </div>
       <DetailWithImg
         colSize={[13, { span: 9, push: 2 }]}

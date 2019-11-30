@@ -45,7 +45,7 @@ const HistoryCard = ({ todo, index }) => {
           <Card title="할일">
             <TextArea
               value={todo.todoContent}
-              autoSize={{ minRows: 4 }}
+              autoSize={{ minRows: 1, maxRows: 7 }}
               disabled
             />
           </Card>
@@ -54,7 +54,7 @@ const HistoryCard = ({ todo, index }) => {
           <Card title="결국 한일">
             <TextArea
               value={todo.doneContent}
-              autoSize={{ minRows: 4 }}
+              autoSize={{ minRows: 1, maxRows: 7 }}
               disabled
             />
           </Card>

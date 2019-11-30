@@ -11,11 +11,11 @@ const Wrapper = styled.div`
   h4.ant-typography {
     font-size: 1.2em;
   }
-  
+
   & .ant-anchor-wrapper {
     background: transparent;
-    
-    &>.ant-anchor {
+
+    & > .ant-anchor {
       margin-bottom: 40px;
     }
   }
@@ -25,9 +25,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const LinkItems = ({ todo }) => {
+const LinkItems = ({ todo, idx }) => {
   return (
-    <Link href={`#${todo.id}`} title={todo.todoContent} />
+    <Link href={`#${todo.id}`} title={`#${idx + 1}  ${todo.todoContent}`} />
   );
 };
 
@@ -40,7 +40,9 @@ const TimelineAnchors = () => {
       <Title level={4}>{moment(date).format('YYYY년 MM월 DD일')}의 두잇</Title>
       <Anchor>
         {me && todos && todos.length ? (
-          todos.map(todo => <LinkItems key={todo.id} todo={todo} />)
+          todos.map((todo, idx) => (
+            <LinkItems key={todo.id} todo={todo} idx={idx} />
+          ))
         ) : (
           <Link href="#" title="한일이 없어용" />
         )}

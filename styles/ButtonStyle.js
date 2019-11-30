@@ -1,17 +1,10 @@
-
 const ButtonStyle = () => `
   button.ant-btn {
     width: 100%;
     margin-bottom: 10px;
 
-    border-color: #252525;
-    color: #252525;
-
-    &:hover, &:focus {
-      color: #fff !important;
-      background: #252525 !important;
-      border-color: #252525 !important;
-    }    
+    color: #252525 !important;
+    border-color: #999 !important;
 
     &:disabled {
       color: #d9d9d9 !important;  
@@ -20,11 +13,11 @@ const ButtonStyle = () => `
     }
 
     &.ant-btn-primary {
-      background: #F8D755;
+      background: #ffde5a;
     }
 
     &.ant-btn-danger {
-      background: #D86056;
+      background: #f36c60;
     }
   }
 

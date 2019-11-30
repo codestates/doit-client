@@ -20,6 +20,7 @@ const StyledHeader = styled(Header)`
     padding: 0 10px;
 
     &.ant-menu-item-selected>a,
+    &.ant-menu-item-selected>button,
     &>a:hover,
     &>a:focus,
     &>button:hover,

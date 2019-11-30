@@ -185,10 +185,10 @@ const Timer = ({
           buttonStyle="solid"
           disabled={isStarted || !me}
         >
-          <Radio.Button value="0.1">0.1</Radio.Button>
+          {/* <Radio.Button value="0.1">0.1</Radio.Button> */}
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
-          {/* <Radio.Button value="60">60</Radio.Button> */}
+          <Radio.Button value="60">60</Radio.Button>
         </RadioGroup>
         <BtnSound />
       </div>

@@ -3,6 +3,7 @@ import { Row, Col, Button, Form, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getCookie } from '../utils/cookieHelper';
 import { FEEDBACK_REQUEST } from '../reducers/feedback';
 
 import messages from '../config/messages';
@@ -15,7 +16,7 @@ const StyledForm = styled(Form)`
   @media (min-width: 768px) {
     button {
       height: 93px;
-    }  
+    }
   }
 `;
 
@@ -29,21 +30,19 @@ const Feedback = () => {
   const { isSubmitting, isSubmitted, submitError } = useSelector(
     (state) => state.feedback,
   );
-  let { me } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      // console.log('me', me);
       dispatch({
         type: FEEDBACK_REQUEST,
-        payload: { content, userId: me.userId, nickname: me.nickname },
+        payload: { content },
       });
       setContent('');
     },
-    [content, me && me.userId, me && me.nickname],
+    [content],
   );
 
   useEffect(() => {

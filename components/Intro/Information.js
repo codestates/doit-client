@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Row, Col } from 'antd';
 import styled from 'styled-components';
 
 // left right 로 나누는 방법
 
-const MaiinFrame = styled.div`
+const MainFrame = styled.div`
   margin-top: 120px;
   @media (max-width: 768px) {
     text-align: center;
@@ -30,7 +29,7 @@ const BorderBottomLine = styled.div`
 const PomoImg = styled.img`
   position: relative;
   left: 130px;
-  content: url('../../static/images/pomo.png');
+  content: url();
   height: auto;
   width: 170px;
   @media (max-width: 768px) {
@@ -48,7 +47,7 @@ const TextInfoBox = styled.div`
 
 const Information = () => {
   return (
-    <MaiinFrame>
+    <MainFrame>
       <InfoDiv>
         <span>포모도로에 대해 들어보셨나요?</span>
         <span>
@@ -72,7 +71,7 @@ const Information = () => {
           <p style={{ fontSize: '1.5rem' }}>누구에게나 시간은 한정적입니다.</p>
         </TextBox>
       </InfoDiv> */}
-    </MaiinFrame>
+    </MainFrame>
   );
 };
 

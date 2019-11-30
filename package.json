@@ -27,6 +27,8 @@
     "next-redux-saga": "^4.0.2",
     "next-redux-wrapper": "^4.0.1",
     "pm2": "^4.1.2",
+    "rc-scroll-anim": "^2.7.4",
+    "rc-tween-one": "^2.6.5",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-google-login": "^5.0.7",

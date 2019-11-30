@@ -7,10 +7,10 @@ import moment from 'moment';
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
 
 const Wrapper = styled.div`
-  border: 1px solid #999;
   border-radius: 4px;
   margin-bottom: 20px;
   background: #fff;
+  box-shadow: 1px 1px 0 0 #d9d9d9;
 
   .ant-fullcalendar-header {
     background: #f36c60;

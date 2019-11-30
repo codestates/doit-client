@@ -31,9 +31,9 @@ const Clock = styled.div`
   text-align: center;
   padding-bottom: 10px;
   background: #252525;
-  border: 1px solid #d9d9d9;
+  box-shadow: 1px 1px 0 0 #d9d9d9;
   border-radius: 4px 4px 0 0;
-  min-height: 220px;
+  min-height: 210px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,7 +79,7 @@ const RadioGroup = styled(Radio.Group)`
 
     &.ant-radio-button-wrapper-checked {
       background: #252525 !important;
-      border-color: #d9d9d9 !important;
+      border-color: #252525 !important;
       box-shadow: none !important;
     }
   }

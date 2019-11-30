@@ -3,7 +3,6 @@ import { Row, Col, Button, Form, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getCookie } from '../utils/cookieHelper';
 import { FEEDBACK_REQUEST } from '../reducers/feedback';
 
 import messages from '../config/messages';
@@ -36,21 +35,26 @@ const Feedback = () => {
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch({
-        type: FEEDBACK_REQUEST,
-        payload: { content },
-      });
-      setContent('');
+      if (content.trim().length >= 1) {
+        dispatch({
+          type: FEEDBACK_REQUEST,
+          payload: { content },
+        });
+      } else {
+        message.error('몇자만 적어 주세요 ㅠ');
+      }
     },
     [content],
   );
 
   useEffect(() => {
-    if (isSubmitted) {
+    if (isSubmitted && content !== '') {
       message.info('피드백 감사합니다 ^0^ ');
+      setContent('');
     }
-    if (submitError) {
+    if (submitError && content !== '') {
       message.error('피드백 전달에 실패했어요 ㅠoㅠ');
+      setContent('');
     }
   }, [isSubmitted, submitError]);
 
@@ -67,11 +71,7 @@ const Feedback = () => {
           />
         </Col>
         <Col xs={24} md={6}>
-          <Button
-            size="large"
-            htmlType="submit"
-            loading={isSubmitting}
-          >
+          <Button size="large" htmlType="submit" loading={isSubmitting}>
             <Icon type="highlight" />
             피드백 보내기
           </Button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import {
   Typography,
   Row,
@@ -8,12 +8,10 @@ import {
   Button,
   Icon,
   message,
-  Modal,
 } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import { Howl } from 'howler';
 
 import {
   PAUSE_TIMER,
@@ -113,24 +111,6 @@ const Timer = ({
     },
   });
 
-  useEffect(() => {
-    if (totalTime === elapsedTime) {
-      dispatch({
-        type: PAUSE_TIMER,
-      });
-      if (isSoundOn) {
-        sound.play();
-      }
-      Modal.success({
-        title: messages.timerEnd,
-        onOk() {
-          sound.stop();
-          inputEl.current.focus();
-        },
-      });
-    }
-  }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
-
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
@@ -187,7 +167,6 @@ const Timer = ({
   }, [todoId]);
 
   const onClickTimeSetting = useCallback((e) => {
-    // (e) => setSelectedTime(e.target.value);
     dispatch({
       type: SET_TIMER,
       time: e.target.value * 60,

@@ -39,7 +39,7 @@ const GoogleLoginButton = () => {
   return (
     <StyledGoogleLogin
       clientId={GOOGLE_CLIENT_ID}
-      buttonText="Login"
+      buttonText="로그인"
       onSuccess={responseSuccess}
       onFailure={responseFail}
       cookiePolicy={'single_host_origin'}

@@ -1,10 +1,11 @@
-const ButtonStyle = () => `
+const Button = () => `
   button.ant-btn {
     width: 100%;
     margin-bottom: 10px;
 
     color: #252525 !important;
     border-color: #999 !important;
+    box-shadow: 1px 1px 0 0 #ededed;
 
     &:disabled {
       color: #d9d9d9 !important;  
@@ -26,4 +27,4 @@ const ButtonStyle = () => `
   }
 `;
 
-export default ButtonStyle;
+export default Button;

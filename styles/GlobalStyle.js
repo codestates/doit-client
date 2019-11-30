@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import ButtonStyle from './ButtonStyle';
+import Button from './Button';
+import Card from './Card';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -52,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body {
-    background: #fafafa;
+    background: #ededed;
     font-family: 'Noto Sans KR', sans-serif;
   }
 
@@ -68,7 +69,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   section.ant-layout {
-    background: #fafafa;
+    background: #ededed;
   }
 
   ul.ant-menu-horizontal {
@@ -79,46 +80,8 @@ const GlobalStyle = createGlobalStyle`
     resize: none;
   }
 
-  ${ButtonStyle}
-
-  .ant-card {
-    margin-bottom: 20px;
-    border-radius: 4px;
-    border-color: #999;
-
-    & .ant-card-head {
-      background: #ffde5a;
-
-      & .ant-card-head-title {
-        font-weight: 400;
-      }
-    }
-    
-    & .ant-card-body {
-      padding: 0;
-
-      & > textarea {
-        border: 0;
-        padding: 4px 24px;
-        border-radius: 0 0 4px 4px;
-
-        background-attachment: local;
-        background-image:
-          linear-gradient(to right, white 20px, transparent 10px),
-          linear-gradient(to left, white 20px, transparent 10px),
-          repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
-        line-height: 31px;
-        
-        &:disabled {
-          color: #252525;
-          background-image:
-            linear-gradient(to right, #f5f5f5 20px, transparent 10px),
-            linear-gradient(to left, #f5f5f5 20px, transparent 10px),
-            repeating-linear-gradient(#f5f5f5, #f5f5f5 30px, #ccc 30px, #ccc 31px, gray 31px);
-        }
-      }
-    }
-  }
+  ${Button}
+  ${Card}
 `;
 
 export default GlobalStyle;

@@ -14,7 +14,7 @@ const StyledHeader = styled(Header)`
   background: #fff;
   height: auto;
   padding: 0;
-  border: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
 
   & .ant-menu-item {
     padding: 0 10px;

@@ -26,7 +26,7 @@ const StyledBackTop = styled(BackTop)`
     width: 40px;
     line-height: 40px;
     border-radius: 4px;
-    background-color: #1088e9;
+    background-color: #252525;
     color: #fff;
     text-align: center;
   }

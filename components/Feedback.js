@@ -72,7 +72,6 @@ const Feedback = () => {
             size="large"
             htmlType="submit"
             loading={isSubmitting}
-            disabled={content.trim().length === 0}
           >
             <Icon type="highlight" />
             피드백 보내기

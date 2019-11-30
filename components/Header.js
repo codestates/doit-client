@@ -21,6 +21,7 @@ const StyledHeader = styled(Header)`
 
   & .ant-menu-item {
     padding: 0 10px;
+    display: inline-block !important;
 
     &.ant-menu-item-selected > a,
     &.ant-menu-item-selected > button,
@@ -30,6 +31,10 @@ const StyledHeader = styled(Header)`
     & > button:focus {
       color: #252525;
     }
+  }
+
+  & .ant-menu-submenu {
+    display: none !important;
   }
 `;
 

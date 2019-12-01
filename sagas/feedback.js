@@ -1,6 +1,8 @@
 import { all, fork, takeLatest, call, put, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
+import { getCookie } from '../utils/cookieHelper';
+import { setToken } from '../sagas';
 import {
   FEEDBACK_FAILURE,
   FEEDBACK_SUCCESS,
@@ -8,6 +10,7 @@ import {
 } from '../reducers/feedback';
 
 function feedbackAPI(info) {
+  setToken(() => getCookie('token'));
   return axios.post(`/feedback`, info, {
     withCredentials: true,
   });

@@ -15,7 +15,7 @@ const StyledForm = styled(Form)`
   @media (min-width: 768px) {
     button {
       height: 93px;
-    }  
+    }
   }
 `;
 
@@ -29,29 +29,32 @@ const Feedback = () => {
   const { isSubmitting, isSubmitted, submitError } = useSelector(
     (state) => state.feedback,
   );
-  const { me } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      // console.log('me', me);
-      dispatch({
-        type: FEEDBACK_REQUEST,
-        payload: { content, userId: me.userId, nickname: me.nickname },
-      });
-      setContent('');
+      if (content.trim().length >= 1) {
+        dispatch({
+          type: FEEDBACK_REQUEST,
+          payload: { content },
+        });
+      } else {
+        message.error('몇자만 적어 주세요 ㅠ');
+      }
     },
-    [content, me && me.userId, me && me.nickname],
+    [content],
   );
 
   useEffect(() => {
-    if (isSubmitted) {
+    if (isSubmitted && content !== '') {
       message.info('피드백 감사합니다 ^0^ ');
+      setContent('');
     }
-    if (submitError) {
+    if (submitError && content !== '') {
       message.error('피드백 전달에 실패했어요 ㅠoㅠ');
+      setContent('');
     }
   }, [isSubmitted, submitError]);
 
@@ -68,11 +71,7 @@ const Feedback = () => {
           />
         </Col>
         <Col xs={24} md={6}>
-          <Button
-            size="large"
-            htmlType="submit"
-            loading={isSubmitting}
-          >
+          <Button size="large" htmlType="submit" loading={isSubmitting}>
             <Icon type="highlight" />
             피드백 보내기
           </Button>

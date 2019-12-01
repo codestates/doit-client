@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -6,15 +7,13 @@ import styled from 'styled-components';
 import { GOOGLE_CLIENT_ID } from '../config/key.json';
 import { GOOGLE_AUTH_REQUEST } from '../reducers/user';
 
-import Router from 'next/router';
 
 const StyledGoogleLogin = styled(GoogleLogin)`
-  display: flex !important;
-  box-shadow: none !important;
-  font-family: inherit !important;
-  width: 240px;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  padding: 0 20px !important;
   height: 60px;
-  outline: 0;
 
   & > * {
     display: flex;
@@ -35,7 +34,7 @@ const GoogleLoginButton = () => {
         token: id_token,
       },
     });
-    Router.push('/');
+    Router.push('/timer');
   };
   const responseFail = (response) => {
     console.log(response);
@@ -43,7 +42,7 @@ const GoogleLoginButton = () => {
   return (
     <StyledGoogleLogin
       clientId={GOOGLE_CLIENT_ID}
-      buttonText="Sign in with Google"
+      buttonText="구글 로그인으로 시작하기"
       longtitle="true"
       onSuccess={responseSuccess}
       onFailure={responseFail}

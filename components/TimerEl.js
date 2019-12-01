@@ -83,12 +83,11 @@ const RadioGroup = styled(Radio.Group)`
   }
 `;
 
-const Timer = ({
+const TimerEl = ({
   verifyContent,
   todoContent,
   setTodoContent,
   setDoneContent,
-  inputEl,
   todoEl,
 }) => {
   const {
@@ -98,18 +97,17 @@ const Timer = ({
     isStarted,
     isRunning,
     todoId,
-    isSoundOn,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const sound = new Howl({
-    src: ['/sounds/Christmas_Village_64.mp3'],
-    onplayerror: function() {
-      sound.once('unlock', function() {
-        sound.play();
-      });
-    },
-  });
+  // const sound = new Howl({
+  //   src: ['static/sounds/Christmas_Village_64.mp3'],
+  //   onplayerror: function() {
+  //     sound.once('unlock', function() {
+  //       sound.play();
+  //     });
+  //   },
+  // });
 
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
@@ -247,4 +245,4 @@ const Timer = ({
   );
 };
 
-export default Timer;
+export default TimerEl;

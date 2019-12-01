@@ -12,7 +12,7 @@ const AppLayout = ({ children }) => {
     <Layout>
       <GlobalStyle />
       <Header />
-      <Content className="container">
+      <Content>
         {children}
       </Content>
     </Layout>

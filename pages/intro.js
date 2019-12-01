@@ -24,7 +24,7 @@ const DoitText = styled.div`
 
 const GoogleLoginButtonDiv = styled.div`
   position: relative;
-  top: 20px;
+  top: -10px;
   left: 5px;
 `;
 

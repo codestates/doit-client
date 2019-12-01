@@ -9,10 +9,15 @@ import { GOOGLE_AUTH_REQUEST } from '../reducers/user';
 import Router from 'next/router';
 
 const StyledGoogleLogin = styled(GoogleLogin)`
-  display: flex !important;
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 60px;
+
+  /* display: flex !important;
   box-shadow: none !important;
   font-family: inherit !important;
-  width: 240px;
+  width: 200px;
   height: 60px;
   outline: 0;
 
@@ -21,7 +26,7 @@ const StyledGoogleLogin = styled(GoogleLogin)`
     padding: 0 !important;
     color: rgba(0, 0, 0, 0.65);
     font-weight: 400 !important;
-  }
+  } */
 `;
 
 const GoogleLoginButton = () => {

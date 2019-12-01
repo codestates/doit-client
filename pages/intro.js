@@ -36,7 +36,7 @@ const intro = () => {
         <DoitText>
           <span style={{ fontSize: '7rem' }}>두잇</span>
           <br />
-          <span>이제부터 시작하세요</span>
+          <span>당신의 집중력 향상을 위해</span>
           <GoogleLoginButtonDiv>
             <GoogleLoginButton />
           </GoogleLoginButtonDiv>
@@ -44,7 +44,7 @@ const intro = () => {
       </div>
       <DetailWithImg
         colSize={[13, { span: 9, push: 2 }]}
-        title="쉽게 공부하세요"
+        title="집중해서 일하고, 돌아보세요"
         textList={[
           '공부나 일을 하다가 유튜브나 카톡을 아주 잠깐 본 것 같은데 시간이 엄청 가 있어서 당황했던 적 누구나 있을겁니다!',
           '두잇은 일에 집중할 수 있도록 타이머 설정을 도와줄 뿐 아니라, 계획과 실제 한일을 비교하여 유저 스스로 발전하게 하는 작지만 강력한 툴입니다!',
@@ -52,7 +52,7 @@ const intro = () => {
         imgList={[
           {
             alt: '양원석',
-            src: '/static/images/imagePhone.png',
+            src: '/static/images/doitMain.png',
           },
         ]}
       />
@@ -73,8 +73,7 @@ const intro = () => {
         imgList={[
           {
             alt: '양원석',
-            src:
-              'https://static.toss.im/web-general/homepage/static/images/legacy/3.0/p1-screen01.png',
+            src: '/static/images/doitHistory.png',
           },
         ]}
       />

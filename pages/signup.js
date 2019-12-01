@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import Router from 'next/router';
 import { Row, Col, Button, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import Router from 'next/router';
 
 import useInput from '../components/useInput';
 import { SIGN_UP_REQUEST } from '../reducers/user';

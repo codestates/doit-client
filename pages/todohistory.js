@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
+import Router from 'next/router';
 import { useSelector } from 'react-redux';
 import { Row, Col, BackTop, Empty } from 'antd';
 import styled from 'styled-components';
-import Router from 'next/router';
 
 import TodoCalendar from '../components/TodoCalendar';
 import HistoryCard from '../components/HistoryCard';
@@ -38,12 +38,12 @@ const todoHistory = () => {
 
   useEffect(() => {
     if (!me) {
-      Router.push('/index');
+      Router.push('/timer');
     }
   }, [me && me.id]);
 
   return (
-    <Wrapper>
+    <Wrapper className="container">
       <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={8}>
           <TodoCalendar />

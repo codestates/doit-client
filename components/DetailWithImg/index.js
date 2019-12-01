@@ -63,18 +63,20 @@ export default function DetailWithImg({
 
   return (
     <Wrapper className="DetailWithImg">
-      <Row gutter={24} type="flex" justify={justify} style={{ textAlign }}>
-        <Col xs={24} lg={colSize[0]}>
-          <Detail title={title} textList={textList} />
-        </Col>
-        <Col xs={24} lg={colSize[1]}>
-          {animated ? (
-            <WithAnimate imgList={imgList} />
-          ) : (
-            <WithImg imgList={imgList} />
-          )}
-        </Col>
-      </Row>
+      <div className="container">
+        <Row gutter={24} type="flex" justify={justify} style={{ textAlign }}>
+          <Col xs={24} lg={colSize[0]}>
+            <Detail title={title} textList={textList} />
+          </Col>
+          <Col xs={24} lg={colSize[1]}>
+            {animated ? (
+              <WithAnimate imgList={imgList} />
+            ) : (
+              <WithImg imgList={imgList} />
+            )}
+          </Col>
+        </Row>
+      </div>
     </Wrapper>
   );
 }

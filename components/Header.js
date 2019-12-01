@@ -64,7 +64,7 @@ const HeaderComponent = () => {
   const dispatch = useDispatch();
 
   const sound = new Howl({
-    src: ['/sounds/Christmas_Village_64.mp3'],
+    src: ['/static/sounds/Christmas_Village_64.mp3'],
     onplayerror: function() {
       sound.once('unlock', function() {
         sound.play();
@@ -121,13 +121,12 @@ const HeaderComponent = () => {
             </Menu>
           </>
         ) : (
-          <Menu mode="horizontal" style={{ float: 'right' }}>
-            <MenuItem key="4">
-              <GoogleLoginButton />
+          <Menu mode="horizontal">
+            <MenuItem key="1">
+              <Logo>두잇</Logo>
             </MenuItem>
           </Menu>
         )}
-        {!me && <LoginForm />}
       </div>
     </StyledHeader>
   );

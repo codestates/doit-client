@@ -43,7 +43,7 @@ const DoIt = ({ Component, store, pageProps }) => {
             rel: 'stylesheet',
             href: 'https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css',
           },
-          { rel: 'shortcut icon', href: 'favicon.ico' },
+          { rel: 'shortcut icon', href: '/static/favicon.ico' },
         ]}
       />
       <AppLayout>

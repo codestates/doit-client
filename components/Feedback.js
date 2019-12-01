@@ -29,7 +29,7 @@ const Feedback = () => {
   const { isSubmitting, isSubmitted, submitError } = useSelector(
     (state) => state.feedback,
   );
-  let { me } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Router from 'next/router';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
@@ -19,18 +19,11 @@ const Wrapper = styled.div`
 `;
 
 const Timer = () => {
-  const [todoContent, setTodoContent] = useState('');
-  const [doneContent, setDoneContent] = useState('');
-
-  const verifyContent = (content) => {
-    const verified = content && content.trim();
-    return verified && verified.length > 0 ? verified : null;
-  };
-
-  const inputEl = useRef(null);
+  const doneEl = useRef(null);
   const todoEl = useRef(null);
 
   const { me } = useSelector((state) => state.user);
+  // const { todoContent } = useSelector((state) => state.timer);
   useEffect(() => {
     if (!me) {
       Router.push('/');
@@ -41,25 +34,14 @@ const Timer = () => {
     <Wrapper className="container">
       <Row gutter={24} type="flex" justify="space-between">
         <Col xs={24} md={8}>
-          <TimerEl
-            verifyContent={verifyContent}
-            todoContent={todoContent}
-            setTodoContent={setTodoContent}
-            setDoneContent={setDoneContent}
-            inputEl={inputEl}
-            todoEl={todoEl}
-          />
+          <TimerEl todoEl={todoEl} />
         </Col>
 
         <Col xs={24} md={16}>
           <TimerCard
-            verifyContent={verifyContent}
-            todoContent={todoContent}
-            setTodoContent={setTodoContent}
-            doneContent={doneContent}
-            setDoneContent={setDoneContent}
-            inputEl={inputEl}
             todoEl={todoEl}
+            doneEl={doneEl}
+            // savedTodoContent={todoContent}
           />
         </Col>
       </Row>

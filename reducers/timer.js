@@ -31,13 +31,14 @@ const initialState = {
   isSaveTodoSuccess: false, // todo 저장 성공 여부
   todoCreateError: '',
   todoCompleteError: '',
-  todoContent: '',
+  savedTodoContent: '',
   doneContent: '',
   todoId: 0,
   timelineId: 0,
   startTime: '',
   elapsedTimeBackup: 0,
   isSoundOn: true,
+  isReseted: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,6 +86,9 @@ const reducer = (state = initialState, action) => {
         isStarted: false,
         isLoading: false,
         isRunning: false,
+        savedTodoContent: '',
+        doneContent: '',
+        isReseted: true,
       };
     }
     case SET_TIMER: {
@@ -131,6 +135,7 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
     isStarted: false,
     isLoading: true,
     isRunning: false,
+    savedTodoContent: action.data.todoContent,
   };
 };
 
@@ -196,6 +201,8 @@ const applyTodoCompleteCleanup = (state, action) => {
     ...state,
     isSavingTodo: false,
     isSaveTodoSuccess: false,
+    savedTodoContent: '',
+    doneContent: '',
   };
 };
 

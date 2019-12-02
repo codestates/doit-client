@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col, Button, Card, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import {
   TODO_COMPLETE_CLEANUP,
 } from '../reducers/timer';
 import messages from '../config/messages';
+import verifyContent from '../utils/contentVerification';
 
 const Wrapper = styled.div`
   button {
@@ -16,15 +17,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const TimerCard = ({
-  verifyContent,
-  todoContent,
-  setTodoContent,
-  doneContent,
-  setDoneContent,
-  inputEl,
-  todoEl,
-}) => {
+const TimerCard = ({ todoEl, doneEl }) => {
+  const [todoContent, setTodoContent] = useState('');
+  const [doneContent, setDoneContent] = useState('');
+
   const { TextArea } = Input;
   const {
     isStarted,
@@ -33,19 +29,35 @@ const TimerCard = ({
     timelineId,
     isSavingTodo,
     isSaveTodoSuccess,
+    isReseted,
+    savedTodoContent,
   } = useSelector((state) => state.timer);
 
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // content DB 저장을 성공했다면
     if (!isSavingTodo && isSaveTodoSuccess) {
       message.success(messages.complete);
       dispatch({
         type: TODO_COMPLETE_CLEANUP,
       });
     }
-  }, [isSavingTodo === false, isSaveTodoSuccess === true]);
+  }, [isSavingTodo === false && isSaveTodoSuccess === true]);
+
+  useEffect(() => {
+    if (isReseted) {
+      setTodoContent('');
+      setDoneContent('');
+    }
+  }, [isReseted]);
+
+  useEffect(() => {
+    if (savedTodoContent !== '') {
+      setTodoContent(savedTodoContent);
+    }
+  }, [savedTodoContent !== '']);
 
   const onComplete = useCallback(() => {
     dispatch({
@@ -56,7 +68,7 @@ const TimerCard = ({
     if (!verified) {
       message.warning(messages.doneContentEmpty);
       return setTimeout(() => {
-        inputEl.current.focus();
+        doneEl.current.focus();
       }, 500);
     }
     dispatch({
@@ -105,7 +117,7 @@ const TimerCard = ({
               placeholder={messages.writeDone}
               rows={7}
               disabled={!isStarted || isRunning}
-              ref={inputEl}
+              ref={doneEl}
             />
           </Card>
         </Col>

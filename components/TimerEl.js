@@ -22,6 +22,7 @@ import {
 } from '../reducers/timer';
 import messages from '../config/messages';
 import BtnSound from './BtnSound';
+import verifyContent from '../utils/contentVerification';
 
 const { Title } = Typography;
 
@@ -83,13 +84,7 @@ const RadioGroup = styled(Radio.Group)`
   }
 `;
 
-const TimerEl = ({
-  verifyContent,
-  todoContent,
-  setTodoContent,
-  setDoneContent,
-  todoEl,
-}) => {
+const TimerEl = ({ todoEl }) => {
   const {
     totalTime,
     elapsedTime,
@@ -100,14 +95,6 @@ const TimerEl = ({
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  // const sound = new Howl({
-  //   src: ['/static/sounds/Christmas_Village_64.mp3'],
-  //   onplayerror: function() {
-  //     sound.once('unlock', function() {
-  //       sound.play();
-  //     });
-  //   },
-  // });
 
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
@@ -116,7 +103,7 @@ const TimerEl = ({
   };
 
   const onStart = useCallback(() => {
-    const verified = verifyContent(todoContent);
+    const verified = verifyContent(todoEl.current.props.value);
     if (!verified) {
       message.warning(messages.todoContentEmpty);
       return setTimeout(() => {
@@ -133,7 +120,7 @@ const TimerEl = ({
           .format(),
       },
     });
-  }, [todoContent]);
+  }, []);
 
   const onPause = useCallback(() => {
     dispatch({
@@ -160,8 +147,6 @@ const TimerEl = ({
         todoId,
       },
     });
-    setTodoContent('');
-    setDoneContent('');
   }, [todoId]);
 
   const onClickTimeSetting = useCallback((e) => {
@@ -183,7 +168,7 @@ const TimerEl = ({
           buttonStyle="solid"
           disabled={isStarted || !me}
         >
-          {/* <Radio.Button value="0.1">0.1</Radio.Button> */}
+          <Radio.Button value="0.1">0.1</Radio.Button>
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>

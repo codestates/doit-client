@@ -45,7 +45,7 @@ const TodoCalendar = () => {
           .format(),
       },
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch({
@@ -57,7 +57,7 @@ const TodoCalendar = () => {
           .format(),
       },
     });
-  }, []);
+  }, [dispatch]);
 
   function getListData(value) {
     const listData = todosCount.filter(

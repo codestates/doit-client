@@ -120,25 +120,25 @@ const TimerEl = ({ todoEl }) => {
           .format(),
       },
     });
-  }, []);
+  }, [dispatch, todoEl, totalTime]);
 
   const onPause = useCallback(() => {
     dispatch({
       type: PAUSE_TIMER,
     });
-  }, []);
+  }, [dispatch]);
 
   const onResume = useCallback(() => {
     dispatch({
       type: RESUME_TIMER,
     });
-  }, []);
+  }, [dispatch]);
 
   const onReset = useCallback(() => {
     dispatch({
       type: PAUSE_TIMER,
     });
-  }, []);
+  }, [dispatch]);
 
   const onConfirmReset = useCallback(() => {
     dispatch({
@@ -147,14 +147,14 @@ const TimerEl = ({ todoEl }) => {
         todoId,
       },
     });
-  }, [todoId]);
+  }, [todoId, dispatch]);
 
   const onClickTimeSetting = useCallback((e) => {
     dispatch({
       type: SET_TIMER,
       time: e.target.value * 60,
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

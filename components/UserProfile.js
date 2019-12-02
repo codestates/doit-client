@@ -11,7 +11,7 @@ const UserProfile = () => {
     dispatch({
       type: LOG_OUT_REQUEST,
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <Row className="profile" type="flex" justify="space-between" align="middle">

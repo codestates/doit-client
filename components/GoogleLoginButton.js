@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { GOOGLE_CLIENT_ID } from '../config/key.json';
 import { GOOGLE_AUTH_REQUEST } from '../reducers/user';
 
-
 const StyledGoogleLogin = styled(GoogleLogin)`
   display: flex;
   justify-content: center;
@@ -37,7 +36,7 @@ const GoogleLoginButton = () => {
     Router.push('/timer');
   };
   const responseFail = (response) => {
-    console.log(response);
+    // console.log(response);
   };
   return (
     <StyledGoogleLogin

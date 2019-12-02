@@ -114,6 +114,7 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           isRunning: false,
+          elapsedTime: state.totalTime,
         };
       }
     }

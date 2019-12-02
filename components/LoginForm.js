@@ -20,7 +20,7 @@ const LoginForm = () => {
         password,
       },
     });
-  }, [id, password]);
+  }, [id, password, dispatch]);
 
   return (
     <Form onSubmit={onSubmitForm}>

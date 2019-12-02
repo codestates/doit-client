@@ -11,7 +11,7 @@ export default function WithImg({ imgList }) {
       {imgList.map(img => (
         <OverPack playScale={0.2} key={img.alt}>
           <TweenOne key="0" animation={{ opacity: 1, y: 0 }} style={{ opacity: 0, transform: 'translateY(-40px)' }}>
-            <img key={img.alt} src={img.src} alt={img.alt} style={{ maxWidth: '100%', maxHeight: '600px' }} />
+            <img key={img.alt} src={img.src} alt={img.alt} style={{ maxWidth: '100%', height: 300 }} />
           </TweenOne>
         </OverPack>
       ))}

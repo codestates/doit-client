@@ -8,12 +8,7 @@ import WithImg from './WithImg';
 import WithAnimate from './WithAnimate';
 
 const Wrapper = styled.div`
-  padding: 80px 0;
-
-  @media (max-width: 767px) {
-    padding: 40px 0;
-    text-align: left;
-  }
+  padding: 30px 0;
 
   .ant-col {
     .TextDiv {
@@ -29,14 +24,6 @@ const Wrapper = styled.div`
 
       &>button {
         margin-bottom: 20px;
-      }
-    }
-
-    &>* {
-      margin-top: 50px;
-      
-      @media (max-width: 767px) {
-        margin-top: 20px
       }
     }
   }

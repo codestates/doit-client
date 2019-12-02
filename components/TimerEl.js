@@ -101,7 +101,7 @@ const TimerEl = ({
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // const sound = new Howl({
-  //   src: ['static/sounds/Christmas_Village_64.mp3'],
+  //   src: ['/static/sounds/Christmas_Village_64.mp3'],
   //   onplayerror: function() {
   //     sound.once('unlock', function() {
   //       sound.play();

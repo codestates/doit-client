@@ -23,7 +23,6 @@ const Timer = () => {
   const todoEl = useRef(null);
 
   const { me } = useSelector((state) => state.user);
-  // const { todoContent } = useSelector((state) => state.timer);
   useEffect(() => {
     if (!me) {
       Router.push('/');
@@ -41,7 +40,6 @@ const Timer = () => {
           <TimerCard
             todoEl={todoEl}
             doneEl={doneEl}
-            // savedTodoContent={todoContent}
           />
         </Col>
       </Row>

@@ -12,13 +12,13 @@ const StyledGoogleLogin = styled(GoogleLogin)`
   display: flex;
   justify-content: center;
   width: max-content;
-  padding: 0 20px !important;
-  height: 60px;
+  padding: 5px 10px !important;
+  border-radius: 4px !important;
 
   & > * {
     display: flex;
-    padding: 0 !important;
-    color: rgba(0, 0, 0, 0.65);
+    color: #252525;
+    font-size: 18px !important;
     font-weight: 400 !important;
   }
 `;
@@ -42,7 +42,7 @@ const GoogleLoginButton = () => {
   return (
     <StyledGoogleLogin
       clientId={GOOGLE_CLIENT_ID}
-      buttonText="구글 로그인으로 시작하기"
+      buttonText="지금 바로 두잇하기"
       longtitle="true"
       onSuccess={responseSuccess}
       onFailure={responseFail}

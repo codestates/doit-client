@@ -5,9 +5,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Howl } from 'howler';
 
-import GoogleLoginButton from './GoogleLoginButton';
 import BtnLogout from './BtnLogout';
-import LoginForm from './LoginForm';
 import { PAUSE_TIMER } from '../reducers/timer';
 import messages from '../config/messages';
 
@@ -92,7 +90,7 @@ const HeaderComponent = () => {
   return (
     <StyledHeader>
       <div className="container">
-        {me ? (
+        {me && (
           <>
             <Menu
               mode="horizontal"
@@ -120,12 +118,6 @@ const HeaderComponent = () => {
               </MenuItem>
             </Menu>
           </>
-        ) : (
-          <Menu mode="horizontal">
-            <MenuItem key="1">
-              <Logo>두잇</Logo>
-            </MenuItem>
-          </Menu>
         )}
       </div>
     </StyledHeader>

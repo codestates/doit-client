@@ -55,25 +55,23 @@ const MenuItem = styled(Menu.Item)`
 
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
-
   const { totalTime, elapsedTime, isSoundOn } = useSelector(
     (state) => state.timer,
   );
   const dispatch = useDispatch();
 
-  const sound = new Howl({
-    src: ['/static/sounds/Christmas_Village_64.mp3'],
-    onplayerror: function() {
-      sound.once('unlock', function() {
-        sound.play();
-      });
-    },
-  });
-
   useEffect(() => {
     if (totalTime === elapsedTime) {
       dispatch({
         type: PAUSE_TIMER,
+      });
+      const sound = new Howl({
+        src: ['/static/sounds/Christmas_Village_64.mp3'],
+        onplayerror: function() {
+          sound.once('unlock', function() {
+            sound.play();
+          });
+        },
       });
       if (isSoundOn) {
         sound.play();
@@ -85,7 +83,7 @@ const HeaderComponent = () => {
         },
       });
     }
-  }, [elapsedTime && totalTime === elapsedTime, isSoundOn]);
+  }, [totalTime, elapsedTime, dispatch, isSoundOn]);
 
   return (
     <StyledHeader>
@@ -106,9 +104,7 @@ const HeaderComponent = () => {
               </MenuItem>
               <MenuItem key="2">
                 <Link href="/todohistory">
-                  <a>
-                    기록 보기
-                  </a>
+                  <a>기록 보기</a>
                 </Link>
               </MenuItem>
             </Menu>

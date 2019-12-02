@@ -22,9 +22,9 @@ const StyledForm = styled(Form)`
 const Feedback = () => {
   const [content, setContent] = useState('');
 
-  const onChangeContent = (e) => {
+  const onChangeContent = useCallback((e) => {
     setContent(e.target.value);
-  };
+  }, []);
 
   const { isSubmitting, isSubmitted, submitError } = useSelector(
     (state) => state.feedback,
@@ -44,7 +44,7 @@ const Feedback = () => {
         message.error('몇자만 적어 주세요 ㅠ');
       }
     },
-    [content],
+    [dispatch, content],
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Feedback = () => {
       message.error('피드백 전달에 실패했어요 ㅠoㅠ');
       setContent('');
     }
-  }, [isSubmitted, submitError]);
+  }, [isSubmitted, submitError, content]);
 
   return (
     <StyledForm onSubmit={onSubmitForm}>

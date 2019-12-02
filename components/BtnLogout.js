@@ -19,7 +19,7 @@ const BtnLogout = () => {
     dispatch({
       type: LOG_OUT_REQUEST,
     });
-  }, []);
+  }, [dispatch]);
 
   const onNotLogout = useCallback(() => {
     message.success(messages.notLogout);

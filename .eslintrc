@@ -4,7 +4,7 @@
         "es6": true
     },
     "extends": [
-        "airbnb"
+        // "airbnb"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -18,11 +18,12 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react-hooks"
     ],
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/prop-types": [0],
-        "react/jsx-props-no-spreading": [0]
+        "react/jsx-props-no-spreading": [0],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

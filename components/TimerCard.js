@@ -44,7 +44,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
         type: TODO_COMPLETE_CLEANUP,
       });
     }
-  }, [isSavingTodo === false && isSaveTodoSuccess === true]);
+  }, [isSavingTodo, isSaveTodoSuccess, dispatch]);
 
   useEffect(() => {
     if (isReseted) {
@@ -57,7 +57,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
     if (savedTodoContent !== '') {
       setTodoContent(savedTodoContent);
     }
-  }, [savedTodoContent !== '']);
+  }, [savedTodoContent]);
 
   const onComplete = useCallback(() => {
     dispatch({
@@ -84,7 +84,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
     });
     setTodoContent('');
     setDoneContent('');
-  }, [doneContent, todoId, timelineId]);
+  }, [doneContent, todoId, timelineId, dispatch, doneEl]);
 
   const onChangeTodoContent = useCallback((e) => {
     setTodoContent(e.target.value);

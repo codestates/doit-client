@@ -25,14 +25,33 @@ const timeFormat = (timestamp) => {
 };
 
 const HistoryCard = ({ todo, index }) => {
-  // console.log(todo);
+  let wholeDurationAsMinutes, concentTimeAsMinutes, restTimeAsMinutes;
+  // console.log(todo.timelines);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
-  const realDuration =
-    startTime && endTime
-      ? moment(endTime).diff(moment(startTime), 'minutes')
-      : '0';
-  const todoCardTitle = `#${index + 1} (${realDuration}분 소요) ${timeFormat(
+
+  if (startTime && endTime) {
+    wholeDurationAsMinutes = Math.round(
+      moment.duration(moment(endTime).diff(moment(startTime))).asMinutes(),
+    );
+
+    const totalConcentTime = todo.timelines
+      .map((timeline) =>
+        moment(timeline.endedAt).diff(moment(timeline.startedAt)),
+      )
+      .reduce((acc, elm) => acc + elm);
+
+    concentTimeAsMinutes = Math.round(
+      moment.duration(totalConcentTime).asMinutes(),
+    );
+    restTimeAsMinutes = wholeDurationAsMinutes - concentTimeAsMinutes;
+  } else {
+    concentTimeAsMinutes = '0';
+    restTimeAsMinutes = '0';
+  }
+
+  const todoCardTitle = `#${index +
+    1} (${concentTimeAsMinutes}분 집중 / ${restTimeAsMinutes}분 화장실) ${timeFormat(
     startTime,
   )} ~ ${timeFormat(endTime)}`;
 

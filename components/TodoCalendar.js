@@ -35,17 +35,20 @@ const Wrapper = styled.div`
 const TodoCalendar = () => {
   const { todosCount } = useSelector((state) => state.todoHistory);
   const dispatch = useDispatch();
-  const onClickCalendar = useCallback((date) => {
-    dispatch({
-      type: LOAD_TODOS_REQUEST,
-      data: {
-        date: moment(date)
-          .startOf('day')
-          .local()
-          .format(),
-      },
-    });
-  }, [dispatch]);
+  const onClickCalendar = useCallback(
+    (date) => {
+      dispatch({
+        type: LOAD_TODOS_REQUEST,
+        data: {
+          date: moment(date)
+            .startOf('day')
+            .local()
+            .format(),
+        },
+      });
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     dispatch({
@@ -71,7 +74,11 @@ const TodoCalendar = () => {
     return (
       <div>
         {listData.map((item) => (
-          <Badge key={item.createdDate} color="#D86056" style={{ paddingLeft: 7 }} />
+          <Badge
+            key={item.createdDate}
+            color="#D86056"
+            style={{ paddingLeft: 7 }}
+          />
         ))}
       </div>
     );
@@ -83,6 +90,7 @@ const TodoCalendar = () => {
         fullscreen={false}
         onSelect={onClickCalendar}
         dateCellRender={dateCellRender}
+        onPanelChange={onClickCalendar}
       />
     </Wrapper>
   );

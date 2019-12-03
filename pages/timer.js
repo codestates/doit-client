@@ -9,7 +9,7 @@ import TimerCard from '../components/TimerCard';
 import Feedback from '../components/Feedback';
 
 const Wrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 40px !important;
 
   @media (max-width: 767px) {
     & > div > .ant-col {

@@ -1,6 +1,7 @@
 export const FEEDBACK_REQUEST = 'FEEDBACK_REQUEST';
 export const FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS';
 export const FEEDBACK_FAILURE = 'FEEDBACK_FAILURE';
+export const FEEDBACK_RESET = 'FEEDBACK_RESET';
 
 const initialState = {
   isSubmitting: false,
@@ -31,6 +32,13 @@ const feedbackReducer = (state = initialState, action) => {
         isSubmitting: false,
         submitError: action.payload,
         isSubmitted: false,
+      };
+    case FEEDBACK_RESET:
+      return {
+        isSubmitting: false,
+        content: '',
+        isSubmitted: false,
+        submitError: '',
       };
     default:
       return state;

@@ -43,6 +43,11 @@ const Font = () => `
     src: url('/static/fonts/digital-7.ttf');
   }
 
+  @font-face{
+    font-family:'digital-clock-font-mono';
+    src: url('/static/fonts/digital-7-mono.ttf');
+  }
+
   *.ant-typography {
     word-break: keep-all;
   }

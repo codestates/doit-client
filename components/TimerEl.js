@@ -42,7 +42,7 @@ const Clock = styled.div`
     color: #fff;
     font-size: 10vw;
     font-weight: 300;
-    font-family: 'digital-clock-font';
+    font-family: 'digital-clock-font-mono';
     margin-bottom: 0;
 
     @media (max-width: 767px) {
@@ -51,6 +51,10 @@ const Clock = styled.div`
 
     @media (min-width: 1200px) {
       font-size: 120px;
+    }
+    
+    span {
+      font-family: 'digital-clock-font';
     }
   }
 `;
@@ -99,7 +103,7 @@ const TimerEl = ({ todoEl }) => {
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
-    return `${min}:${sec}`;
+    return <>{min}<span>:</span>{sec}</>;
   };
 
   const onStart = useCallback(() => {

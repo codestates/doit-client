@@ -58,6 +58,9 @@ const Feedback = () => {
     if (submitError && content !== '') {
       message.error('피드백 전달에 실패했어요 ㅠoㅠ');
       setContent('');
+      dispatch({
+        type: FEEDBACK_RESET,
+      });
     }
   }, [isSubmitted, submitError, content]);
 

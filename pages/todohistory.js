@@ -67,6 +67,7 @@ const todoHistory = () => {
             />
           )}
         </Col>
+
         <StyledBackTop>
           <div className="ant-back-top-inner">위로</div>
         </StyledBackTop>

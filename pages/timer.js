@@ -29,6 +29,17 @@ const Timer = () => {
     }
   }, [me && me.id]);
 
+  useEffect(() => {
+    const listener = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', listener);
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, []);
+
   return (
     <Wrapper className="container">
       <Row gutter={24} type="flex" justify="space-between">
@@ -37,10 +48,7 @@ const Timer = () => {
         </Col>
 
         <Col xs={24} md={16}>
-          <TimerCard
-            todoEl={todoEl}
-            doneEl={doneEl}
-          />
+          <TimerCard todoEl={todoEl} doneEl={doneEl} />
         </Col>
       </Row>
       <Feedback />

@@ -30,7 +30,7 @@ const MainText = styled.div`
     font-size: 60px;
     margin-bottom: 0.2em;
   }
-  
+
   & div.ant-typography {
     color: #fff;
     font-size: 30px;
@@ -66,12 +66,14 @@ const Index = () => {
         <MainText>
           <div className="container">
             <Title level={1}>두잇</Title>
-            <Paragraph><p>당신의 집중력을 위해</p></Paragraph>
+            <Paragraph>
+              <p>당신의 집중력을 위해</p>
+            </Paragraph>
             <GoogleLoginButton />
           </div>
         </MainText>
       </div>
-      
+
       <Description>
         <DetailWithImg
           colSize={[13, 11]}
@@ -88,14 +90,9 @@ const Index = () => {
           ]}
         />
         <DetailWithImg
-          colSize={[
-            { span: 11, push: 13 },
-            { span: 13, pull: 11 },
-          ]}
+          colSize={[{ span: 11, push: 13 }, { span: 13, pull: 11 }]}
           title="두잇 사용법"
-          textList={[
-            '1. 몇분 동안 무슨 일을 할지를 적습니다.',
-          ]}
+          textList={['1. 몇분 동안 무슨 일을 할지를 적습니다.']}
           imgList={[
             {
               alt: '이미지',
@@ -105,9 +102,7 @@ const Index = () => {
         />
         <DetailWithImg
           colSize={[13, 11]}
-          textList={[
-            '2. 시작 버튼을 누르고 집중력을 불태웁니다.',
-          ]}
+          textList={['2. 시작 버튼을 누르고 집중력을 불태웁니다.']}
           imgList={[
             {
               alt: '이미지',
@@ -116,10 +111,7 @@ const Index = () => {
           ]}
         />
         <DetailWithImg
-          colSize={[
-            { span: 11, push: 13 },
-            { span: 13, pull: 11 },
-          ]}
+          colSize={[{ span: 11, push: 13 }, { span: 13, pull: 11 }]}
           textList={[
             <>
               3. 시간이 완료되면 실제 한 일을 적고,

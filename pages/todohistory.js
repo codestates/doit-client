@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   padding-top: 40px;
 
   @media (max-width: 767px) {
-    &>div>.ant-col {
+    & > div > .ant-col {
       margin-bottom: 40px;
     }
   }
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 const StyledBackTop = styled(BackTop)`
   bottom: 100px;
 
-  &>.ant-back-top-inner {
+  & > .ant-back-top-inner {
     height: 40px;
     width: 40px;
     line-height: 40px;
@@ -52,15 +52,17 @@ const todoHistory = () => {
 
         <Col xs={24} md={16}>
           {todos.length ? (
-            todos.map((todo, index) => <HistoryCard key={todo.id} todo={todo} index={index} />)
+            todos.map((todo, index) => (
+              <HistoryCard key={todo.id} todo={todo} index={index} />
+            ))
           ) : (
             <Empty
-             description={
-              <span>
-                <br />
-                <br />
-                한일이 없네;
-              </span>
+              description={
+                <span>
+                  <br />
+                  <br />
+                  한일이 없네;
+                </span>
               }
             />
           )}

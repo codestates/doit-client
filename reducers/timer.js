@@ -12,7 +12,10 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
+export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
+export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
 export const PAUSE_TIMER = 'PAUSE_TIMER';
+
 export const RESUME_TIMER = 'RESUME_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_TIMER = 'SET_TIMER';
@@ -64,6 +67,20 @@ const reducer = (state = initialState, action) => {
     case TODO_COMPLETE_CLEANUP: {
       return applyTodoCompleteCleanup(state, action);
     }
+
+    case TODO_PAUSE_REQUEST: {
+      return {
+        ...state,
+        isRunning: false,
+        elapsedTimeBackup: state.elapsedTime,
+      };
+    }
+    case TODO_PAUSE_SUCCESS: {
+      return {
+        ...state,
+        timelineId: state.timelineId + 1,
+      };
+    }
     case PAUSE_TIMER: {
       return {
         ...state,
@@ -71,6 +88,7 @@ const reducer = (state = initialState, action) => {
         elapsedTimeBackup: state.elapsedTime,
       };
     }
+
     case RESUME_TIMER: {
       return {
         ...state,

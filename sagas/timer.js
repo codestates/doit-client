@@ -2,6 +2,7 @@ import {
   all,
   fork,
   takeLatest,
+  takeEvery,
   call,
   put,
   take,
@@ -21,13 +22,21 @@ import {
   TODO_COMPLETE_REQUEST,
   RESET_TIMER,
   ADD_SECOND,
+  TODO_PAUSE_REQUEST,
+  TODO_PAUSE_SUCCESS,
   PAUSE_TIMER,
   RESUME_TIMER,
 } from '../reducers/timer';
 
 function* startTimer() {
   const timerTask = yield fork(tick);
-  yield take([PAUSE_TIMER, RESET_TIMER, START_TIMER_AND_TODO_CREATE_FAILURE]);
+  yield take([
+    TODO_PAUSE_REQUEST,
+    TODO_PAUSE_SUCCESS,
+    PAUSE_TIMER,
+    RESET_TIMER,
+    START_TIMER_AND_TODO_CREATE_FAILURE,
+  ]);
   yield cancel(timerTask);
 }
 
@@ -55,6 +64,7 @@ function startTimerAndTodoCreateAPI(todoCreateData) {
 function* startTimerAndTodoCreate(action) {
   try {
     const result = yield call(startTimerAndTodoCreateAPI, action.data);
+    console.log('result.data.data after success', result.data.data);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_SUCCESS,
       payload: result.data.data,
@@ -120,11 +130,58 @@ function* watchTodoReset() {
   yield takeLatest(RESET_TIMER, todoReset);
 }
 
+// pause
+function todoPauseAPI(todoPauseData) {
+  console.log('todoPauseData in saga', todoPauseData);
+  setToken(() => getCookie('token'));
+  return axios.post(`/todo/pause`, todoPauseData, {
+    withCredentials: true,
+  });
+}
+
+function* todoPause(action) {
+  try {
+    yield call(todoPauseAPI, action.data);
+    yield put({
+      type: TODO_PAUSE_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* watchTodoPause() {
+  yield takeEvery(TODO_PAUSE_REQUEST, todoPause);
+}
+
+// resume
+function todoResumeAPI(todoResumeData) {
+  console.log('todoResumeData in saga', todoResumeData);
+  setToken(() => getCookie('token'));
+  return axios.post(`/todo/resume`, todoResumeData, {
+    withCredentials: true,
+  });
+}
+
+function* todoResume(action) {
+  try {
+    yield call(todoResumeAPI, action.data);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* watchTodoResume() {
+  yield takeEvery(RESUME_TIMER, todoResume);
+}
+
 function* todoTimerSaga() {
   yield all([
     fork(watchstartTimerAndTodoCreate),
     fork(watchTodoComplete),
     fork(watchTodoReset),
+    fork(watchTodoPause),
+    fork(watchTodoResume),
     fork(watchStartTimer),
   ]);
 }

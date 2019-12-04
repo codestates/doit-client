@@ -63,6 +63,7 @@ const timeCalculator = (todo) => {
   // console.log(todo.timelines);
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
+  const stopNumber = todo.timelines.length - 1;
 
   if (startTime && endTime) {
     wholeDurationAsMinutes = Math.round(
@@ -83,7 +84,13 @@ const timeCalculator = (todo) => {
     concentTimeAsMinutes = '0';
     restTimeAsMinutes = '0';
   }
-  return { concentTimeAsMinutes, restTimeAsMinutes, startTime, endTime };
+  return {
+    concentTimeAsMinutes,
+    restTimeAsMinutes,
+    startTime,
+    endTime,
+    stopNumber,
+  };
 };
 
 const HistoryCard = ({ todo, index }) => {
@@ -93,10 +100,11 @@ const HistoryCard = ({ todo, index }) => {
     restTimeAsMinutes,
     startTime,
     endTime,
+    stopNumber,
   } = timeCalculator(todo);
 
   const todoCardTitle = `#${index +
-    1} (${concentTimeAsMinutes}분 집중 / ${restTimeAsMinutes}분 화장실) ${timeFormat(
+    1} (${concentTimeAsMinutes}분 집중 /  ${stopNumber}번(${restTimeAsMinutes}분) 멈춤) ${timeFormat(
     startTime,
   )} ~ ${timeFormat(endTime)}`;
 

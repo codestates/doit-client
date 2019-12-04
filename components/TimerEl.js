@@ -14,6 +14,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
+  TODO_PAUSE_REQUEST,
   PAUSE_TIMER,
   RESUME_TIMER,
   RESET_TIMER,
@@ -52,7 +53,7 @@ const Clock = styled.div`
     @media (min-width: 1200px) {
       font-size: 120px;
     }
-    
+
     span {
       font-family: 'digital-clock-font';
     }
@@ -96,6 +97,7 @@ const TimerEl = ({ todoEl }) => {
     isStarted,
     isRunning,
     todoId,
+    timelineId,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -103,7 +105,13 @@ const TimerEl = ({ todoEl }) => {
   const timeFormat = (totalTime) => {
     const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
     const sec = String(totalTime % 60).padStart(2, 0);
-    return <>{min}<span>:</span>{sec}</>;
+    return (
+      <>
+        {min}
+        <span>:</span>
+        {sec}
+      </>
+    );
   };
 
   const onStart = useCallback(() => {
@@ -128,15 +136,29 @@ const TimerEl = ({ todoEl }) => {
 
   const onPause = useCallback(() => {
     dispatch({
-      type: PAUSE_TIMER,
+      // type: PAUSE_TIMER,
+      type: TODO_PAUSE_REQUEST,
+      data: {
+        todoId,
+        timelineId,
+        endedAt: moment()
+          .utc()
+          .format(),
+      },
     });
-  }, [dispatch]);
+  }, [dispatch, todoId, timelineId]);
 
   const onResume = useCallback(() => {
     dispatch({
       type: RESUME_TIMER,
+      data: {
+        todoId,
+        startedAt: moment()
+          .utc()
+          .format(),
+      },
     });
-  }, [dispatch]);
+  }, [dispatch, todoId, timelineId]);
 
   const onReset = useCallback(() => {
     dispatch({
@@ -153,12 +175,15 @@ const TimerEl = ({ todoEl }) => {
     });
   }, [todoId, dispatch]);
 
-  const onClickTimeSetting = useCallback((e) => {
-    dispatch({
-      type: SET_TIMER,
-      time: e.target.value * 60,
-    });
-  }, [dispatch]);
+  const onClickTimeSetting = useCallback(
+    (e) => {
+      dispatch({
+        type: SET_TIMER,
+        time: e.target.value * 60,
+      });
+    },
+    [dispatch],
+  );
 
   return (
     <div>
@@ -172,6 +197,7 @@ const TimerEl = ({ todoEl }) => {
           buttonStyle="solid"
           disabled={isStarted || !me}
         >
+          {/* <Radio.Button value="0.1">6</Radio.Button> */}
           <Radio.Button value="25">25</Radio.Button>
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>

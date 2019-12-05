@@ -154,6 +154,7 @@ const TimerEl = ({ todoEl }) => {
       type: RESUME_TIMER,
       data: {
         todoId,
+        timelineId: timelineId + 1,
         startedAt: moment()
           .utc()
           .format(),

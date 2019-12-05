@@ -35,13 +35,10 @@ const Timer = () => {
       event.preventDefault();
       event.returnValue = '';
     };
-    console.log('todoContent', todoContent);
     if (todoContent && todoContent.length > 0) {
-      console.log('event listener added');
       window.addEventListener('beforeunload', listener);
     }
     return () => {
-      console.log('event listener deleted');
       window.removeEventListener('beforeunload', listener);
     };
   }, [todoContent]);

@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import moment from 'moment';
-import { Typography, Row, Col, Card, Input, Button, message } from 'antd';
+import {
+  Typography,
+  Row,
+  Col,
+  Card,
+  Input,
+  Button,
+  message,
+  Popconfirm,
+} from 'antd';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
 
+import messages from '../config/messages';
 import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
 
 const { Title } = Typography;
@@ -43,16 +53,20 @@ const useDeleteTodoDone = (todo) => {
             date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
           },
         });
-        message.success('삭제되었습니다');
+        message.success(messages.successDeleteTodoDone);
       }
     } catch (error) {
       console.error(error);
-      message.error('삭제 실패했어요 ㅠ');
+      message.error(messages.failDeleteTodoDone);
       setIconLoading(false);
     }
   };
 
-  return { iconLoading, deleteTodoDone };
+  const cancelDelete = useCallback(() => {
+    message.success(messages.notDeleteTodoDone);
+  }, []);
+
+  return { iconLoading, deleteTodoDone, cancelDelete };
 };
 
 const timeCalculator = (todo) => {
@@ -91,7 +105,7 @@ const timeCalculator = (todo) => {
 };
 
 const HistoryCard = ({ todo, index }) => {
-  const { iconLoading, deleteTodoDone } = useDeleteTodoDone(todo);
+  const { iconLoading, deleteTodoDone, cancelDelete } = useDeleteTodoDone(todo);
   const {
     concentTimeAsMinutes,
     restTimeAsMinutes,
@@ -111,9 +125,17 @@ const HistoryCard = ({ todo, index }) => {
         <Title level={4}>{todoCardTitle}</Title>
       </Col>
       <Col xs={24} md={4}>
-        <Button type="primary" onClick={deleteTodoDone} loading={iconLoading}>
-          삭제
-        </Button>
+        <Popconfirm
+          title={messages.askDeleteTodoDone}
+          onConfirm={deleteTodoDone}
+          onCancel={cancelDelete}
+          okText={messages.yesDeleteTodoDone}
+          cancelText={messages.noDeleteTodoDone}
+        >
+          <Button type="primary" loading={iconLoading}>
+            삭제
+          </Button>
+        </Popconfirm>
       </Col>
 
       <Row gutter={24} type="flex" justify="space-between">

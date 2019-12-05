@@ -23,7 +23,6 @@ import {
   RESET_TIMER,
   ADD_SECOND,
   TODO_PAUSE_REQUEST,
-  TODO_PAUSE_SUCCESS,
   PAUSE_TIMER,
   RESUME_TIMER,
 } from '../reducers/timer';
@@ -32,7 +31,6 @@ function* startTimer() {
   const timerTask = yield fork(tick);
   yield take([
     TODO_PAUSE_REQUEST,
-    TODO_PAUSE_SUCCESS,
     PAUSE_TIMER,
     RESET_TIMER,
     START_TIMER_AND_TODO_CREATE_FAILURE,
@@ -64,7 +62,7 @@ function startTimerAndTodoCreateAPI(todoCreateData) {
 function* startTimerAndTodoCreate(action) {
   try {
     const result = yield call(startTimerAndTodoCreateAPI, action.data);
-    console.log('result.data.data after success', result.data.data);
+    // console.log('result.data.data after success', result.data.data);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_SUCCESS,
       payload: result.data.data,
@@ -132,7 +130,7 @@ function* watchTodoReset() {
 
 // pause
 function todoPauseAPI(todoPauseData) {
-  console.log('todoPauseData in saga', todoPauseData);
+  // console.log('todoPauseData in saga', todoPauseData);
   setToken(() => getCookie('token'));
   return axios.post(`/todo/pause`, todoPauseData, {
     withCredentials: true,
@@ -142,9 +140,6 @@ function todoPauseAPI(todoPauseData) {
 function* todoPause(action) {
   try {
     yield call(todoPauseAPI, action.data);
-    yield put({
-      type: TODO_PAUSE_SUCCESS,
-    });
   } catch (e) {
     console.error(e);
   }
@@ -156,7 +151,7 @@ function* watchTodoPause() {
 
 // resume
 function todoResumeAPI(todoResumeData) {
-  console.log('todoResumeData in saga', todoResumeData);
+  // console.log('todoResumeData in saga', todoResumeData);
   setToken(() => getCookie('token'));
   return axios.post(`/todo/resume`, todoResumeData, {
     withCredentials: true,

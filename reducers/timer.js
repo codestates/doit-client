@@ -16,7 +16,6 @@ export const WRITE_TODO_CONTENT = 'WRITE_TODO_CONTENT';
 export const WRITE_DONE_CONTENT = 'WRITE_DONE_CONTENT';
 
 export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST'; // 잠깐 화장실 버튼 눌렀을때 용도
-export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
 
 export const PAUSE_TIMER = 'PAUSE_TIMER'; // 리셋이나 완료시 단순 timer멈추는 용도
 export const RESUME_TIMER = 'RESUME_TIMER';
@@ -78,9 +77,6 @@ const reducer = (state = initialState, action) => {
     }
     case TODO_PAUSE_REQUEST: {
       return applyTodoPauseRequest(state, action);
-    }
-    case TODO_PAUSE_SUCCESS: {
-      return applyTodoPauseSuccess(state, action);
     }
     case PAUSE_TIMER: {
       return applyPauseTimer(state, action);
@@ -204,13 +200,6 @@ const applyTodoPauseRequest = (state, action) => {
   };
 };
 
-const applyTodoPauseSuccess = (state, action) => {
-  return {
-    ...state,
-    timelineId: state.timelineId + 1,
-  };
-};
-
 const applyPauseTimer = (state, action) => {
   return {
     ...state,
@@ -224,6 +213,7 @@ const applyResumeTimer = (state, action) => {
     ...state,
     isRunning: true,
     startTime: moment().local(),
+    timelineId: action.data.timelineId,
   };
 };
 

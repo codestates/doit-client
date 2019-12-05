@@ -35,12 +35,26 @@ const StyledBackTop = styled(BackTop)`
 const todoHistory = () => {
   const { todos } = useSelector((state) => state.todoHistory);
   const { me } = useSelector((state) => state.user);
+  const { todoContent } = useSelector((state) => state.timer);
 
   useEffect(() => {
     if (!me) {
       Router.push('/timer');
     }
   }, [me && me.id]);
+
+  useEffect(() => {
+    const listener = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    if (todoContent && todoContent.length > 0) {
+      window.addEventListener('beforeunload', listener);
+    }
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, [todoContent]);
 
   return (
     <Wrapper className="container">

@@ -19,10 +19,11 @@ const Wrapper = styled.div`
 `;
 
 const Timer = () => {
-  const doneEl = useRef(null);
-  const todoEl = useRef(null);
+  const doneEl = useRef();
+  const todoEl = useRef();
 
   const { me } = useSelector((state) => state.user);
+  const { todoContent } = useSelector((state) => state.timer);
   useEffect(() => {
     if (!me) {
       Router.push('/');
@@ -34,11 +35,16 @@ const Timer = () => {
       event.preventDefault();
       event.returnValue = '';
     };
-    window.addEventListener('beforeunload', listener);
+    console.log('todoContent', todoContent);
+    if (todoContent && todoContent.length > 0) {
+      console.log('event listener added');
+      window.addEventListener('beforeunload', listener);
+    }
     return () => {
+      console.log('event listener deleted');
       window.removeEventListener('beforeunload', listener);
     };
-  }, []);
+  }, [todoContent]);
 
   return (
     <Wrapper className="container">

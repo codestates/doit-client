@@ -12,10 +12,13 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
-export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
-export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
-export const PAUSE_TIMER = 'PAUSE_TIMER';
+export const WRITE_TODO_CONTENT = 'WRITE_TODO_CONTENT';
+export const WRITE_DONE_CONTENT = 'WRITE_DONE_CONTENT';
 
+export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST'; // 잠깐 화장실 버튼 눌렀을때 용도
+export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
+
+export const PAUSE_TIMER = 'PAUSE_TIMER'; // 리셋이나 완료시 단순 timer멈추는 용도
 export const RESUME_TIMER = 'RESUME_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_TIMER = 'SET_TIMER';
@@ -34,7 +37,7 @@ const initialState = {
   isSaveTodoSuccess: false, // todo 저장 성공 여부
   todoCreateError: '',
   todoCompleteError: '',
-  savedTodoContent: '',
+  todoContent: '',
   doneContent: '',
   todoId: 0,
   timelineId: 0,
@@ -66,6 +69,12 @@ const reducer = (state = initialState, action) => {
     }
     case TODO_COMPLETE_CLEANUP: {
       return applyTodoCompleteCleanup(state, action);
+    }
+    case WRITE_TODO_CONTENT: {
+      return applyWriteTodoContent(state, action);
+    }
+    case WRITE_DONE_CONTENT: {
+      return applyWriteDoneContent(state, action);
     }
 
     case TODO_PAUSE_REQUEST: {
@@ -104,7 +113,7 @@ const reducer = (state = initialState, action) => {
         isStarted: false,
         isLoading: false,
         isRunning: false,
-        savedTodoContent: '',
+        todoContent: '',
         doneContent: '',
         isReseted: true,
       };
@@ -154,7 +163,7 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
     isStarted: false,
     isLoading: true,
     isRunning: false,
-    savedTodoContent: action.data.todoContent,
+    // savedTodoContent: action.data.todoContent,
   };
 };
 
@@ -220,8 +229,22 @@ const applyTodoCompleteCleanup = (state, action) => {
     ...state,
     isSavingTodo: false,
     isSaveTodoSuccess: false,
-    savedTodoContent: '',
+    todoContnet: '',
     doneContent: '',
+  };
+};
+
+const applyWriteTodoContent = (state, action) => {
+  return {
+    ...state,
+    todoContent: action.payload,
+  };
+};
+
+const applyWriteDoneContent = (state, action) => {
+  return {
+    ...state,
+    doneContent: action.payload,
   };
 };
 

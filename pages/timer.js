@@ -19,8 +19,8 @@ const Wrapper = styled.div`
 `;
 
 const Timer = () => {
-  const doneEl = useRef(null);
-  const todoEl = useRef(null);
+  const doneEl = useRef();
+  const todoEl = useRef();
 
   const { me } = useSelector((state) => state.user);
   useEffect(() => {

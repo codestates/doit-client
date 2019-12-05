@@ -133,7 +133,7 @@ const TimerEl = ({ todoEl }) => {
           .format(),
       },
     });
-  }, [dispatch, todoEl, totalTime]);
+  }, [dispatch, todoEl, totalTime, todoContent]);
 
   const onPause = useCallback(() => {
     dispatch({

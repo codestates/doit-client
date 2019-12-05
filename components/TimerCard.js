@@ -80,13 +80,19 @@ const TimerCard = ({ todoEl, doneEl }) => {
     dispatch({ type: WRITE_DONE_CONTENT, payload: '' });
   }, [doneContent, todoId, timelineId, dispatch, doneEl]);
 
-  const onChangeTodoContent = useCallback((e) => {
-    dispatch({ type: WRITE_TODO_CONTENT, payload: e.target.value });
-  }, []);
+  const onChangeTodoContent = useCallback(
+    (e) => {
+      dispatch({ type: WRITE_TODO_CONTENT, payload: e.target.value });
+    },
+    [dispatch],
+  );
 
-  const onChangeDoneContent = useCallback((e) => {
-    dispatch({ type: WRITE_DONE_CONTENT, payload: e.target.value });
-  }, []);
+  const onChangeDoneContent = useCallback(
+    (e) => {
+      dispatch({ type: WRITE_DONE_CONTENT, payload: e.target.value });
+    },
+    [dispatch],
+  );
 
   return (
     <Wrapper>

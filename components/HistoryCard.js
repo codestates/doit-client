@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
-import { Typography, Row, Col, Card, Input } from 'antd';
+import { Typography, Row, Col, Card, Input, Button, message } from 'antd';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Button, message } from 'antd';
 
 import { useDispatch } from 'react-redux';
 
@@ -36,14 +35,12 @@ const useDeleteTodoDone = (todo) => {
   const deleteTodoDone = async () => {
     setIconLoading(true);
     try {
-      let data = await axios.delete(`/todo/${todo.id}`);
+      const data = await axios.delete(`/todo/${todo.id}`);
       if (data.status === 200) {
         dispatch({
           type: LOAD_TODOS_REQUEST,
           data: {
-            date: moment(new Date(todo.timelines[0].startedAt)).format(
-              'YYYY-MM-DD',
-            ),
+            date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
           },
         });
         message.success('삭제되었습니다');

@@ -12,10 +12,13 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
-export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
-export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
-export const PAUSE_TIMER = 'PAUSE_TIMER';
+export const WRITE_TODO_CONTENT = 'WRITE_TODO_CONTENT';
+export const WRITE_DONE_CONTENT = 'WRITE_DONE_CONTENT';
 
+export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST'; // 잠깐 화장실 버튼 눌렀을때 용도
+export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
+
+export const PAUSE_TIMER = 'PAUSE_TIMER'; // 리셋이나 완료시 단순 timer멈추는 용도
 export const RESUME_TIMER = 'RESUME_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_TIMER = 'SET_TIMER';
@@ -34,7 +37,7 @@ const initialState = {
   isSaveTodoSuccess: false, // todo 저장 성공 여부
   todoCreateError: '',
   todoCompleteError: '',
-  savedTodoContent: '',
+  todoContent: '',
   doneContent: '',
   todoId: 0,
   timelineId: 0,
@@ -67,80 +70,35 @@ const reducer = (state = initialState, action) => {
     case TODO_COMPLETE_CLEANUP: {
       return applyTodoCompleteCleanup(state, action);
     }
-
+    case WRITE_TODO_CONTENT: {
+      return applyWriteTodoContent(state, action);
+    }
+    case WRITE_DONE_CONTENT: {
+      return applyWriteDoneContent(state, action);
+    }
     case TODO_PAUSE_REQUEST: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTimeBackup: state.elapsedTime,
-      };
+      return applyTodoPauseRequest(state, action);
     }
     case TODO_PAUSE_SUCCESS: {
-      return {
-        ...state,
-        timelineId: state.timelineId + 1,
-      };
+      return applyTodoPauseSuccess(state, action);
     }
     case PAUSE_TIMER: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTimeBackup: state.elapsedTime,
-      };
+      return applyPauseTimer(state, action);
     }
-
     case RESUME_TIMER: {
-      return {
-        ...state,
-        isRunning: true,
-        startTime: moment().local(),
-      };
+      return applyResumeTimer(state, action);
     }
     case RESET_TIMER: {
-      return {
-        ...state,
-        elapsedTime: 0,
-        elapsedTimeBackup: 0,
-        isStarted: false,
-        isLoading: false,
-        isRunning: false,
-        savedTodoContent: '',
-        doneContent: '',
-        isReseted: true,
-      };
+      return applyResetTimer(state, action);
     }
     case SET_TIMER: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTime: 0,
-        elapsedTimeBackup: 0,
-        totalTime: action.time,
-      };
+      return applySetTimer(state, action);
     }
     case ADD_SECOND: {
-      if (state.elapsedTime < state.totalTime) {
-        return {
-          ...state,
-          elapsedTime:
-            parseInt(
-              moment.duration(moment().local() - state.startTime).asSeconds(),
-              10,
-            ) + state.elapsedTimeBackup,
-        };
-      } else {
-        return {
-          ...state,
-          isRunning: false,
-          elapsedTime: state.totalTime,
-        };
-      }
+      return applyAddSecond(state, action);
     }
     case TOGGLE_SOUND_ON_OFF: {
-      return {
-        ...state,
-        isSoundOn: action.data,
-      };
+      return applyToggleSoundOnOff(state, action);
     }
     default: {
       return state;
@@ -154,7 +112,6 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
     isStarted: false,
     isLoading: true,
     isRunning: false,
-    savedTodoContent: action.data.todoContent,
   };
 };
 
@@ -220,8 +177,103 @@ const applyTodoCompleteCleanup = (state, action) => {
     ...state,
     isSavingTodo: false,
     isSaveTodoSuccess: false,
-    savedTodoContent: '',
+    todoContnet: '',
     doneContent: '',
+  };
+};
+
+const applyWriteTodoContent = (state, action) => {
+  return {
+    ...state,
+    todoContent: action.payload,
+  };
+};
+
+const applyWriteDoneContent = (state, action) => {
+  return {
+    ...state,
+    doneContent: action.payload,
+  };
+};
+
+const applyTodoPauseRequest = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTimeBackup: state.elapsedTime,
+  };
+};
+
+const applyTodoPauseSuccess = (state, action) => {
+  return {
+    ...state,
+    timelineId: state.timelineId + 1,
+  };
+};
+
+const applyPauseTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTimeBackup: state.elapsedTime,
+  };
+};
+
+const applyResumeTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: true,
+    startTime: moment().local(),
+  };
+};
+
+const applyResetTimer = (state, action) => {
+  return {
+    ...state,
+    elapsedTime: 0,
+    elapsedTimeBackup: 0,
+    isStarted: false,
+    isLoading: false,
+    isRunning: false,
+    todoContent: '',
+    doneContent: '',
+    isReseted: true,
+  };
+};
+
+const applySetTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTime: 0,
+    elapsedTimeBackup: 0,
+    totalTime: action.time,
+  };
+};
+
+const applyAddSecond = (state, action) => {
+  if (state.elapsedTime < state.totalTime) {
+    return {
+      ...state,
+      elapsedTime:
+        parseInt(
+          moment.duration(moment().local() - state.startTime).asSeconds(),
+          10,
+        ) + state.elapsedTimeBackup,
+    };
+  } else {
+    return {
+      ...state,
+      isRunning: false,
+      elapsedTime: state.totalTime,
+    };
+  }
+};
+
+const applyToggleSoundOnOff = (state, action) => {
+  return {
+    ...state,
+    isSoundOn: action.data,
   };
 };
 

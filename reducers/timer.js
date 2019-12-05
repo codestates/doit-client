@@ -76,80 +76,29 @@ const reducer = (state = initialState, action) => {
     case WRITE_DONE_CONTENT: {
       return applyWriteDoneContent(state, action);
     }
-
     case TODO_PAUSE_REQUEST: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTimeBackup: state.elapsedTime,
-      };
+      return applyTodoPauseRequest(state, action);
     }
     case TODO_PAUSE_SUCCESS: {
-      return {
-        ...state,
-        timelineId: state.timelineId + 1,
-      };
+      return applyTodoPauseSuccess(state, action);
     }
     case PAUSE_TIMER: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTimeBackup: state.elapsedTime,
-      };
+      return applyPauseTimer(state, action);
     }
-
     case RESUME_TIMER: {
-      return {
-        ...state,
-        isRunning: true,
-        startTime: moment().local(),
-      };
+      return applyResumeTimer(state, action);
     }
     case RESET_TIMER: {
-      return {
-        ...state,
-        elapsedTime: 0,
-        elapsedTimeBackup: 0,
-        isStarted: false,
-        isLoading: false,
-        isRunning: false,
-        todoContent: '',
-        doneContent: '',
-        isReseted: true,
-      };
+      return applyResetTimer(state, action);
     }
     case SET_TIMER: {
-      return {
-        ...state,
-        isRunning: false,
-        elapsedTime: 0,
-        elapsedTimeBackup: 0,
-        totalTime: action.time,
-      };
+      return applySetTimer(state, action);
     }
     case ADD_SECOND: {
-      if (state.elapsedTime < state.totalTime) {
-        return {
-          ...state,
-          elapsedTime:
-            parseInt(
-              moment.duration(moment().local() - state.startTime).asSeconds(),
-              10,
-            ) + state.elapsedTimeBackup,
-        };
-      } else {
-        return {
-          ...state,
-          isRunning: false,
-          elapsedTime: state.totalTime,
-        };
-      }
+      return applyAddSecond(state, action);
     }
     case TOGGLE_SOUND_ON_OFF: {
-      return {
-        ...state,
-        isSoundOn: action.data,
-      };
+      return applyToggleSoundOnOff(state, action);
     }
     default: {
       return state;
@@ -163,7 +112,6 @@ const applyStartTimerAndTodoCreateRequest = (state, action) => {
     isStarted: false,
     isLoading: true,
     isRunning: false,
-    // savedTodoContent: action.data.todoContent,
   };
 };
 
@@ -245,6 +193,87 @@ const applyWriteDoneContent = (state, action) => {
   return {
     ...state,
     doneContent: action.payload,
+  };
+};
+
+const applyTodoPauseRequest = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTimeBackup: state.elapsedTime,
+  };
+};
+
+const applyTodoPauseSuccess = (state, action) => {
+  return {
+    ...state,
+    timelineId: state.timelineId + 1,
+  };
+};
+
+const applyPauseTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTimeBackup: state.elapsedTime,
+  };
+};
+
+const applyResumeTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: true,
+    startTime: moment().local(),
+  };
+};
+
+const applyResetTimer = (state, action) => {
+  return {
+    ...state,
+    elapsedTime: 0,
+    elapsedTimeBackup: 0,
+    isStarted: false,
+    isLoading: false,
+    isRunning: false,
+    todoContent: '',
+    doneContent: '',
+    isReseted: true,
+  };
+};
+
+const applySetTimer = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    elapsedTime: 0,
+    elapsedTimeBackup: 0,
+    totalTime: action.time,
+  };
+};
+
+const applyAddSecond = (state, action) => {
+  if (state.elapsedTime < state.totalTime) {
+    return {
+      ...state,
+      elapsedTime:
+        parseInt(
+          moment.duration(moment().local() - state.startTime).asSeconds(),
+          10,
+        ) + state.elapsedTimeBackup,
+    };
+  } else {
+    return {
+      ...state,
+      isRunning: false,
+      elapsedTime: state.totalTime,
+    };
+  }
+};
+
+const applyToggleSoundOnOff = (state, action) => {
+  return {
+    ...state,
+    isSoundOn: action.data,
   };
 };
 

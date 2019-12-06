@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import {
   Typography,
@@ -11,12 +12,13 @@ import {
   Popconfirm,
 } from 'antd';
 import styled from 'styled-components';
-import axios from 'axios';
-
-import { useDispatch } from 'react-redux';
 
 import messages from '../config/messages';
-import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
+import {
+  LOAD_TODOS_REQUEST,
+  DELETE_HISTORY_REQUEST,
+  DELETE_HISTORY_CLEANUP,
+} from '../reducers/todoHistory';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -39,39 +41,11 @@ const timeFormat = (timestamp) => {
     : '??';
 };
 
-const useDeleteTodoDone = (todo) => {
-  const [iconLoading, setIconLoading] = useState(false);
-  const dispatch = useDispatch();
-  const deleteTodoDone = async () => {
-    setIconLoading(true);
-    try {
-      const data = await axios.delete(`/todo/${todo.id}`);
-      if (data.status === 200) {
-        dispatch({
-          type: LOAD_TODOS_REQUEST,
-          data: {
-            date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
-          },
-        });
-        message.success(messages.successDeleteTodoDone);
-      }
-    } catch (error) {
-      console.error(error);
-      message.error(messages.failDeleteTodoDone);
-      setIconLoading(false);
-    }
-  };
-
-  const cancelDelete = useCallback(() => {
-    message.success(messages.notDeleteTodoDone);
-  }, []);
-
-  return { iconLoading, deleteTodoDone, cancelDelete };
-};
-
 const timeCalculator = (todo) => {
-  let wholeDurationAsMinutes, concentTimeAsMinutes, restTimeAsMinutes;
-  // console.log(todo.timelines);
+  let wholeDurationAsMinutes = '0';
+  let concentTimeAsMinutes = '0';
+  let restTimeAsMinutes = '0';
+
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const stopNumber = todo.timelines.length - 1;
@@ -91,9 +65,6 @@ const timeCalculator = (todo) => {
       moment.duration(totalConcentTime).asMinutes(),
     );
     restTimeAsMinutes = wholeDurationAsMinutes - concentTimeAsMinutes;
-  } else {
-    concentTimeAsMinutes = '0';
-    restTimeAsMinutes = '0';
   }
   return {
     concentTimeAsMinutes,
@@ -105,7 +76,47 @@ const timeCalculator = (todo) => {
 };
 
 const HistoryCard = ({ todo, index }) => {
-  const { iconLoading, deleteTodoDone, cancelDelete } = useDeleteTodoDone(todo);
+  const dispatch = useDispatch();
+
+  const [iconLoading, setIconLoading] = useState(false);
+
+  const {
+    deleteHistoryId,
+    deleteHistorySuccess,
+    deleteHistoryError,
+  } = useSelector((state) => state.todoHistory);
+
+  useEffect(() => {
+    if (deleteHistoryId === todo.id && deleteHistorySuccess) {
+      dispatch({
+        type: LOAD_TODOS_REQUEST,
+        data: {
+          date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
+        },
+      });
+      dispatch({ type: DELETE_HISTORY_CLEANUP });
+      setIconLoading(false);
+      message.success(messages.successDeleteTodoDone);
+    }
+  }, [deleteHistorySuccess, deleteHistoryId]);
+
+  useEffect(() => {
+    if (deleteHistoryId === todo.id && deleteHistoryError !== '') {
+      dispatch({ type: DELETE_HISTORY_CLEANUP });
+      setIconLoading(false);
+      message.error(messages.failDeleteTodoDone);
+    }
+  }, [deleteHistoryError, deleteHistoryId]);
+
+  const deleteTodoDone = useCallback((todo) => {
+    setIconLoading(true);
+    dispatch({ type: DELETE_HISTORY_REQUEST, payload: todo.id });
+  });
+
+  const cancelDelete = useCallback(() => {
+    message.success(messages.notDeleteTodoDone);
+  }, []);
+
   const {
     concentTimeAsMinutes,
     restTimeAsMinutes,
@@ -115,7 +126,7 @@ const HistoryCard = ({ todo, index }) => {
   } = timeCalculator(todo);
 
   const todoCardTitle = `#${index +
-    1} (${concentTimeAsMinutes}분 집중 /  ${stopNumber}번(${restTimeAsMinutes}분) 멈춤) ${timeFormat(
+    1} (${concentTimeAsMinutes}분 집중 / ${stopNumber}번(${restTimeAsMinutes}분) 멈춤) ${timeFormat(
     startTime,
   )} ~ ${timeFormat(endTime)}`;
 
@@ -127,7 +138,7 @@ const HistoryCard = ({ todo, index }) => {
       <Col xs={24} md={4}>
         <Popconfirm
           title={messages.askDeleteTodoDone}
-          onConfirm={deleteTodoDone}
+          onConfirm={() => deleteTodoDone(todo)}
           onCancel={cancelDelete}
           okText={messages.yesDeleteTodoDone}
           cancelText={messages.noDeleteTodoDone}

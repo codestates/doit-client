@@ -14,26 +14,29 @@ import axios from 'axios';
 import { getCookie } from '../utils/cookieHelper';
 import { setToken } from '../sagas';
 import {
+  START_TIMER_AND_TODO_CREATE_REQUEST,
   START_TIMER_AND_TODO_CREATE_SUCCESS,
   START_TIMER_AND_TODO_CREATE_FAILURE,
-  START_TIMER_AND_TODO_CREATE_REQUEST,
+  TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_SUCCESS,
   TODO_COMPLETE_FAILURE,
-  TODO_COMPLETE_REQUEST,
+  TODO_PAUSE_REQUEST,
+  TODO_PAUSE_SUCCESS,
+  TODO_PAUSE_FAILURE,
+  TODO_RESUME_REQUEST,
+  TODO_RESUME_SUCCESS,
+  TODO_RESUME_FAILURE,
   RESET_TIMER,
   ADD_SECOND,
-  TODO_PAUSE_REQUEST,
-  PAUSE_TIMER,
-  RESUME_TIMER,
 } from '../reducers/timer';
 
 function* startTimer() {
   const timerTask = yield fork(tick);
   yield take([
-    TODO_PAUSE_REQUEST,
-    PAUSE_TIMER,
-    RESET_TIMER,
     START_TIMER_AND_TODO_CREATE_FAILURE,
+    TODO_PAUSE_REQUEST,
+    TODO_RESUME_FAILURE,
+    RESET_TIMER,
   ]);
   yield cancel(timerTask);
 }
@@ -47,7 +50,11 @@ function* tick() {
 
 function* watchStartTimer() {
   yield takeLatest(
-    [START_TIMER_AND_TODO_CREATE_REQUEST, RESUME_TIMER],
+    [
+      START_TIMER_AND_TODO_CREATE_REQUEST,
+      TODO_RESUME_REQUEST,
+      TODO_PAUSE_FAILURE,
+    ],
     startTimer,
   );
 }
@@ -62,12 +69,12 @@ function startTimerAndTodoCreateAPI(todoCreateData) {
 function* startTimerAndTodoCreate(action) {
   try {
     const result = yield call(startTimerAndTodoCreateAPI, action.data);
-    // console.log('result.data.data after success', result.data.data);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_SUCCESS,
       payload: result.data.data,
     });
   } catch (e) {
+    console.error(e);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_FAILURE,
       error: e,
@@ -97,6 +104,7 @@ function* todoComplete(action) {
       payload: result.data.data,
     });
   } catch (e) {
+    console.error(e);
     yield put({
       type: TODO_COMPLETE_FAILURE,
       error: e,
@@ -130,7 +138,6 @@ function* watchTodoReset() {
 
 // pause
 function todoPauseAPI(todoPauseData) {
-  // console.log('todoPauseData in saga', todoPauseData);
   setToken(() => getCookie('token'));
   return axios.post(`/todo/pause`, todoPauseData, {
     withCredentials: true,
@@ -138,10 +145,23 @@ function todoPauseAPI(todoPauseData) {
 }
 
 function* todoPause(action) {
-  try {
-    yield call(todoPauseAPI, action.data);
-  } catch (e) {
-    console.error(e);
+  if (action.data) {
+    try {
+      yield call(todoPauseAPI, action.data);
+      yield put({
+        type: TODO_PAUSE_SUCCESS,
+      });
+    } catch (e) {
+      console.error(e);
+      yield put({
+        type: TODO_PAUSE_FAILURE,
+        error: e,
+      });
+    }
+  } else {
+    yield put({
+      type: TODO_PAUSE_SUCCESS,
+    });
   }
 }
 
@@ -160,14 +180,22 @@ function todoResumeAPI(todoResumeData) {
 
 function* todoResume(action) {
   try {
-    yield call(todoResumeAPI, action.data);
+    const result = yield call(todoResumeAPI, action.data);
+    yield put({
+      type: TODO_RESUME_SUCCESS,
+      payload: result.data.data,
+    });
   } catch (e) {
     console.error(e);
+    yield put({
+      type: TODO_RESUME_FAILURE,
+      error: e,
+    });
   }
 }
 
 function* watchTodoResume() {
-  yield takeEvery(RESUME_TIMER, todoResume);
+  yield takeEvery(TODO_RESUME_REQUEST, todoResume);
 }
 
 function* todoTimerSaga() {

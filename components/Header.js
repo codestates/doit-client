@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Howl } from 'howler';
 
 import BtnLogout from './BtnLogout';
-import { PAUSE_TIMER } from '../reducers/timer';
+import { TODO_PAUSE_REQUEST } from '../reducers/timer';
 import messages from '../config/messages';
 
 const { Header } = Layout;
@@ -63,7 +63,7 @@ const HeaderComponent = () => {
   useEffect(() => {
     if (totalTime === elapsedTime) {
       dispatch({
-        type: PAUSE_TIMER,
+        type: TODO_PAUSE_REQUEST,
       });
       const sound = new Howl({
         src: ['/static/sounds/Christmas_Village_64.mp3'],

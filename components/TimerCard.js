@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Row, Col, Button, Card, Input, Icon, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  PAUSE_TIMER,
+  TODO_PAUSE_REQUEST,
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
   WRITE_TODO_CONTENT,
@@ -55,7 +55,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
 
   const onComplete = useCallback(() => {
     dispatch({
-      type: PAUSE_TIMER,
+      type: TODO_PAUSE_REQUEST,
     });
 
     const verified = verifyContent(doneContent);

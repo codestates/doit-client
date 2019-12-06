@@ -15,11 +15,18 @@ export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 export const WRITE_TODO_CONTENT = 'WRITE_TODO_CONTENT';
 export const WRITE_DONE_CONTENT = 'WRITE_DONE_CONTENT';
 
-export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST'; // 잠깐 화장실 버튼 눌렀을때 용도
+export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
+export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
+export const TODO_PAUSE_FAILURE = 'TODO_PAUSE_FAILURE';
+export const TODO_PAUSE_CLEANUP = 'TODO_PAUSE_CLEANUP';
 
-export const PAUSE_TIMER = 'PAUSE_TIMER'; // 리셋이나 완료시 단순 timer멈추는 용도
-export const RESUME_TIMER = 'RESUME_TIMER';
+export const TODO_RESUME_REQUEST = 'TODO_RESUME_REQUEST';
+export const TODO_RESUME_SUCCESS = 'TODO_RESUME_SUCCESS';
+export const TODO_RESUME_FAILURE = 'TODO_RESUME_FAILURE';
+export const TODO_RESUME_CLEANUP = 'TODO_RESUME_CLEANUP';
+
 export const RESET_TIMER = 'RESET_TIMER';
+
 export const SET_TIMER = 'SET_TIMER';
 export const ADD_SECOND = 'ADD_SECOND';
 export const TOGGLE_SOUND_ON_OFF = 'TOGGLE_SOUND_ON_OFF';
@@ -36,6 +43,8 @@ const initialState = {
   isSaveTodoSuccess: false, // todo 저장 성공 여부
   todoCreateError: '',
   todoCompleteError: '',
+  todoPauseError: '',
+  todoResumeError: '',
   todoContent: '',
   doneContent: '',
   todoId: 0,
@@ -78,12 +87,28 @@ const reducer = (state = initialState, action) => {
     case TODO_PAUSE_REQUEST: {
       return applyTodoPauseRequest(state, action);
     }
-    case PAUSE_TIMER: {
-      return applyPauseTimer(state, action);
+    case TODO_PAUSE_SUCCESS: {
+      return applyTodoPauseSuccess(state, action);
     }
-    case RESUME_TIMER: {
-      return applyResumeTimer(state, action);
+    case TODO_PAUSE_FAILURE: {
+      return applyTodoPauseFailure(state, action);
     }
+    case TODO_COMPLETE_CLEANUP: {
+      return applyTodoPauseCleanup(state, action);
+    }
+    case TODO_RESUME_REQUEST: {
+      return applyTodoResumeRequest(state, action);
+    }
+    case TODO_RESUME_SUCCESS: {
+      return applyTodoResumeSuccess(state, action);
+    }
+    case TODO_RESUME_FAILURE: {
+      return applyTodoResumeFailure(state, action);
+    }
+    case TODO_RESUME_CLEANUP: {
+      return applyTodoResumeCleanup(state, action);
+    }
+
     case RESET_TIMER: {
       return applyResetTimer(state, action);
     }
@@ -196,24 +221,59 @@ const applyTodoPauseRequest = (state, action) => {
   return {
     ...state,
     isRunning: false,
-    elapsedTimeBackup: state.elapsedTime,
   };
 };
 
-const applyPauseTimer = (state, action) => {
+const applyTodoPauseSuccess = (state, action) => {
   return {
     ...state,
-    isRunning: false,
     elapsedTimeBackup: state.elapsedTime,
   };
 };
 
-const applyResumeTimer = (state, action) => {
+const applyTodoPauseFailure = (state, action) => {
   return {
     ...state,
     isRunning: true,
+    elapsedTimeBackup: 0,
+    todoPauseError: action.error,
+  };
+};
+
+const applyTodoPauseCleanup = (state, action) => {
+  return {
+    ...state,
+    todoPauseError: '',
+  };
+};
+
+const applyTodoResumeRequest = (state, action) => {
+  return {
+    ...state,
+    isRunning: true,
+  };
+};
+
+const applyTodoResumeSuccess = (state, action) => {
+  return {
+    ...state,
     startTime: moment().local(),
-    timelineId: action.data.timelineId,
+    timelineId: action.payload.timelineId,
+  };
+};
+
+const applyTodoResumeFailure = (state, action) => {
+  return {
+    ...state,
+    isRunning: false,
+    todoResumeError: action.error,
+  };
+};
+
+const applyTodoResumeCleanup = (state, action) => {
+  return {
+    ...state,
+    todoResumeError: '',
   };
 };
 

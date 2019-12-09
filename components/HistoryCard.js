@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import {
@@ -15,9 +15,7 @@ import styled from 'styled-components';
 
 import messages from '../config/messages';
 import {
-  LOAD_TODOS_REQUEST,
   DELETE_HISTORY_REQUEST,
-  DELETE_HISTORY_CLEANUP,
 } from '../reducers/todoHistory';
 
 const { Title } = Typography;
@@ -78,38 +76,7 @@ const timeCalculator = (todo) => {
 const HistoryCard = ({ todo, index }) => {
   const dispatch = useDispatch();
 
-  const [iconLoading, setIconLoading] = useState(false);
-
-  const {
-    deleteHistoryId,
-    deleteHistorySuccess,
-    deleteHistoryError,
-  } = useSelector((state) => state.todoHistory);
-
-  useEffect(() => {
-    if (deleteHistoryId === todo.id && deleteHistorySuccess) {
-      dispatch({
-        type: LOAD_TODOS_REQUEST,
-        data: {
-          date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
-        },
-      });
-      dispatch({ type: DELETE_HISTORY_CLEANUP });
-      setIconLoading(false);
-      message.success(messages.successDeleteTodoDone);
-    }
-  }, [deleteHistorySuccess, deleteHistoryId]);
-
-  useEffect(() => {
-    if (deleteHistoryId === todo.id && deleteHistoryError !== '') {
-      dispatch({ type: DELETE_HISTORY_CLEANUP });
-      setIconLoading(false);
-      message.error(messages.failDeleteTodoDone);
-    }
-  }, [deleteHistoryError, deleteHistoryId]);
-
   const deleteTodoDone = useCallback((todo) => {
-    setIconLoading(true);
     dispatch({ type: DELETE_HISTORY_REQUEST, payload: todo.id });
   });
 
@@ -143,7 +110,7 @@ const HistoryCard = ({ todo, index }) => {
           okText={messages.yesDeleteTodoDone}
           cancelText={messages.noDeleteTodoDone}
         >
-          <Button type="primary" loading={iconLoading}>
+          <Button type="primary" >
             삭제
           </Button>
         </Popconfirm>

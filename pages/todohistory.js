@@ -35,7 +35,7 @@ const StyledBackTop = styled(BackTop)`
 const todoHistory = () => {
   const { todos } = useSelector((state) => state.todoHistory);
   const { me } = useSelector((state) => state.user);
-  const { todoContent } = useSelector((state) => state.timer);
+  const { savedTodoContent } = useSelector((state) => state.timer);
 
   useEffect(() => {
     if (!me) {
@@ -48,13 +48,13 @@ const todoHistory = () => {
       event.preventDefault();
       event.returnValue = '';
     };
-    if (todoContent && todoContent.length > 0) {
+    if (savedTodoContent !== '') {
       window.addEventListener('beforeunload', listener);
     }
     return () => {
       window.removeEventListener('beforeunload', listener);
     };
-  }, [todoContent]);
+  }, [savedTodoContent]);
 
   return (
     <Wrapper className="container">

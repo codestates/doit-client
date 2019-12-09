@@ -12,8 +12,7 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
-export const WRITE_TODO_CONTENT = 'WRITE_TODO_CONTENT';
-export const WRITE_DONE_CONTENT = 'WRITE_DONE_CONTENT';
+export const SAVE_TODOCONTENT = 'SAVE_TODOCONTENT'
 
 export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
 export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
@@ -45,8 +44,7 @@ const initialState = {
   todoCompleteError: '',
   todoPauseError: '',
   todoResumeError: '',
-  todoContent: '',
-  doneContent: '',
+  savedTodoContent: '',
   todoId: 0,
   timelineId: 0,
   startTime: '',
@@ -78,12 +76,10 @@ const reducer = (state = initialState, action) => {
     case TODO_COMPLETE_CLEANUP: {
       return applyTodoCompleteCleanup(state, action);
     }
-    case WRITE_TODO_CONTENT: {
-      return applyWriteTodoContent(state, action);
+    case SAVE_TODOCONTENT: {
+      return applyCheckTodoExist(state, action)
     }
-    case WRITE_DONE_CONTENT: {
-      return applyWriteDoneContent(state, action);
-    }
+
     case TODO_PAUSE_REQUEST: {
       return applyTodoPauseRequest(state, action);
     }
@@ -203,19 +199,12 @@ const applyTodoCompleteCleanup = (state, action) => {
   };
 };
 
-const applyWriteTodoContent = (state, action) => {
+const applyCheckTodoExist = (state, action) => {
   return {
-    ...state,
-    todoContent: action.payload,
-  };
-};
-
-const applyWriteDoneContent = (state, action) => {
-  return {
-    ...state,
-    doneContent: action.payload,
-  };
-};
+    ...state, 
+    savedTodoContent: action.payload
+  }
+}
 
 const applyTodoPauseRequest = (state, action) => {
   return {

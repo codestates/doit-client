@@ -99,7 +99,6 @@ const TimerEl = ({ todoEl }) => {
     isRunning,
     todoId,
     timelineId,
-    todoContent,
     todoPauseError,
     todoResumeError,
   } = useSelector((state) => state.timer);
@@ -119,7 +118,7 @@ const TimerEl = ({ todoEl }) => {
   };
 
   const onStart = useCallback(() => {
-    const verified = verifyContent(todoContent);
+    const verified = verifyContent(todoEl.current.props.value);
     if (!verified) {
       message.warning(messages.todoContentEmpty);
       return setTimeout(() => {
@@ -136,7 +135,7 @@ const TimerEl = ({ todoEl }) => {
           .format(),
       },
     });
-  }, [dispatch, todoEl, totalTime, todoContent]);
+  }, [dispatch, todoEl, totalTime]);
 
   const onPause = useCallback(() => {
     dispatch({

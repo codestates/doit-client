@@ -7,6 +7,8 @@ import {
   PAUSE_TIMER,
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
+  WRITE_TODO_CONTENT,
+  WRITE_DONE_CONTENT,
 } from '../reducers/timer';
 import messages from '../config/messages';
 import verifyContent from '../utils/contentVerification';
@@ -18,9 +20,6 @@ const Wrapper = styled.div`
 `;
 
 const TimerCard = ({ todoEl, doneEl }) => {
-  const [todoContent, setTodoContent] = useState('');
-  const [doneContent, setDoneContent] = useState('');
-
   const { TextArea } = Input;
   const {
     isStarted,
@@ -30,7 +29,8 @@ const TimerCard = ({ todoEl, doneEl }) => {
     isSavingTodo,
     isSaveTodoSuccess,
     isReseted,
-    savedTodoContent,
+    todoContent,
+    doneContent,
   } = useSelector((state) => state.timer);
 
   const { me } = useSelector((state) => state.user);
@@ -48,16 +48,10 @@ const TimerCard = ({ todoEl, doneEl }) => {
 
   useEffect(() => {
     if (isReseted) {
-      setTodoContent('');
-      setDoneContent('');
+      dispatch({ type: WRITE_TODO_CONTENT, payload: '' });
+      dispatch({ type: WRITE_DONE_CONTENT, payload: '' });
     }
   }, [isReseted]);
-
-  useEffect(() => {
-    if (savedTodoContent !== '') {
-      setTodoContent(savedTodoContent);
-    }
-  }, [savedTodoContent]);
 
   const onComplete = useCallback(() => {
     dispatch({
@@ -82,16 +76,16 @@ const TimerCard = ({ todoEl, doneEl }) => {
           .format(),
       },
     });
-    setTodoContent('');
-    setDoneContent('');
+    dispatch({ type: WRITE_TODO_CONTENT, payload: '' });
+    dispatch({ type: WRITE_DONE_CONTENT, payload: '' });
   }, [doneContent, todoId, timelineId, dispatch, doneEl]);
 
   const onChangeTodoContent = useCallback((e) => {
-    setTodoContent(e.target.value);
+    dispatch({ type: WRITE_TODO_CONTENT, payload: e.target.value });
   }, []);
 
   const onChangeDoneContent = useCallback((e) => {
-    setDoneContent(e.target.value);
+    dispatch({ type: WRITE_DONE_CONTENT, payload: e.target.value });
   }, []);
 
   return (

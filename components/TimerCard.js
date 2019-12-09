@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  PAUSE_TIMER,
+  TODO_PAUSE_REQUEST,
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
-  WRITE_TODO_CONTENT,
-  WRITE_DONE_CONTENT,
+  SAVE_TODOCONTENT
 } from '../reducers/timer';
 import messages from '../config/messages';
 import verifyContent from '../utils/contentVerification';
@@ -29,12 +28,14 @@ const TimerCard = ({ todoEl, doneEl }) => {
     isSavingTodo,
     isSaveTodoSuccess,
     isReseted,
-    todoContent,
-    doneContent,
+    savedTodoContent
   } = useSelector((state) => state.timer);
 
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const [todoContent, setTodoContent] = useState('');
+  const [doneContent, setDoneContent] = useState('');
 
   useEffect(() => {
     // content DB 저장을 성공했다면
@@ -43,19 +44,26 @@ const TimerCard = ({ todoEl, doneEl }) => {
       dispatch({
         type: TODO_COMPLETE_CLEANUP,
       });
+      dispatch({type: SAVE_TODOCONTENT, payload: ''});
     }
   }, [isSavingTodo, isSaveTodoSuccess, dispatch]);
 
   useEffect(() => {
     if (isReseted) {
-      dispatch({ type: WRITE_TODO_CONTENT, payload: '' });
-      dispatch({ type: WRITE_DONE_CONTENT, payload: '' });
+      setTodoContent('');
+      setDoneContent('');
+      dispatch({type: SAVE_TODOCONTENT, payload: ''}); 
     }
   }, [isReseted]);
 
+  useEffect(() => {
+    setTodoContent(savedTodoContent);
+    todoEl.current.focus();
+  }, [savedTodoContent])
+
   const onComplete = useCallback(() => {
     dispatch({
-      type: PAUSE_TIMER,
+      type: TODO_PAUSE_REQUEST,
     });
 
     const verified = verifyContent(doneContent);
@@ -76,22 +84,25 @@ const TimerCard = ({ todoEl, doneEl }) => {
           .format(),
       },
     });
-    dispatch({ type: WRITE_TODO_CONTENT, payload: '' });
-    dispatch({ type: WRITE_DONE_CONTENT, payload: '' });
+    setTodoContent('');
+    setDoneContent('');
   }, [doneContent, todoId, timelineId, dispatch, doneEl]);
 
   const onChangeTodoContent = useCallback(
-    (e) => {
-      dispatch({ type: WRITE_TODO_CONTENT, payload: e.target.value });
+    (e) => {;
+      setTodoContent(e.target.value);
+      if (e.target.value === '') {
+        dispatch({type: SAVE_TODOCONTENT, payload: ''});
+      }
     },
     [dispatch],
   );
 
   const onChangeDoneContent = useCallback(
-    (e) => {
-      dispatch({ type: WRITE_DONE_CONTENT, payload: e.target.value });
+    (e) => {;
+      setDoneContent(e.target.value)
     },
-    [dispatch],
+    [],
   );
 
   return (
@@ -100,12 +111,13 @@ const TimerCard = ({ todoEl, doneEl }) => {
         <Col xs={24} md={12}>
           <Card title="할일">
             <TextArea
-              value={todoContent}
+              value = {todoContent}
               onChange={onChangeTodoContent}
               placeholder={messages.writeTodo}
               rows={7}
               disabled={isStarted || !me}
               ref={todoEl}
+              onBlur={() => dispatch({type: SAVE_TODOCONTENT, payload: todoContent})}
             />
           </Card>
         </Col>

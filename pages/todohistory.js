@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
-import { useSelector } from 'react-redux';
-import { Row, Col, BackTop, Empty } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col, BackTop, Empty, message } from 'antd';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import TodoCalendar from '../components/TodoCalendar';
 import HistoryCard from '../components/HistoryCard';
 import TimelineAnchors from '../components/TimelineAnchors';
+import {
+  LOAD_TODOS_REQUEST,
+  DELETE_HISTORY_CLEANUP,
+} from '../reducers/todoHistory';
+import messages from '../config/messages';
 
 const Wrapper = styled.div`
   padding-top: 40px;
@@ -33,14 +39,53 @@ const StyledBackTop = styled(BackTop)`
 `;
 
 const todoHistory = () => {
-  const { todos } = useSelector((state) => state.todoHistory);
+  const { todos,  deleteHistorySuccess, deleteHistoryError } = useSelector((state) => state.todoHistory);
   const { me } = useSelector((state) => state.user);
+  const { savedTodoContent } = useSelector((state) => state.timer);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!me) {
       Router.push('/timer');
     }
   }, [me && me.id]);
+
+
+  useEffect(() => {
+    const listener = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    if (savedTodoContent !== '') {
+      window.addEventListener('beforeunload', listener);
+    }
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, [savedTodoContent]);
+
+  useEffect(() => {
+    if (deleteHistorySuccess) {
+      const date = todos && todos.length > 0 && moment(todos[0].timelines[0].startedAt).format('YYYY-MM-DD');
+      dispatch({
+        type: LOAD_TODOS_REQUEST,
+        data: {
+          date
+        },
+      });
+      dispatch({ type: DELETE_HISTORY_CLEANUP });
+      message.success(messages.successDeleteTodoDone);
+    }
+  }, [deleteHistorySuccess]);
+
+  useEffect(() => {
+    if (deleteHistoryError !== '') {
+      dispatch({ type: DELETE_HISTORY_CLEANUP });
+      // setIconLoading(false);
+      message.error(messages.failDeleteTodoDone);
+    }
+  }, [deleteHistoryError]);
 
   return (
     <Wrapper className="container">

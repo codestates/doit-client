@@ -13,6 +13,14 @@ const messages = {
     '공부할 때 집중이 안돼서 고민했던 적 있나요? 타임 어택과 한일에 대한 피드백을 도와주는 두잇을 사용해보세요!',
   notLogout: '그래요. 더 열심히 하셔야죠!',
   feedback: '자비 없는 피드백 기다립니다!',
+
+  // history 에서 카드 삭제시
+  askDeleteTodoDone: '삭제 하실거에요~?',
+  notDeleteTodoDone: '삭제 안하는 걸로~',
+  successDeleteTodoDone: '삭제 완료요~',
+  failDeleteTodoDone: '삭제 실패했어요 ㅠ',
+  yesDeleteTodoDone: '네~ (미련 0)',
+  noDeleteTodoDone: '아니요!!!',
 };
 
 export default messages;

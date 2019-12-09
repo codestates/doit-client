@@ -7,6 +7,9 @@ import {
   LOAD_TODOS_REQUEST,
   LOAD_TODOS_SUCCESS,
   LOAD_TODOS_FAILURE,
+  DELETE_HISTORY_REQUEST,
+  DELETE_HISTORY_SUCCESS,
+  DELETE_HISTORY_FAILURE,
 } from '../reducers/todoHistory';
 
 function loadTodosAPI(loadData) {
@@ -24,6 +27,7 @@ function* loadTodos(action) {
       data: result.data.data,
     });
   } catch (e) {
+    console.error(e);
     yield put({
       type: LOAD_TODOS_FAILURE,
       error: e,
@@ -35,8 +39,34 @@ function* watchLoadTodos() {
   yield takeLatest(LOAD_TODOS_REQUEST, loadTodos);
 }
 
+function deleteHistoryAPI(deleteId) {
+  setToken(() => getCookie('token'));
+  return axios.delete(`/todo/${deleteId}`, {
+    withCredentials: true,
+  });
+}
+
+function* deleteHistory(action) {
+  try {
+    yield call(deleteHistoryAPI, action.payload);
+    yield put({
+      type: DELETE_HISTORY_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: DELETE_HISTORY_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchDeleteHistory() {
+  yield takeLatest(DELETE_HISTORY_REQUEST, deleteHistory);
+}
+
 function* todoHistorySaga() {
-  yield all([fork(watchLoadTodos)]);
+  yield all([fork(watchLoadTodos), fork(watchDeleteHistory)]);
 }
 
 export default todoHistorySaga;

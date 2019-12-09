@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Typography,
   Row,
@@ -14,12 +14,13 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
+  START_TIMER_AND_TODO_CREATE_REQUEST,
   TODO_PAUSE_REQUEST,
-  PAUSE_TIMER,
-  RESUME_TIMER,
+  TODO_PAUSE_CLEANUP,
+  TODO_RESUME_REQUEST,
+  TODO_RESUME_CLEANUP,
   RESET_TIMER,
   SET_TIMER,
-  START_TIMER_AND_TODO_CREATE_REQUEST,
 } from '../reducers/timer';
 import messages from '../config/messages';
 import BtnSound from './BtnSound';
@@ -98,7 +99,8 @@ const TimerEl = ({ todoEl }) => {
     isRunning,
     todoId,
     timelineId,
-    todoContent,
+    todoPauseError,
+    todoResumeError,
   } = useSelector((state) => state.timer);
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -116,7 +118,7 @@ const TimerEl = ({ todoEl }) => {
   };
 
   const onStart = useCallback(() => {
-    const verified = verifyContent(todoContent);
+    const verified = verifyContent(todoEl.current.props.value);
     if (!verified) {
       message.warning(messages.todoContentEmpty);
       return setTimeout(() => {
@@ -133,11 +135,10 @@ const TimerEl = ({ todoEl }) => {
           .format(),
       },
     });
-  }, [dispatch, todoEl, totalTime, todoContent]);
+  }, [dispatch, todoEl, totalTime]);
 
   const onPause = useCallback(() => {
     dispatch({
-      // type: PAUSE_TIMER,
       type: TODO_PAUSE_REQUEST,
       data: {
         todoId,
@@ -151,7 +152,7 @@ const TimerEl = ({ todoEl }) => {
 
   const onResume = useCallback(() => {
     dispatch({
-      type: RESUME_TIMER,
+      type: TODO_RESUME_REQUEST,
       data: {
         todoId,
         startedAt: moment()
@@ -163,7 +164,7 @@ const TimerEl = ({ todoEl }) => {
 
   const onReset = useCallback(() => {
     dispatch({
-      type: PAUSE_TIMER,
+      type: TODO_PAUSE_REQUEST,
     });
   }, [dispatch]);
 
@@ -185,6 +186,20 @@ const TimerEl = ({ todoEl }) => {
     },
     [dispatch],
   );
+
+  useEffect(() => {
+    if (todoPauseError !== '') {
+      message.error('PAUSE 실패했어요 ㅠ');
+      dispatch({ type: TODO_PAUSE_CLEANUP });
+    }
+  }, [todoPauseError]); 
+
+  useEffect(() => {
+    if (todoResumeError !== '') {
+      message.error('RESUME 실패했어요 ㅠ');
+      dispatch({ type: TODO_RESUME_CLEANUP });
+    }
+  }, [todoResumeError]);
 
   return (
     <div>

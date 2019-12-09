@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { Typography, Row, Col, Card, Input, Button, message } from 'antd';
+import {
+  Typography,
+  Row,
+  Col,
+  Card,
+  Input,
+  Button,
+  message,
+  Popconfirm,
+} from 'antd';
 import styled from 'styled-components';
-import axios from 'axios';
 
-import { useDispatch } from 'react-redux';
-
-import { LOAD_TODOS_REQUEST } from '../reducers/todoHistory';
+import messages from '../config/messages';
+import {
+  DELETE_HISTORY_REQUEST,
+} from '../reducers/todoHistory';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -29,35 +39,11 @@ const timeFormat = (timestamp) => {
     : '??';
 };
 
-const useDeleteTodoDone = (todo) => {
-  const [iconLoading, setIconLoading] = useState(false);
-  const dispatch = useDispatch();
-  const deleteTodoDone = async () => {
-    setIconLoading(true);
-    try {
-      const data = await axios.delete(`/todo/${todo.id}`);
-      if (data.status === 200) {
-        dispatch({
-          type: LOAD_TODOS_REQUEST,
-          data: {
-            date: moment(todo.timelines[0].startedAt).format('YYYY-MM-DD'),
-          },
-        });
-        message.success('삭제되었습니다');
-      }
-    } catch (error) {
-      console.error(error);
-      message.error('삭제 실패했어요 ㅠ');
-      setIconLoading(false);
-    }
-  };
-
-  return { iconLoading, deleteTodoDone };
-};
-
 const timeCalculator = (todo) => {
-  let wholeDurationAsMinutes, concentTimeAsMinutes, restTimeAsMinutes;
-  // console.log(todo.timelines);
+  let wholeDurationAsMinutes = '0';
+  let concentTimeAsMinutes = '0';
+  let restTimeAsMinutes = '0';
+
   const startTime = todo.timelines[0].startedAt;
   const endTime = todo.timelines[todo.timelines.length - 1].endedAt;
   const stopNumber = todo.timelines.length - 1;
@@ -77,9 +63,6 @@ const timeCalculator = (todo) => {
       moment.duration(totalConcentTime).asMinutes(),
     );
     restTimeAsMinutes = wholeDurationAsMinutes - concentTimeAsMinutes;
-  } else {
-    concentTimeAsMinutes = '0';
-    restTimeAsMinutes = '0';
   }
   return {
     concentTimeAsMinutes,
@@ -88,10 +71,19 @@ const timeCalculator = (todo) => {
     endTime,
     stopNumber,
   };
-};
+}; 
 
 const HistoryCard = ({ todo, index }) => {
-  const { iconLoading, deleteTodoDone } = useDeleteTodoDone(todo);
+  const dispatch = useDispatch();
+
+  const deleteTodoDone = useCallback((todo) => {
+    dispatch({ type: DELETE_HISTORY_REQUEST, payload: todo.id });
+  });
+
+  const cancelDelete = useCallback(() => {
+    message.success(messages.notDeleteTodoDone);
+  }, []);
+
   const {
     concentTimeAsMinutes,
     restTimeAsMinutes,
@@ -101,7 +93,7 @@ const HistoryCard = ({ todo, index }) => {
   } = timeCalculator(todo);
 
   const todoCardTitle = `#${index +
-    1} (${concentTimeAsMinutes}분 집중 /  ${stopNumber}번(${restTimeAsMinutes}분) 멈춤) ${timeFormat(
+    1} (${concentTimeAsMinutes}분 집중 / ${stopNumber}번(${restTimeAsMinutes}분) 멈춤) ${timeFormat(
     startTime,
   )} ~ ${timeFormat(endTime)}`;
 
@@ -111,9 +103,17 @@ const HistoryCard = ({ todo, index }) => {
         <Title level={4}>{todoCardTitle}</Title>
       </Col>
       <Col xs={24} md={4}>
-        <Button type="primary" onClick={deleteTodoDone} loading={iconLoading}>
-          삭제
-        </Button>
+        <Popconfirm
+          title={messages.askDeleteTodoDone}
+          onConfirm={() => deleteTodoDone(todo)}
+          onCancel={cancelDelete}
+          okText={messages.yesDeleteTodoDone}
+          cancelText={messages.noDeleteTodoDone}
+        >
+          <Button type="primary" >
+            삭제
+          </Button>
+        </Popconfirm>
       </Col>
 
       <Row gutter={24} type="flex" justify="space-between">

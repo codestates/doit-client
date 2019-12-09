@@ -71,7 +71,7 @@ const timeCalculator = (todo) => {
     endTime,
     stopNumber,
   };
-};
+}; 
 
 const HistoryCard = ({ todo, index }) => {
   const dispatch = useDispatch();

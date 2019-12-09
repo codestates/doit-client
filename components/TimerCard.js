@@ -52,7 +52,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
     if (isReseted) {
       setTodoContent('');
       setDoneContent('');
-      dispatch({type: SAVE_TODOCONTENT, payload: ''});
+      dispatch({type: SAVE_TODOCONTENT, payload: ''}); 
     }
   }, [isReseted]);
 

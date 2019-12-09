@@ -192,7 +192,7 @@ const TimerEl = ({ todoEl }) => {
       message.error('PAUSE 실패했어요 ㅠ');
       dispatch({ type: TODO_PAUSE_CLEANUP });
     }
-  }, [todoPauseError]);
+  }, [todoPauseError]); 
 
   useEffect(() => {
     if (todoResumeError !== '') {

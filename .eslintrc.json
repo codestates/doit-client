@@ -6,8 +6,6 @@
     "extends": [
         "airbnb",
         "airbnb/hooks",
-        "prettier",
-        "prettier/react"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -27,6 +25,7 @@
         "react/jsx-props-no-spreading": [0],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "react/jsx-filename-extension": [0]
+        "react/jsx-filename-extension": [0],
+        "jsx-a11y/anchor-is-valid": 0
     }
 }

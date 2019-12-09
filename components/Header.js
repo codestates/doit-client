@@ -107,6 +107,11 @@ const HeaderComponent = () => {
                   <a>기록 보기</a>
                 </Link>
               </MenuItem>
+              <MenuItem key="whatsnew">
+                <Link href="/whatsnew">
+                  <a>새소식</a>
+                </Link>
+              </MenuItem>
             </Menu>
             <Menu mode="horizontal" style={{ float: 'right' }}>
               <MenuItem key="3">

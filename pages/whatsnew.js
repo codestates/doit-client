@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+// import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col, Timeline } from 'antd';
 
@@ -61,20 +61,20 @@ const whatsnewData = [
 ];
 
 const whatsnew = () => {
-  const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
+  // const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
 
-  useEffect(() => {
-    const listener = (event) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-    if (savedTodoContent !== '' || focusOnTodoContent) {
-      window.addEventListener('beforeunload', listener);
-    }
-    return () => {
-      window.removeEventListener('beforeunload', listener);
-    };
-  }, [savedTodoContent, focusOnTodoContent]);
+  // useEffect(() => {
+  //   const listener = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = '';
+  //   };
+  //   if (savedTodoContent !== '' || focusOnTodoContent) {
+  //     window.addEventListener('beforeunload', listener);
+  //   }
+  //   return () => {
+  //     window.removeEventListener('beforeunload', listener);
+  //   };
+  // }, [savedTodoContent, focusOnTodoContent]);
 
   return (
     <Wrapper className="container">

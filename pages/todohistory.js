@@ -41,8 +41,6 @@ const StyledBackTop = styled(BackTop)`
 const todoHistory = () => {
   const { todos,  deleteHistorySuccess, deleteHistoryError } = useSelector((state) => state.todoHistory);
   const { me } = useSelector((state) => state.user);
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,21 +48,6 @@ const todoHistory = () => {
       Router.push('/timer');
     }
   }, [me && me.id]);
-
-  // const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
-
-  // useEffect(() => {
-  //   const listener = (event) => {
-  //     event.preventDefault();
-  //     event.returnValue = '';
-  //   };
-  //   if (savedTodoContent !== '' || focusOnTodoContent) {
-  //     window.addEventListener('beforeunload', listener);
-  //   }
-  //   return () => {
-  //     window.removeEventListener('beforeunload', listener);
-  //   };
-  // }, [savedTodoContent, focusOnTodoContent]);
 
   useEffect(() => {
     if (deleteHistorySuccess) {

@@ -30,21 +30,6 @@ const Timer = () => {
     }
   }, [me && me.id]);
 
-    // const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
-
-  // useEffect(() => {
-  //   const listener = (event) => {
-  //     event.preventDefault();
-  //     event.returnValue = '';
-  //   };
-  //   if (savedTodoContent !== '' || focusOnTodoContent) {
-  //     window.addEventListener('beforeunload', listener);
-  //   }
-  //   return () => {
-  //     window.removeEventListener('beforeunload', listener);
-  //   };
-  // }, [savedTodoContent, focusOnTodoContent]);
-
   return (
     <Wrapper className="container">
       <Row gutter={24} type="flex" justify="space-between">

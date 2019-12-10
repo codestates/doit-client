@@ -41,7 +41,7 @@ const StyledBackTop = styled(BackTop)`
 const todoHistory = () => {
   const { todos,  deleteHistorySuccess, deleteHistoryError } = useSelector((state) => state.todoHistory);
   const { me } = useSelector((state) => state.user);
-  const { savedTodoContent } = useSelector((state) => state.timer);
+  const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
 
   const dispatch = useDispatch();
 
@@ -57,13 +57,13 @@ const todoHistory = () => {
       event.preventDefault();
       event.returnValue = '';
     };
-    if (savedTodoContent !== '') {
+    if (savedTodoContent !== '' || focusOnTodoContent) {
       window.addEventListener('beforeunload', listener);
     }
     return () => {
       window.removeEventListener('beforeunload', listener);
     };
-  }, [savedTodoContent]);
+  }, [savedTodoContent, focusOnTodoContent]);
 
   useEffect(() => {
     if (deleteHistorySuccess) {
@@ -82,7 +82,6 @@ const todoHistory = () => {
   useEffect(() => {
     if (deleteHistoryError !== '') {
       dispatch({ type: DELETE_HISTORY_CLEANUP });
-      // setIconLoading(false);
       message.error(messages.failDeleteTodoDone);
     }
   }, [deleteHistoryError]);

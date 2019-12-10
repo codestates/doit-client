@@ -23,7 +23,7 @@ const Timer = () => {
   const todoEl = useRef();
 
   const { me } = useSelector((state) => state.user);
-  const { savedTodoContent } = useSelector((state) => state.timer);
+  const { savedTodoContent, focusOnTodoContent } = useSelector((state) => state.timer);
   useEffect(() => {
     if (!me) {
       Router.push('/');
@@ -35,13 +35,13 @@ const Timer = () => {
       event.preventDefault();
       event.returnValue = '';
     };
-    if (savedTodoContent !== '') {
+    if (savedTodoContent !== '' || focusOnTodoContent) {
       window.addEventListener('beforeunload', listener);
     }
     return () => {
       window.removeEventListener('beforeunload', listener);
     };
-  }, [savedTodoContent]);
+  }, [savedTodoContent, focusOnTodoContent]);
 
   return (
     <Wrapper className="container">

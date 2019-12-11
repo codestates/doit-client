@@ -5,7 +5,7 @@
     },
     "extends": [
         "airbnb",
-        "airbnb/hooks",
+        "airbnb/hooks"
     ],
     "globals": {
         "Atomics": "readonly",

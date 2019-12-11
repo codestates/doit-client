@@ -23,25 +23,12 @@ const Timer = () => {
   const todoEl = useRef();
 
   const { me } = useSelector((state) => state.user);
-  const { savedTodoContent } = useSelector((state) => state.timer);
+
   useEffect(() => {
     if (!me) {
       Router.push('/');
     }
   }, [me && me.id]);
-
-  useEffect(() => {
-    const listener = (event) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-    if (savedTodoContent !== '') {
-      window.addEventListener('beforeunload', listener);
-    }
-    return () => {
-      window.removeEventListener('beforeunload', listener);
-    };
-  }, [savedTodoContent]);
 
   return (
     <Wrapper className="container">

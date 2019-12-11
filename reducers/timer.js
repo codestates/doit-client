@@ -12,7 +12,8 @@ export const TODO_COMPLETE_SUCCESS = 'TODO_COMPLETE_SUCCESS';
 export const TODO_COMPLETE_FAILURE = 'TODO_COMPLETE_FAILURE';
 export const TODO_COMPLETE_CLEANUP = 'TODO_COMPLETE_CLEANUP';
 
-export const SAVE_TODOCONTENT = 'SAVE_TODOCONTENT'
+export const FOCUS_ON_TODOCONTENT = 'FOCUS_ON_TODOCONTENT';
+export const SAVE_TODOCONTENT = 'SAVE_TODOCONTENT';
 
 export const TODO_PAUSE_REQUEST = 'TODO_PAUSE_REQUEST';
 export const TODO_PAUSE_SUCCESS = 'TODO_PAUSE_SUCCESS';
@@ -44,6 +45,7 @@ const initialState = {
   todoCompleteError: '',
   todoPauseError: '',
   todoResumeError: '',
+  focusOnTodoContent: false,
   savedTodoContent: '',
   todoId: 0,
   timelineId: 0,
@@ -76,10 +78,12 @@ const reducer = (state = initialState, action) => {
     case TODO_COMPLETE_CLEANUP: {
       return applyTodoCompleteCleanup(state, action);
     }
+    case FOCUS_ON_TODOCONTENT: {
+      return applyFocusOnTodocontent(state, action);
+    }
     case SAVE_TODOCONTENT: {
       return applyCheckTodoExist(state, action)
     }
-
     case TODO_PAUSE_REQUEST: {
       return applyTodoPauseRequest(state, action);
     }
@@ -198,6 +202,13 @@ const applyTodoCompleteCleanup = (state, action) => {
     doneContent: '',
   };
 };
+
+const applyFocusOnTodocontent = (state, action) => {
+  return {
+    ...state, 
+    focusOnTodoContent: !state.focusOnTodoContent
+  }
+}
 
 const applyCheckTodoExist = (state, action) => {
   return {

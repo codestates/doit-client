@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   Typography,
   Row,
@@ -106,9 +107,9 @@ const TimerEl = ({ todoEl }) => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const timeFormat = (totalTime) => {
-    const min = String(Math.floor(totalTime / 60)).padStart(2, 0);
-    const sec = String(totalTime % 60).padStart(2, 0);
+  const timeFormat = (totalSeconds) => {
+    const min = String(Math.floor(totalSeconds / 60)).padStart(2, 0);
+    const sec = String(totalSeconds % 60).padStart(2, 0);
     return (
       <>
         {min}
@@ -122,18 +123,14 @@ const TimerEl = ({ todoEl }) => {
     const verified = verifyContent(todoEl.current.props.value);
     if (!verified) {
       message.warning(messages.todoContentEmpty);
-      return setTimeout(() => {
-        todoEl.current.focus();
-      }, 500);
+      todoEl.current.focus();
     }
     dispatch({
       type: START_TIMER_AND_TODO_CREATE_REQUEST,
       data: {
         todoContent: verified,
         duration: totalTime / 60,
-        startedAt: moment()
-          .utc()
-          .format(),
+        startedAt: moment().utc().format(),
       },
     });
   }, [dispatch, todoEl, totalTime]);
@@ -144,9 +141,7 @@ const TimerEl = ({ todoEl }) => {
       data: {
         todoId,
         timelineId,
-        endedAt: moment()
-          .utc()
-          .format(),
+        endedAt: moment().utc().format(),
       },
     });
   }, [dispatch, todoId, timelineId]);
@@ -156,9 +151,7 @@ const TimerEl = ({ todoEl }) => {
       type: TODO_RESUME_REQUEST,
       data: {
         todoId,
-        startedAt: moment()
-          .utc()
-          .format(),
+        startedAt: moment().utc().format(),
       },
     });
   }, [dispatch, todoId]);
@@ -193,14 +186,14 @@ const TimerEl = ({ todoEl }) => {
       message.error('PAUSE 실패했어요 ㅠ');
       dispatch({ type: TODO_PAUSE_CLEANUP });
     }
-  }, [todoPauseError]); 
+  }, [todoPauseError, dispatch]);
 
   useEffect(() => {
     if (todoResumeError !== '') {
       message.error('RESUME 실패했어요 ㅠ');
       dispatch({ type: TODO_RESUME_CLEANUP });
     }
-  }, [todoResumeError]);
+  }, [todoResumeError, dispatch]);
 
   return (
     <div>
@@ -276,5 +269,10 @@ const TimerEl = ({ todoEl }) => {
     </div>
   );
 };
+
+TimerEl.propTypes = {
+  todoEl: PropTypes.shape({ current: PropTypes.object }).isRequired,
+};
+
 
 export default TimerEl;

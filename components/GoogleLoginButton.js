@@ -26,6 +26,7 @@ const GoogleLoginButton = () => {
   const dispatch = useDispatch();
   const responseSuccess = (response) => {
     // console.log(response);
+    // eslint-disable-next-line camelcase
     const { id_token } = response.tokenObj;
     dispatch({
       type: GOOGLE_AUTH_REQUEST,
@@ -35,6 +36,7 @@ const GoogleLoginButton = () => {
     });
     Router.push('/timer');
   };
+  // eslint-disable-next-line no-unused-vars
   const responseFail = (response) => {
     // console.log(response);
   };
@@ -45,7 +47,7 @@ const GoogleLoginButton = () => {
       longtitle="true"
       onSuccess={responseSuccess}
       onFailure={responseFail}
-      cookiePolicy={'single_host_origin'}
+      cookiePolicy="single_host_origin"
     />
   );
 };

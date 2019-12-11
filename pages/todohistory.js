@@ -45,6 +45,8 @@ const todoHistory = () => {
 
   const dispatch = useDispatch();
 
+  console.log(todos);
+
   useEffect(() => {
     if (!me) {
       Router.push('/timer');

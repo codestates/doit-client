@@ -67,8 +67,8 @@ const HeaderComponent = () => {
       });
       const sound = new Howl({
         src: ['/static/sounds/Christmas_Village_64.mp3'],
-        onplayerror: function() {
-          sound.once('unlock', function() {
+        onplayerror: () => {
+          sound.once('unlock', () => {
             sound.play();
           });
         },

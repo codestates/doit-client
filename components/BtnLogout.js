@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { Popconfirm, Icon, message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { LOG_OUT_REQUEST } from '../reducers/user';
 import styled from 'styled-components';
+
+import { LOG_OUT_REQUEST } from '../reducers/user';
 import messages from '../config/messages';
 
 const StyledButton = styled.button`

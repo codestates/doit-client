@@ -8,6 +8,7 @@ import {
   Button,
   Icon,
   message,
+  InputNumber,
 } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -34,7 +35,7 @@ const Clock = styled.div`
   background: #252525;
   box-shadow: 1px 1px 0 0 #d9d9d9;
   border-radius: 4px 4px 0 0;
-  min-height: 210px;
+  min-height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -218,6 +219,7 @@ const TimerEl = ({ todoEl }) => {
           <Radio.Button value="45">45</Radio.Button>
           <Radio.Button value="60">60</Radio.Button>
         </RadioGroup>
+        <InputNumber size="small" min={1} max={100000} defaultValue={3} />
         <BtnSound />
       </div>
 

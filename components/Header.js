@@ -55,7 +55,7 @@ const MenuItem = styled(Menu.Item)`
 
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
-  const { totalTime, elapsedTime, isSoundOn } = useSelector(
+  const { totalTime, elapsedTime, isSoundOn, savedTodoContent, focusOnTodoContent } = useSelector(
     (state) => state.timer,
   );
   const dispatch = useDispatch();
@@ -84,6 +84,19 @@ const HeaderComponent = () => {
       });
     }
   }, [totalTime, elapsedTime, dispatch, isSoundOn]);
+
+  useEffect(() => {
+    const listener = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    if (savedTodoContent !== '' || focusOnTodoContent) {
+      window.addEventListener('beforeunload', listener);
+    }
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, [savedTodoContent, focusOnTodoContent]);
 
   return (
     <StyledHeader>

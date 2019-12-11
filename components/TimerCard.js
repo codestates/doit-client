@@ -7,7 +7,8 @@ import {
   TODO_PAUSE_REQUEST,
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
-  SAVE_TODOCONTENT
+  SAVE_TODOCONTENT,
+  FOCUS_ON_TODOCONTENT
 } from '../reducers/timer';
 import messages from '../config/messages';
 import verifyContent from '../utils/contentVerification';
@@ -117,7 +118,11 @@ const TimerCard = ({ todoEl, doneEl }) => {
               rows={7}
               disabled={isStarted || !me}
               ref={todoEl}
-              onBlur={() => dispatch({type: SAVE_TODOCONTENT, payload: todoContent})}
+              onFocus={() => dispatch({type: FOCUS_ON_TODOCONTENT})}
+              onBlur={() => {
+                dispatch({type: SAVE_TODOCONTENT, payload: todoContent})
+                dispatch({type: FOCUS_ON_TODOCONTENT})
+              }}
             />
           </Card>
         </Col>

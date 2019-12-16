@@ -55,9 +55,9 @@ const MenuItem = styled(Menu.Item)`
 
 const HeaderComponent = () => {
   const { me } = useSelector((state) => state.user);
-  const { totalTime, elapsedTime, isSoundOn, savedTodoContent, focusOnTodoContent } = useSelector(
-    (state) => state.timer,
-  );
+  const {
+    totalTime, elapsedTime, isSoundOn, savedTodoContent, focusOnTodoContent,
+  } = useSelector((state) => state.timer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,8 +67,8 @@ const HeaderComponent = () => {
       });
       const sound = new Howl({
         src: ['/static/sounds/Christmas_Village_64.mp3'],
-        onplayerror: function() {
-          sound.once('unlock', function() {
+        onplayerror: () => {
+          sound.once('unlock', () => {
             sound.play();
           });
         },
@@ -88,6 +88,7 @@ const HeaderComponent = () => {
   useEffect(() => {
     const listener = (event) => {
       event.preventDefault();
+      // eslint-disable-next-line no-param-reassign
       event.returnValue = '';
     };
     if (savedTodoContent !== '' || focusOnTodoContent) {

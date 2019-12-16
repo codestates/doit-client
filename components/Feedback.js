@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Row, Col, Button, Form, Input, Icon, message } from 'antd';
+import {
+  Row, Col, Button, Form, Input, Icon, message,
+} from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FEEDBACK_REQUEST, FEEDBACK_RESET } from '../reducers/feedback';
-
 import messages from '../config/messages';
 
 const { TextArea } = Input;
@@ -50,19 +51,15 @@ const Feedback = () => {
   useEffect(() => {
     if (isSubmitted && content !== '') {
       message.info('피드백 감사합니다 ^0^ ');
-      setContent('');
-      dispatch({
-        type: FEEDBACK_RESET,
-      });
     }
     if (submitError && content !== '') {
       message.error('피드백 전달에 실패했어요 ㅠoㅠ');
-      setContent('');
-      dispatch({
-        type: FEEDBACK_RESET,
-      });
     }
-  }, [isSubmitted, submitError, content]);
+    setContent('');
+    dispatch({
+      type: FEEDBACK_RESET,
+    });
+  }, [isSubmitted, submitError, content, dispatch]);
 
   return (
     <StyledForm onSubmit={onSubmitForm}>

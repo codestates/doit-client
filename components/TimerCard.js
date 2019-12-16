@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Row, Col, Button, Card, Input, Icon, message } from 'antd';
+import PropTypes from 'prop-types';
+import {
+  Row, Col, Button, Card, Input, Icon, message,
+} from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +11,7 @@ import {
   TODO_COMPLETE_REQUEST,
   TODO_COMPLETE_CLEANUP,
   SAVE_TODOCONTENT,
-  FOCUS_ON_TODOCONTENT
+  FOCUS_ON_TODOCONTENT,
 } from '../reducers/timer';
 import messages from '../config/messages';
 import verifyContent from '../utils/contentVerification';
@@ -29,7 +32,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
     isSavingTodo,
     isSaveTodoSuccess,
     isReseted,
-    savedTodoContent
+    savedTodoContent,
   } = useSelector((state) => state.timer);
 
   const { me } = useSelector((state) => state.user);
@@ -39,13 +42,12 @@ const TimerCard = ({ todoEl, doneEl }) => {
   const [doneContent, setDoneContent] = useState('');
 
   useEffect(() => {
-    // content DB 저장을 성공했다면
     if (!isSavingTodo && isSaveTodoSuccess) {
       message.success(messages.complete);
       dispatch({
         type: TODO_COMPLETE_CLEANUP,
       });
-      dispatch({type: SAVE_TODOCONTENT, payload: ''});
+      dispatch({ type: SAVE_TODOCONTENT, payload: '' });
     }
   }, [isSavingTodo, isSaveTodoSuccess, dispatch]);
 
@@ -53,14 +55,14 @@ const TimerCard = ({ todoEl, doneEl }) => {
     if (isReseted) {
       setTodoContent('');
       setDoneContent('');
-      dispatch({type: SAVE_TODOCONTENT, payload: ''}); 
+      dispatch({ type: SAVE_TODOCONTENT, payload: '' });
     }
-  }, [isReseted]);
+  }, [isReseted, dispatch]);
 
   useEffect(() => {
     setTodoContent(savedTodoContent);
     todoEl.current.focus();
-  }, [savedTodoContent])
+  }, [savedTodoContent, todoEl]);
 
   const onComplete = useCallback(() => {
     dispatch({
@@ -70,9 +72,7 @@ const TimerCard = ({ todoEl, doneEl }) => {
     const verified = verifyContent(doneContent);
     if (!verified) {
       message.warning(messages.doneContentEmpty);
-      return setTimeout(() => {
-        doneEl.current.focus();
-      }, 500);
+      return doneEl.current.focus();
     }
     dispatch({
       type: TODO_COMPLETE_REQUEST,
@@ -80,31 +80,24 @@ const TimerCard = ({ todoEl, doneEl }) => {
         doneContent: verified || 'OK',
         todoId,
         timelineId,
-        endedAt: moment()
-          .utc()
-          .format(),
+        endedAt: moment().utc().format(),
       },
     });
     setTodoContent('');
     setDoneContent('');
-  }, [doneContent, todoId, timelineId, dispatch, doneEl]);
+    return todoEl.current.focus();
+  }, [doneContent, todoId, timelineId, dispatch, doneEl, todoEl]);
 
-  const onChangeTodoContent = useCallback(
-    (e) => {;
-      setTodoContent(e.target.value);
-      if (e.target.value === '') {
-        dispatch({type: SAVE_TODOCONTENT, payload: ''});
-      }
-    },
-    [dispatch],
-  );
+  const onChangeTodoContent = useCallback((e) => {
+    setTodoContent(e.target.value);
+    if (e.target.value === '') {
+      dispatch({ type: SAVE_TODOCONTENT, payload: '' });
+    }
+  }, [dispatch]);
 
-  const onChangeDoneContent = useCallback(
-    (e) => {;
-      setDoneContent(e.target.value)
-    },
-    [],
-  );
+  const onChangeDoneContent = useCallback((e) => {
+    setDoneContent(e.target.value);
+  }, []);
 
   return (
     <Wrapper>
@@ -112,16 +105,16 @@ const TimerCard = ({ todoEl, doneEl }) => {
         <Col xs={24} md={12}>
           <Card title="할일">
             <TextArea
-              value = {todoContent}
+              value={todoContent}
               onChange={onChangeTodoContent}
               placeholder={messages.writeTodo}
               rows={7}
               disabled={isStarted || !me}
               ref={todoEl}
-              onFocus={() => dispatch({type: FOCUS_ON_TODOCONTENT})}
+              onFocus={() => dispatch({ type: FOCUS_ON_TODOCONTENT })}
               onBlur={() => {
-                dispatch({type: SAVE_TODOCONTENT, payload: todoContent})
-                dispatch({type: FOCUS_ON_TODOCONTENT})
+                dispatch({ type: SAVE_TODOCONTENT, payload: todoContent });
+                dispatch({ type: FOCUS_ON_TODOCONTENT });
               }}
             />
           </Card>
@@ -152,6 +145,11 @@ const TimerCard = ({ todoEl, doneEl }) => {
       </Button>
     </Wrapper>
   );
+};
+
+TimerCard.propTypes = {
+  todoEl: PropTypes.shape({ current: PropTypes.object }).isRequired,
+  doneEl: PropTypes.shape({ current: PropTypes.object }).isRequired,
 };
 
 export default TimerCard;

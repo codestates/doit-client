@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Typography, Anchor } from 'antd';
 import styled from 'styled-components';
@@ -25,11 +26,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const LinkItems = ({ todo, idx }) => {
-  return (
-    <Link href={`#${todo.id}`} title={`#${idx + 1}  ${todo.todoContent}`} />
-  );
-};
+const LinkItems = ({ todo, index }) => (
+  <Link href={`#${todo.id}`} title={`#${index + 1}  ${todo.todoContent}`} />
+);
 
 const TimelineAnchors = () => {
   const { me } = useSelector((state) => state.user);
@@ -37,11 +36,14 @@ const TimelineAnchors = () => {
 
   return (
     <Wrapper>
-      <Title level={4}>{moment(date).format('YYYY년 MM월 DD일')}의 두잇</Title>
+      <Title level={4}>
+        {moment(date).format('YYYY년 MM월 DD일')}
+        의 두잇
+      </Title>
       <Anchor>
         {me && todos && todos.length ? (
-          todos.map((todo, idx) => (
-            <LinkItems key={todo.id} todo={todo} idx={idx} />
+          todos.map((todo, index) => (
+            <LinkItems key={todo.id} todo={todo} index={index} />
           ))
         ) : (
           <Link href="#" title="한일이 없어용" />
@@ -49,6 +51,18 @@ const TimelineAnchors = () => {
       </Anchor>
     </Wrapper>
   );
+};
+
+LinkItems.propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    duration: PropTypes.number.isRequired,
+    isComplete: PropTypes.bool.isRequired,
+    todoContent: PropTypes.string.isRequired,
+    doneContent: PropTypes.string,
+    timelines: PropTypes.array.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default TimelineAnchors;

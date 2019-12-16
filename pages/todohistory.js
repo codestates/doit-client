@@ -43,6 +43,8 @@ const todoHistory = () => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  console.log(todos);
+
   useEffect(() => {
     if (!me) {
       Router.push('/timer');

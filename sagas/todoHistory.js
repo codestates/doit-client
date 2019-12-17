@@ -27,7 +27,6 @@ function* loadTodos(action) {
       data: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: LOAD_TODOS_FAILURE,
       error: e,
@@ -53,7 +52,6 @@ function* deleteHistory(action) {
       type: DELETE_HISTORY_SUCCESS,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: DELETE_HISTORY_FAILURE,
       error: e,

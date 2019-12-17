@@ -74,7 +74,6 @@ function* startTimerAndTodoCreate(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: START_TIMER_AND_TODO_CREATE_FAILURE,
       error: e,
@@ -104,7 +103,6 @@ function* todoComplete(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: TODO_COMPLETE_FAILURE,
       error: e,
@@ -128,7 +126,6 @@ function* todoReset(action) {
   try {
     yield call(todoResetAPI, action.data);
   } catch (e) {
-    console.error(e);
   }
 }
 
@@ -152,7 +149,6 @@ function* todoPause(action) {
         type: TODO_PAUSE_SUCCESS,
       });
     } catch (e) {
-      console.error(e);
       yield put({
         type: TODO_PAUSE_FAILURE,
         error: e,
@@ -186,7 +182,6 @@ function* todoResume(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: TODO_RESUME_FAILURE,
       error: e,

@@ -38,7 +38,6 @@ function* login(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: LOG_IN_FAILURE,
       error: e,
@@ -71,7 +70,6 @@ function* loadUser() {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: LOAD_USER_FAILURE,
       error: e,
@@ -103,7 +101,6 @@ function* signup(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: SIGN_UP_FAILURE,
       error: e.response.data.message,
@@ -135,7 +132,6 @@ function* googleAuth(action) {
       payload: result.data.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({
       type: GOOGLE_AUTH_FAILURE,
       error: e.response.data.message,
